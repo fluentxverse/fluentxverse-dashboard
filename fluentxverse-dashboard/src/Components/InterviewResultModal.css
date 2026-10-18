@@ -1,0 +1,324 @@
+.interview-result-modal {
+  max-width: 600px;
+  width: 95%;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+.interview-result-modal .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+}
+
+.interview-result-modal .modal-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.interview-result-modal .modal-close {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+}
+
+.interview-result-modal .modal-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.interview-result-modal .modal-body {
+  padding: 1.5rem;
+}
+
+.interview-result-modal .loading-state,
+.interview-result-modal .error-state,
+.interview-result-modal .empty-state {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-secondary);
+}
+
+.interview-result-modal .loading-state i,
+.interview-result-modal .error-state i,
+.interview-result-modal .empty-state i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.interview-result-modal .error-state {
+  color: #ef4444;
+}
+
+/* Tutor Info */
+.result-tutor-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--background-secondary);
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.result-tutor-info .tutor-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.result-tutor-info .tutor-details {
+  flex: 1;
+}
+
+.result-tutor-info .tutor-details h3 {
+  margin: 0 0 0.25rem;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+}
+
+.result-tutor-info .interview-date {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.result-badge {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.result-badge.pass {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.result-badge.fail {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+/* Result Section */
+.result-section {
+  margin-bottom: 1.5rem;
+}
+
+.result-section h4 {
+  margin: 0 0 0.75rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.result-section h4 i {
+  color: #3b82f6;
+}
+
+/* Rubric Results */
+.rubric-results {
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.rubric-result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.rubric-result-item:last-of-type {
+  border-bottom: none;
+}
+
+.rubric-result-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+}
+
+.rubric-result-label i {
+  color: #3b82f6;
+}
+
+.rubric-result-score {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.score-bar {
+  width: 100px;
+  height: 8px;
+  background: var(--background-secondary);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.score-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #2563eb);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.score-value {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  min-width: 35px;
+}
+
+.rubric-result-average {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 2px solid var(--border-color);
+}
+
+.rubric-result-average span {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.rubric-result-average strong {
+  font-size: 1.1rem;
+  color: #3b82f6;
+}
+
+/* Timestamp Results */
+.timestamp-results {
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 0.5rem;
+}
+
+.timestamp-result-item {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 8px;
+}
+
+.timestamp-result-item:hover {
+  background: var(--background-secondary);
+}
+
+.timestamp-time {
+  font-family: monospace;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #3b82f6;
+  min-width: 50px;
+}
+
+.timestamp-text {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+}
+
+/* Recording Player */
+.recording-player {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.recording-video {
+  width: 100%;
+  max-height: 360px;
+  border-radius: 12px;
+  background: #000;
+  object-fit: contain;
+}
+
+.recording-download {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s;
+  align-self: flex-start;
+}
+
+.recording-download:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+/* Notes Content */
+.notes-content {
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1rem;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  white-space: pre-wrap;
+  line-height: 1.6;
+}
+
+/* Modal Footer */
+.interview-result-modal .modal-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Spin animation */
+.ri-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

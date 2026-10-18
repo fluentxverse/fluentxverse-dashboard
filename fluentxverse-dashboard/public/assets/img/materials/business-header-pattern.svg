@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="220" viewBox="0 0 660 220" fill="none" stroke="#bda4e7" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Business icons adapted from Lucide, ISC License.
+  Copyright (c) 2026 Lucide Icons and Contributors.
+  Permission to use, copy, modify, and/or distribute this software for any
+  purpose with or without fee is hereby granted, provided that the above
+  copyright notice and this permission notice appear in all copies.
+  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+  WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+  MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+  ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+  WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE. -->
+  <defs>
+    <g id="briefcase">
+      <path d="M12 12h.01" vector-effect="non-scaling-stroke"/>
+      <path d="M16 6V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" vector-effect="non-scaling-stroke"/>
+      <path d="M22 13a18.15 18.15 0 0 1-20 0" vector-effect="non-scaling-stroke"/>
+      <rect width="20" height="14" x="2" y="6" rx="2" vector-effect="non-scaling-stroke"/>
+    </g>
+    <g id="conversation">
+      <path d="M16 10a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 14.286V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" vector-effect="non-scaling-stroke"/>
+      <path d="M20 9a2 2 0 0 1 2 2v10.286a.71.71 0 0 1-1.212.502l-2.202-2.202A2 2 0 0 0 17.172 19H10a2 2 0 0 1-2-2v-1" vector-effect="non-scaling-stroke"/>
+    </g>
+    <g id="document">
+      <path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" vector-effect="non-scaling-stroke"/>
+      <path d="M14 2v5a1 1 0 0 0 1 1h5" vector-effect="non-scaling-stroke"/>
+      <path d="M10 9H8" vector-effect="non-scaling-stroke"/>
+      <path d="M16 13H8" vector-effect="non-scaling-stroke"/>
+      <path d="M16 17H8" vector-effect="non-scaling-stroke"/>
+    </g>
+    <g id="presentation">
+      <path d="M2 3h20" vector-effect="non-scaling-stroke"/>
+      <path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3" vector-effect="non-scaling-stroke"/>
+      <path d="m7 21 5-5 5 5" vector-effect="non-scaling-stroke"/>
+      <g transform="translate(6.5 4.5) scale(.48)">
+      <path d="M12 16v5" vector-effect="non-scaling-stroke"/>
+      <path d="M16 14.639V21" vector-effect="non-scaling-stroke"/>
+      <path d="M20 10.656V21" vector-effect="non-scaling-stroke"/>
+      <path d="m22 3-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15" vector-effect="non-scaling-stroke"/>
+      <path d="M4 18.463V21" vector-effect="non-scaling-stroke"/>
+      <path d="M8 14.656V21" vector-effect="non-scaling-stroke"/>
+      </g>
+    </g>
+    <g id="gear">
+      <path d="M9.800 3.790L10.562 3.623L10.703 1.681L13.297 1.681L13.438 3.623L14.200 3.790L14.943 4.026L16.037 2.415L18.282 3.712L17.434 5.464L18.010 5.990L18.536 6.566L20.288 5.718L21.585 7.963L19.974 9.057L20.210 9.800L20.377 10.562L22.319 10.703L22.319 13.297L20.377 13.438L20.210 14.200L19.974 14.943L21.585 16.037L20.288 18.282L18.536 17.434L18.010 18.010L17.434 18.536L18.282 20.288L16.037 21.585L14.943 19.974L14.200 20.210L13.438 20.377L13.297 22.319L10.703 22.319L10.562 20.377L9.800 20.210L9.057 19.974L7.963 21.585L5.718 20.288L6.566 18.536L5.990 18.010L5.464 17.434L3.712 18.282L2.415 16.037L4.026 14.943L3.790 14.200L3.623 13.438L1.681 13.297L1.681 10.703L3.623 10.562L3.790 9.800L4.026 9.057L2.415 7.963L3.712 5.718L5.464 6.566L5.990 5.990L6.566 5.464L5.718 3.712L7.963 2.415L9.057 4.026Z" vector-effect="non-scaling-stroke"/>
+      <circle cx="12" cy="12" r="6.4" vector-effect="non-scaling-stroke"/>
+      <circle cx="12" cy="12" r="3" vector-effect="non-scaling-stroke"/>
+    </g>
+  </defs>
+  <!-- Static business schematic: strategy, conversations, documents and growth. -->
+  <g stroke="#8150b7" opacity=".3">
+    <path d="M220 0V220M260 0V220M300 0V220M340 0V220M380 0V220M420 0V220M460 0V220M500 0V220M540 0V220M580 0V220M620 0V220"/>
+    <path d="M200 30H660M200 70H660M200 110H660M200 150H660M200 190H660"/>
+  </g>
+  <path d="M275 220 382 0H409L302 220Z" fill="#7136b4" fill-opacity=".32" stroke="none"/>
+  <path d="M310 220 417 0" stroke="#a875ed" opacity=".55"/>
+  <path d="M613 0 543 143H560L630 0Z" fill="#9054d5" fill-opacity=".5" stroke="none"/>
+  <path d="M650 0 580 143" stroke="#c48eff" stroke-width="3" opacity=".75"/>
+  <g stroke="#9564c5" opacity=".7">
+    <path d="M351 73 372 52H492L514 74V159L490 183H348"/>
+    <path d="M360 79 380 60H488L506 78V155L486 175H365"/>
+    <path d="M352 73H365M351 73V86M514 144V159H499"/>
+  </g>
+  <path d="M378 182H400L412 170H477" stroke="#79d6d1" opacity=".85"/>
+  <path d="M197 172H247L273 146H322L353 116H376" stroke="#bb8df4" opacity=".65"/>
+  <path d="M281 72H312L330 90H365M510 105H548L568 85H610" stroke="#b68bea" opacity=".55" stroke-dasharray="3 5"/>
+  <g fill="#bf92f7" stroke="none">
+    <path d="M195 168h7v7h-7zM319 142h7v7h-7zM606 81h7v7h-7z"/>
+    <path d="m331 208 7-12h5l-7 12zm10 0 7-12h5l-7 12zm10 0 7-12h5l-7 12z"/>
+  </g>
+  <g fill="#79d6d1" stroke="none">
+    <circle cx="377" cy="182" r="2.5"/>
+    <circle cx="477" cy="170" r="2.5"/>
+  </g>
+  <g stroke="#c19ae9" opacity=".8">
+    <use href="#conversation" transform="translate(280 46) scale(2.1)"/>
+    <use href="#briefcase" transform="translate(235 153) scale(2.3)"/>
+    <use href="#presentation" transform="translate(389 71) scale(4.4)"/>
+    <use href="#document" transform="translate(535 48) scale(2.3)"/>
+  </g>
+  <g stroke="#c391ff" opacity=".35">
+    <use href="#gear" transform="translate(579 116) scale(5.5)"/>
+    <circle cx="645" cy="182" r="75" stroke-dasharray="2 6"/>
+  </g>
+  <g stroke="#a677dc" opacity=".65">
+    <path d="M176 213H267L278 202H320M441 16H515L525 26H582"/>
+    <path d="M441 13v6m7-6v6m7-6v6m7-6v6"/>
+  </g>
+</svg>

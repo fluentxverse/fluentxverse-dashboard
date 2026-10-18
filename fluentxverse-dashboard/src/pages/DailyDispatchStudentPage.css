@@ -1,0 +1,94 @@
+/**
+ * DailyDispatchStudentPage styles
+ * Student-specific overrides for the Daily Dispatch view
+ */
+
+/* ============================================================================
+   STUDENT VIEW CONTAINER
+   ============================================================================ */
+
+.dds-container {
+  /* Inherits from ddp-container */
+}
+
+/* ============================================================================
+   QUESTION-ONLY STYLING (NO ANSWERS)
+   ============================================================================ */
+
+.dds-question-only {
+  background: #f8f9fa;
+  border-left: 3px solid var(--ddp-accent);
+  padding: 0.75rem 1rem;
+  margin: 1rem 0 1.5rem;
+  border-radius: 0 4px 4px 0;
+}
+
+.dds-question-only .ddp-question {
+  margin: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-style: italic;
+  color: #333;
+}
+
+.dds-question-only .ddp-qa-label {
+  color: var(--ddp-accent);
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.dds-question-only .ddp-qa-label i {
+  display: block;
+}
+
+/* ============================================================================
+   STUDENT-SPECIFIC SECTION STYLING
+   ============================================================================ */
+
+/* Slightly different section headers for student view */
+.dds-container .ddp-section-header h2 {
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+}
+
+/* Clean vocabulary display */
+.dds-container .ddp-vocab-body p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* ============================================================================
+   PRINT STYLES FOR STUDENT VIEW
+   ============================================================================ */
+
+@media print {
+  .dds-container {
+    font-size: 11pt;
+  }
+
+  .dds-question-only {
+    background: #f5f5f5 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .dds-question-only .ddp-qa-label {
+    color: #000 !important;
+  }
+}
+
+/* ============================================================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================================================ */
+
+@media (max-width: 768px) {
+  .dds-question-only {
+    padding: 0.5rem 0.75rem;
+    margin: 0.75rem 0 1rem;
+  }
+
+  .dds-question-only .ddp-question {
+    font-size: 0.9rem;
+  }
+}

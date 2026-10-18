@@ -1,0 +1,11 @@
+{
+  "name": "fluentxverse-dashboard-source",
+  "private": true,
+  "description": "Administration dashboard for tutor screening, interviews, lesson operations, compensation, and release acceptance.",
+  "scripts": {
+    "setup": "cd fluentxverse-dashboard && bun install",
+    "dev": "npm --prefix fluentxverse-dashboard run dev",
+    "build": "npm --prefix fluentxverse-dashboard run build",
+    "preview": "npm --prefix fluentxverse-dashboard run preview"
+  }
+}

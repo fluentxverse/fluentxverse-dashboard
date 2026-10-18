@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Admin Dashboard | FluentXVerse</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="FluentXVerse Admin Dashboard - Manage tutors, students, and platform operations." />
+    
+    <meta name="theme-color" content="#0245ae">
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/img/logo/icon_logo.png" />
+
+    <script>
+      (function () {
+        var path = window.location.pathname;
+        if (!/^\/(business-english|conversational-skills)-preview\//.test(path)) return;
+        var theme = new URLSearchParams(window.location.search).get('theme');
+        if (theme !== 'dark' && theme !== 'light') {
+          var isBusiness = path.indexOf('/business-english-preview/') === 0;
+          try { theme = localStorage.getItem(isBusiness ? 'beve-theme' : 'csve-theme'); } catch (error) {}
+          if (theme !== 'dark' && theme !== 'light') theme = isBusiness ? 'dark' : 'light';
+        }
+        var root = document.documentElement;
+        root.dataset.materialPage = 'true';
+        root.dataset.materialTheme = theme;
+        root.style.colorScheme = theme;
+      })();
+    </script>
+    <style>
+      html[data-material-page='true'],html[data-material-page='true'] body{margin:0;background:#f5f5f5}
+      html[data-material-theme='dark'],html[data-material-theme='dark'] body{background:#1a1a1a!important;transition:none}
+    </style>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    
+    <!-- Remix Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css" rel="stylesheet" />
+    <link href="/assets/icons/remixicon/remixicon.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

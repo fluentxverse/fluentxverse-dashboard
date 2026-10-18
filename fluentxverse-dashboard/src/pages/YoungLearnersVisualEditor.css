@@ -1,0 +1,1070 @@
+/**
+ * YoungLearnersVisualEditor.css
+ * Styles for the Young Learners Visual Editor
+ */
+
+/* ============================================================================
+   MAIN LAYOUT
+   ============================================================================ */
+
+.yl-visual-editor {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  transition: background-color 0.3s ease;
+}
+
+/* Loading State */
+.yl-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  gap: 1rem;
+}
+
+.yl-loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid #e5e7eb;
+  border-top-color: #6366f1;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Error State */
+.yl-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  gap: 1rem;
+  text-align: center;
+}
+
+.yl-error i {
+  font-size: 4rem;
+  color: #ef4444;
+}
+
+.yl-error h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #1f2937;
+}
+
+.yl-error p {
+  margin: 0;
+  color: #6b7280;
+}
+
+/* ============================================================================
+   HEADER
+   ============================================================================ */
+
+.yl-editor-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.yl-header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.yl-back-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 10px;
+  background: #f3f4f6;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.yl-back-btn:hover {
+  background: #e5e7eb;
+  transform: translateX(-2px);
+}
+
+.yl-header-info h1 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.yl-mascot-emoji {
+  font-size: 1.5rem;
+}
+
+.yl-header-meta {
+  font-size: 0.875rem;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.yl-status-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.yl-status-badge.draft {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.yl-status-badge.published {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.yl-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Buttons */
+.yl-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.yl-btn.small {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8125rem;
+}
+
+.yl-btn.primary {
+  background: #6366f1;
+  color: white;
+}
+
+.yl-btn.primary:hover:not(:disabled) {
+  background: #4f46e5;
+}
+
+.yl-btn.secondary {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.yl-btn.secondary:hover:not(:disabled) {
+  background: #e5e7eb;
+}
+
+.yl-btn.success {
+  background: #10b981;
+  color: white;
+}
+
+.yl-btn.success:hover:not(:disabled) {
+  background: #059669;
+}
+
+.yl-btn.warning {
+  background: #f59e0b;
+  color: white;
+}
+
+.yl-btn.warning:hover:not(:disabled) {
+  background: #d97706;
+}
+
+.yl-btn.danger {
+  background: #ef4444;
+  color: white;
+}
+
+.yl-btn.danger:hover:not(:disabled) {
+  background: #dc2626;
+}
+
+.yl-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.yl-unsaved-dot {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 8px;
+  height: 8px;
+  background: #fbbf24;
+  border-radius: 50%;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* ============================================================================
+   TAB NAVIGATION
+   ============================================================================ */
+
+.yl-editor-tabs {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  overflow-x: auto;
+}
+
+.yl-tab {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: #6b7280;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.yl-tab:hover {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.yl-tab.active {
+  background: #eef2ff;
+  color: #6366f1;
+}
+
+.yl-tab i {
+  font-size: 1.125rem;
+}
+
+.yl-tab-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  background: #6366f1;
+  color: white;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.yl-tab.active .yl-tab-badge {
+  background: #4f46e5;
+}
+
+/* ============================================================================
+   CONTENT AREA
+   ============================================================================ */
+
+.yl-editor-content {
+  flex: 1;
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+/* Empty State */
+.yl-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  background: white;
+  border: 2px dashed #e5e7eb;
+  border-radius: 16px;
+  text-align: center;
+}
+
+.yl-empty-state i {
+  font-size: 4rem;
+  color: #d1d5db;
+  margin-bottom: 1rem;
+}
+
+.yl-empty-state h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+  color: #374151;
+}
+
+.yl-empty-state p {
+  margin: 0 0 1.5rem;
+  color: #6b7280;
+  max-width: 400px;
+}
+
+/* ============================================================================
+   COLLAPSIBLE SECTIONS
+   ============================================================================ */
+
+.yl-editor-section {
+  background: white;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.yl-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  background: #f9fafb;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s;
+}
+
+.yl-section-header:hover {
+  background: #f3f4f6;
+}
+
+.yl-section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.yl-section-title i {
+  font-size: 1.25rem;
+  color: #6366f1;
+}
+
+.yl-section-badge {
+  padding: 0.25rem 0.5rem;
+  background: #6366f1;
+  color: white;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.yl-section-content {
+  padding: 1.25rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* ============================================================================
+   FORMS
+   ============================================================================ */
+
+.yl-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+
+.yl-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.yl-input-group label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.yl-input-group input,
+.yl-input-group select,
+.yl-input-group textarea {
+  padding: 0.75rem 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 0.9375rem;
+  font-family: inherit;
+  background: white;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.yl-input-group input:focus,
+.yl-input-group select:focus,
+.yl-input-group textarea:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.yl-input-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.yl-json-textarea {
+  font-family: 'Fira Code', 'Monaco', monospace;
+  font-size: 0.8125rem;
+}
+
+/* ============================================================================
+   MASCOT & COLOR GRIDS
+   ============================================================================ */
+
+.yl-mascot-grid {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.yl-mascot-btn {
+  width: 60px;
+  height: 60px;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.yl-mascot-btn:hover {
+  border-color: #d1d5db;
+  transform: scale(1.05);
+}
+
+.yl-mascot-btn.active {
+  border-color: #6366f1;
+  background: #eef2ff;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.yl-mascot-emoji-large {
+  font-size: 2rem;
+}
+
+.yl-color-grid {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.yl-color-btn {
+  width: 48px;
+  height: 48px;
+  border: 3px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.yl-color-btn:hover {
+  transform: scale(1.1);
+}
+
+.yl-color-btn.active {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+}
+
+/* ============================================================================
+   GREETING PREVIEW
+   ============================================================================ */
+
+.yl-greeting-preview {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 1.25rem;
+}
+
+.yl-greeting-mascot {
+  font-size: 3rem;
+}
+
+.yl-greeting-bubble {
+  background: white;
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  border-radius: 0 12px 12px 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  max-width: 400px;
+}
+
+.yl-greeting-bubble p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.yl-greeting-jp {
+  color: #6b7280;
+  font-size: 0.875rem;
+  margin-top: 0.5rem !important;
+}
+
+/* ============================================================================
+   IMAGE UPLOAD
+   ============================================================================ */
+
+.yl-image-upload {
+  border: 2px dashed #e5e7eb;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  overflow: hidden;
+  background: #f9fafb;
+}
+
+.yl-image-upload:hover {
+  border-color: #6366f1;
+  background: #eef2ff;
+}
+
+.yl-image-upload.small {
+  width: 80px;
+  height: 80px;
+}
+
+.yl-image-upload.medium {
+  width: 120px;
+  height: 120px;
+}
+
+.yl-image-upload.large {
+  width: 100%;
+  max-width: 300px;
+  height: 200px;
+}
+
+.yl-image-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 0.5rem;
+  color: #9ca3af;
+}
+
+.yl-image-placeholder i {
+  font-size: 1.5rem;
+}
+
+.yl-image-placeholder span {
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.yl-image-preview {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.yl-image-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.yl-image-remove {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(239, 68, 68, 0.9);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.yl-image-preview:hover .yl-image-remove {
+  opacity: 1;
+}
+
+.yl-image-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #6366f1;
+}
+
+/* ============================================================================
+   PANEL HEADERS
+   ============================================================================ */
+
+.yl-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.yl-panel-header h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0;
+  font-size: 1.25rem;
+  color: #1f2937;
+}
+
+.yl-panel-header h2 i {
+  font-size: 1.5rem;
+  color: #6366f1;
+}
+
+/* ============================================================================
+   VOCABULARY CARDS
+   ============================================================================ */
+
+.yl-vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1rem;
+}
+
+.yl-vocab-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.yl-vocab-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.yl-vocab-number {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #6366f1;
+  color: white;
+  border-radius: 50%;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.yl-vocab-actions {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.yl-vocab-actions button {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #6b7280;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.yl-vocab-actions button:hover:not(:disabled) {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.yl-vocab-actions button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.yl-vocab-actions button.danger:hover:not(:disabled) {
+  background: #fef2f2;
+  color: #ef4444;
+}
+
+.yl-vocab-content {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.yl-vocab-inputs {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.yl-vocab-inputs .yl-input-group input {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+}
+
+/* ============================================================================
+   SONG PANEL
+   ============================================================================ */
+
+.yl-song-content {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.yl-lyrics-section {
+  margin-top: 1.5rem;
+}
+
+.yl-lyrics-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.yl-lyrics-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: #374151;
+}
+
+.yl-lyrics-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.yl-lyric-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.yl-lyric-number {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f4f6;
+  color: #6b7280;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.yl-lyric-line {
+  flex: 2;
+  padding: 0.625rem 0.875rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 0.9375rem;
+}
+
+.yl-lyric-translation {
+  flex: 1;
+  padding: 0.625rem 0.875rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 0.9375rem;
+}
+
+.yl-lyric-delete {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #9ca3af;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+
+.yl-lyric-delete:hover {
+  background: #fef2f2;
+  color: #ef4444;
+}
+
+/* ============================================================================
+   STORY PANEL
+   ============================================================================ */
+
+.yl-story-content {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.yl-pages-section {
+  margin-top: 1.5rem;
+}
+
+.yl-pages-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.yl-pages-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: #374151;
+}
+
+.yl-pages-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.yl-story-page {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.yl-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.yl-page-number {
+  font-weight: 600;
+  color: #6366f1;
+}
+
+.yl-page-actions {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.yl-page-actions button {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #6b7280;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.yl-page-actions button:hover:not(:disabled) {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.yl-page-actions button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.yl-page-actions button.danger:hover:not(:disabled) {
+  background: #fef2f2;
+  color: #ef4444;
+}
+
+.yl-page-content {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.yl-page-inputs {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.yl-page-inputs textarea {
+  padding: 0.75rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 0.9375rem;
+  resize: vertical;
+}
+
+/* ============================================================================
+   ACTIVITIES PANEL
+   ============================================================================ */
+
+.yl-activities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 1rem;
+}
+
+.yl-activity-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.yl-activity-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.yl-activity-emoji {
+  font-size: 1.5rem;
+}
+
+.yl-activity-type {
+  flex: 1;
+  font-weight: 600;
+}
+
+.yl-activity-delete {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.yl-activity-delete:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.yl-activity-content {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* ============================================================================
+   RESPONSIVE
+   ============================================================================ */
+
+@media (max-width: 768px) {
+  .yl-editor-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .yl-header-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  
+  .yl-editor-tabs {
+    padding: 0.5rem 1rem;
+  }
+  
+  .yl-tab {
+    padding: 0.625rem 1rem;
+    font-size: 0.8125rem;
+  }
+  
+  .yl-editor-content {
+    padding: 1rem;
+  }
+  
+  .yl-vocab-grid,
+  .yl-activities-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .yl-vocab-content,
+  .yl-page-content {
+    flex-direction: column;
+  }
+  
+  .yl-image-upload.medium,
+  .yl-image-upload.large {
+    width: 100%;
+    height: 150px;
+  }
+  
+  .yl-lyric-row {
+    flex-wrap: wrap;
+  }
+  
+  .yl-lyric-line,
+  .yl-lyric-translation {
+    flex: 1 1 100%;
+  }
+}

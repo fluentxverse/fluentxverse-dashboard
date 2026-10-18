@@ -1,0 +1,14 @@
+{
+  "name": "fluentxverse-dashboard",
+  "account_id": "8355506b306aa26ed64113cdc82cf338",
+  "workers_dev": true,
+  "routes": [
+    { "pattern": "dashboard.fluentxverse.com", "custom_domain": true },
+    { "pattern": "dashboard.fluentxverse.xyz", "custom_domain": true }
+  ],
+  "compatibility_date": "2026-02-20",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
+  }
+}

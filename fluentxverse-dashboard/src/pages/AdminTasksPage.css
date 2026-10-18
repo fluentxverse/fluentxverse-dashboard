@@ -1,0 +1,46 @@
+.admin-tasks-page { width: 100%; max-width: 1180px; min-width: 0; margin: 0 auto; color: var(--text-primary); }
+.admin-tasks-header, .admin-tasks-list-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.admin-tasks-header { margin-bottom: 24px; }
+.admin-tasks-header h1 { margin: 0 0 4px; font-size: 28px; }
+.admin-tasks-header p { margin: 0; color: var(--text-secondary); }
+.admin-tasks-count { color: var(--primary); font-weight: 700; }
+.admin-tasks-form { border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-secondary); padding: 22px; margin-bottom: 30px; }
+.admin-tasks-form-heading { display: flex; align-items: center; gap: 9px; margin-bottom: 18px; color: var(--primary); }
+.admin-tasks-form-heading h2, .admin-tasks-list-head h2 { font-size: 18px; margin: 0; color: var(--text-primary); }
+.admin-tasks-form-heading i { font-size: 21px; }
+.admin-tasks-fields { display: grid; grid-template-columns: minmax(0, 1fr) 160px 210px; gap: 14px; }
+.admin-tasks-form label, .admin-task-status-label { display: flex; flex-direction: column; gap: 7px; font-size: 13px; font-weight: 700; color: var(--text-secondary); }
+.admin-tasks-form label span { font-weight: 400; }
+.admin-tasks-form input, .admin-tasks-form textarea, .admin-tasks-form select, .admin-task-status { width: 100%; box-sizing: border-box; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-primary); color: var(--text-primary); padding: 10px 12px; font: inherit; font-weight: 500; }
+.admin-tasks-form textarea { resize: vertical; margin-bottom: 0; }
+.admin-tasks-fields + label { margin-top: 14px; }
+.admin-tasks-form-actions { display: flex; justify-content: flex-end; margin-top: 14px; }
+.admin-tasks-form-actions button { border: 0; border-radius: 6px; background: var(--primary); color: #fff; padding: 10px 17px; font-weight: 700; cursor: pointer; }
+.admin-tasks-form-actions button:disabled { background: var(--bg-tertiary); color: var(--text-secondary); border: 1px solid var(--border-color); cursor: not-allowed; }
+.admin-tasks-list-head { margin-bottom: 14px; }
+.admin-tasks-filters { display: flex; gap: 3px; flex-wrap: wrap; border: 1px solid var(--border-color); border-radius: 6px; padding: 3px; }
+.admin-tasks-filters button { border: 0; border-radius: 4px; background: transparent; color: var(--text-secondary); padding: 7px 10px; cursor: pointer; font-weight: 600; }
+.admin-tasks-filters button.active { background: var(--primary); color: #fff; }
+.admin-tasks-filters span { opacity: .72; margin-left: 3px; }
+.admin-tasks-rows { border-top: 1px solid var(--border-color); }
+.admin-task-row { display: flex; align-items: center; justify-content: space-between; gap: 18px; border-bottom: 1px solid var(--border-color); padding: 19px 3px; }
+.admin-task-main { min-width: 0; }
+.admin-task-title { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+.admin-task-title h3 { margin: 0; font-size: 15px; overflow-wrap: anywhere; }
+.admin-task-kind { text-transform: capitalize; color: #2b6ad0; background: rgba(43, 106, 208, .12); padding: 3px 7px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+.admin-task-kind.suggestion { color: #0b8762; background: rgba(11, 135, 98, .12); }
+.admin-task-main p { color: var(--text-secondary); white-space: pre-wrap; overflow-wrap: anywhere; margin: 8px 0; line-height: 1.5; }
+.admin-task-main small { color: var(--text-secondary); }
+.admin-task-status-label { flex: 0 0 160px; }
+.admin-task-controls { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+.admin-task-controls .admin-task-status-label:first-child { flex-basis: 190px; }
+.admin-task-controls select { width: 100%; box-sizing: border-box; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-primary); color: var(--text-primary); padding: 10px 12px; font: inherit; font-weight: 500; }
+.admin-task-status { cursor: pointer; }
+.admin-task-status.completed { color: #0b8762; }
+.admin-task-status.rejected { color: #b84c4c; }
+.admin-task-status.in_progress { color: #b16a11; }
+.admin-tasks-empty, .admin-tasks-error { padding: 30px 12px; color: var(--text-secondary); border-top: 1px solid var(--border-color); }
+.admin-tasks-error { color: #b84c4c; }
+.admin-tasks-error button { margin-left: 8px; padding: 6px 10px; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-secondary); color: var(--primary); font-weight: 700; cursor: pointer; }
+@media (max-width: 900px) { .admin-task-row { align-items: flex-start; flex-direction: column; } .admin-task-controls { width: 100%; } .admin-task-controls .admin-task-status-label { flex: 1 1 0; min-width: 0; } }
+@media (max-width: 640px) { .admin-tasks-header h1 { font-size: 23px; } .admin-tasks-form { padding: 16px; } .admin-tasks-fields { grid-template-columns: 1fr; } .admin-tasks-list-head { align-items: stretch; } .admin-tasks-filters { width: 100%; } .admin-tasks-filters button { flex: 1 1 auto; } .admin-task-controls { flex-direction: column; align-items: stretch; } .admin-task-controls .admin-task-status-label { flex: none; width: 100%; } }

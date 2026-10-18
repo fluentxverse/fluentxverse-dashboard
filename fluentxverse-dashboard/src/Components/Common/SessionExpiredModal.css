@@ -1,0 +1,155 @@
+.session-expired-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.session-expired-modal {
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 420px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.session-expired-icon {
+  width: 72px;
+  height: 72px;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+}
+
+.session-expired-icon i {
+  font-size: 36px;
+  color: white;
+}
+
+.session-expired-modal h2 {
+  margin: 0 0 12px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.session-expired-modal p {
+  margin: 0 0 20px;
+  color: #6b7280;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.session-expired-note {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  text-align: left;
+}
+
+.session-expired-note i {
+  color: #16a34a;
+  font-size: 18px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.session-expired-note span {
+  font-size: 13px;
+  color: #15803d;
+  line-height: 1.4;
+}
+
+.session-expired-btn {
+  width: 100%;
+  padding: 14px 24px;
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.session-expired-btn:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.session-expired-btn i {
+  font-size: 20px;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .session-expired-modal {
+    background: #1f2937;
+  }
+
+  .session-expired-modal h2 {
+    color: #f9fafb;
+  }
+
+  .session-expired-modal p {
+    color: #9ca3af;
+  }
+
+  .session-expired-note {
+    background: #064e3b;
+    border-color: #065f46;
+  }
+
+  .session-expired-note span {
+    color: #6ee7b7;
+  }
+
+  .session-expired-note i {
+    color: #6ee7b7;
+  }
+}

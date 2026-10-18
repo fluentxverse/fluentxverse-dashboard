@@ -1,0 +1,1193 @@
+/* Young Learners Editor Page */
+/* Based on Conversational Skills Editor layout */
+
+/* ========================================
+   PAGE LAYOUT
+   ======================================== */
+
+.yle-page {
+  padding: 24px 32px;
+  max-width: 100%;
+  margin: 0;
+}
+
+/* ========================================
+   HEADER
+   ======================================== */
+
+.yle-header {
+  margin-bottom: 24px;
+}
+
+.yle-header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.yle-title-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.yle-title-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+}
+
+.yle-title-emoji {
+  font-size: 28px;
+}
+
+.yle-header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.yle-header p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin: 4px 0 0 0;
+}
+
+.yle-create-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(236, 72, 153, 0.3);
+}
+
+.yle-create-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(236, 72, 153, 0.4);
+}
+
+.yle-create-btn i {
+  font-size: 20px;
+}
+
+/* ========================================
+   MAIN LAYOUT
+   ======================================== */
+
+.yle-main-layout {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 1200px) {
+  .yle-main-layout {
+    grid-template-columns: 1fr;
+  }
+  
+  .yle-analytics-panel {
+    display: none;
+  }
+}
+
+/* ========================================
+   ACCORDION CONTAINER
+   ======================================== */
+
+.yle-accordion-container {
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.yle-accordion {
+  display: flex;
+  flex-direction: column;
+}
+
+.yle-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 60px;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.yle-loading i {
+  font-size: 24px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ========================================
+   LEVEL ACCORDION
+   ======================================== */
+
+.yle-level {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.yle-level:last-child {
+  border-bottom: none;
+}
+
+.yle-level-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 16px 20px;
+  background: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.yle-level-header:hover {
+  background: var(--bg-secondary);
+}
+
+.yle-level-header.expanded {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.yle-level-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.yle-level-info i {
+  font-size: 18px;
+  color: var(--text-tertiary);
+  transition: transform 0.2s;
+}
+
+.yle-level-header.expanded .yle-level-info i {
+  transform: rotate(90deg);
+}
+
+.yle-level-badge {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.yle-level-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.yle-level-age {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  background: var(--bg-tertiary);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.yle-level-count {
+  font-size: 13px;
+  color: var(--text-tertiary);
+}
+
+/* ========================================
+   UNITS
+   ======================================== */
+
+.yle-units {
+  background: var(--bg-secondary);
+}
+
+.yle-unit {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.yle-unit:last-child {
+  border-bottom: none;
+}
+
+.yle-unit-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 12px 20px 12px 44px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.yle-unit-header:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.yle-unit-header.expanded {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.yle-unit-header.empty {
+  opacity: 0.6;
+}
+
+.yle-unit-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.yle-unit-info i {
+  font-size: 16px;
+  color: var(--text-tertiary);
+}
+
+.yle-unit-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.yle-unit-name {
+  font-size: 13px;
+  color: var(--text-tertiary);
+}
+
+.yle-unit-name::before {
+  content: ':';
+  margin-right: 6px;
+}
+
+.yle-unit-count {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  background: var(--bg-tertiary);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+/* ========================================
+   LESSONS LIST
+   ======================================== */
+
+.yle-lessons-list {
+  background: #fff;
+  border-top: 1px solid var(--border-color);
+}
+
+.yle-lesson-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px 12px 68px;
+  border-bottom: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.yle-lesson-row:last-child {
+  border-bottom: none;
+}
+
+.yle-lesson-row:hover {
+  background: var(--bg-secondary);
+}
+
+.yle-lesson-row.selected {
+  background: #fdf2f8;
+  border-left: 3px solid #ec4899;
+  padding-left: 65px;
+}
+
+.yle-lesson-main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+.yle-lesson-mascot {
+  font-size: 20px;
+}
+
+.yle-lesson-number {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  background: var(--bg-tertiary);
+  padding: 2px 6px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.yle-lesson-title {
+  font-size: 14px;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.yle-theme-badge {
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.yle-lesson-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.yle-lesson-row:hover .yle-lesson-actions {
+  opacity: 1;
+}
+
+.yle-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.yle-action-btn:hover {
+  background: var(--bg-secondary);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.yle-action-btn.yle-action-delete:hover {
+  background: #fef2f2;
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+/* Empty Unit */
+.yle-empty-unit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 20px;
+  color: var(--text-tertiary);
+  font-size: 13px;
+}
+
+.yle-add-lesson-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: transparent;
+  border: 1px dashed var(--border-color);
+  border-radius: 6px;
+  color: var(--text-secondary);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.yle-add-lesson-btn:hover {
+  background: var(--bg-secondary);
+  border-color: #ec4899;
+  color: #ec4899;
+}
+
+/* ========================================
+   ANALYTICS PANEL
+   ======================================== */
+
+.yle-analytics-panel {
+  position: sticky;
+  top: 24px;
+}
+
+.yle-analytics {
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.yle-analytics-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.yle-analytics-header i {
+  font-size: 20px;
+  color: #ec4899;
+}
+
+.yle-analytics-header h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  flex: 1;
+}
+
+.yle-analytics-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: var(--bg-secondary);
+  border: none;
+  border-radius: 6px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.yle-analytics-close:hover {
+  background: var(--bg-tertiary);
+}
+
+/* Progress Circle */
+.yle-progress-section {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.yle-progress-circle {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 12px;
+}
+
+.yle-progress-circle svg {
+  transform: rotate(-90deg);
+}
+
+.yle-progress-bg {
+  fill: none;
+  stroke: var(--bg-tertiary);
+  stroke-width: 8;
+}
+
+.yle-progress-fill {
+  fill: none;
+  stroke: #ec4899;
+  stroke-width: 8;
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.5s ease;
+}
+
+.yle-progress-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.yle-progress-value {
+  display: block;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.yle-progress-label {
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+
+.yle-progress-detail {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* Stats Section */
+.yle-stats-section {
+  margin-bottom: 20px;
+}
+
+.yle-stats-section:last-child {
+  margin-bottom: 0;
+}
+
+.yle-stats-section h4 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin: 0 0 12px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Theme Bars */
+.yle-theme-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.yle-theme-bar-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.yle-theme-bar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.yle-theme-bar-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-primary);
+}
+
+.yle-theme-icon-small {
+  font-size: 14px;
+}
+
+.yle-theme-bar-value {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.yle-theme-bar-track {
+  height: 6px;
+  background: var(--bg-tertiary);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.yle-theme-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.yle-theme-bar-fill.animals { background: #f59e0b; }
+.yle-theme-bar-fill.colors { background: #ec4899; }
+.yle-theme-bar-fill.numbers { background: #3b82f6; }
+.yle-theme-bar-fill.shapes { background: #8b5cf6; }
+.yle-theme-bar-fill.family { background: #10b981; }
+
+/* Quick Stats */
+.yle-quick-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.yle-quick-stat {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+}
+
+.yle-quick-stat i {
+  font-size: 20px;
+  color: #ec4899;
+}
+
+.yle-quick-stat-value {
+  display: block;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.yle-quick-stat-label {
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+
+/* Recent List */
+.yle-recent-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.yle-recent-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+}
+
+.yle-recent-mascot {
+  font-size: 16px;
+}
+
+.yle-recent-title {
+  flex: 1;
+  font-size: 13px;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.yle-recent-date {
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+
+.yle-empty-recent {
+  text-align: center;
+  color: var(--text-tertiary);
+  font-size: 13px;
+  padding: 20px;
+  margin: 0;
+}
+
+/* Lesson Info Card */
+.yle-lesson-info-card {
+  background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.yle-lesson-info-mascot {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.yle-lesson-info-card h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 4px 0;
+}
+
+.yle-lesson-info-unit {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 0 0 12px 0;
+}
+
+.yle-lesson-info-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.yle-lesson-info-level {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.yle-lesson-info-theme {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* Content Status */
+.yle-content-status {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.yle-status-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.yle-status-item.complete {
+  color: #10b981;
+}
+
+.yle-status-item.complete i {
+  color: #10b981;
+}
+
+.yle-status-item.incomplete {
+  color: var(--text-tertiary);
+}
+
+.yle-status-item.incomplete i {
+  color: var(--text-tertiary);
+}
+
+/* Engagement Stats */
+.yle-engagement-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.yle-engagement-stat {
+  text-align: center;
+  padding: 12px;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+}
+
+.yle-engagement-value {
+  display: block;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.yle-engagement-label {
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+
+/* Time Stats */
+.yle-time-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.yle-time-stat {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+}
+
+.yle-time-stat i {
+  font-size: 18px;
+  color: #ec4899;
+}
+
+.yle-time-value {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.yle-time-label {
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+
+/* Status Badge */
+.yle-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.yle-status-badge.draft {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.yle-status-badge.published {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+/* ========================================
+   MODAL
+   ======================================== */
+
+.yle-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.yle-modal {
+  background: #fff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 640px;
+  max-height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.yle-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.yle-modal-header h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.yle-modal-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: var(--bg-secondary);
+  border: none;
+  border-radius: 8px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.yle-modal-close:hover {
+  background: var(--bg-tertiary);
+}
+
+.yle-modal-body {
+  padding: 24px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.yle-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 24px;
+  border-top: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+}
+
+/* Form Fields */
+.yle-form-row {
+  display: grid;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.yle-form-row-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.yle-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.yle-form-field:last-child {
+  margin-bottom: 0;
+}
+
+.yle-form-field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.yle-locked-label {
+  font-weight: 400;
+  color: var(--text-tertiary);
+  margin-left: 8px;
+}
+
+.yle-form-field input,
+.yle-form-field select {
+  padding: 10px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.yle-form-field input:focus,
+.yle-form-field select:focus {
+  outline: none;
+  border-color: #ec4899;
+  box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1);
+}
+
+.yle-form-field input:disabled {
+  background: var(--bg-secondary);
+  color: var(--text-tertiary);
+}
+
+/* Warning */
+.yle-warning {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: #fef3c7;
+  border: 1px solid #fcd34d;
+  border-radius: 8px;
+  color: #92400e;
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+
+.yle-warning i {
+  font-size: 18px;
+}
+
+/* Theme Grid */
+.yle-theme-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+
+.yle-theme-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 8px;
+  background: var(--bg-secondary);
+  border: 2px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.yle-theme-btn:hover {
+  background: #fff;
+  border-color: var(--border-color);
+}
+
+.yle-theme-btn.selected {
+  background: #fdf2f8;
+  border-color: #ec4899;
+}
+
+.yle-theme-icon {
+  font-size: 24px;
+}
+
+.yle-theme-label {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+/* Mascot Grid */
+.yle-mascot-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.yle-mascot-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 16px 12px;
+  background: var(--bg-secondary);
+  border: 2px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.yle-mascot-btn:hover {
+  background: #fff;
+  border-color: var(--border-color);
+}
+
+.yle-mascot-btn.selected {
+  background: #fdf2f8;
+  border-color: #ec4899;
+}
+
+.yle-mascot-emoji {
+  font-size: 32px;
+}
+
+.yle-mascot-name {
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+/* Preview Labels */
+.yle-preview-labels {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+.yle-preview-mascot {
+  font-size: 48px;
+}
+
+.yle-preview-text p {
+  margin: 0 0 4px 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.yle-preview-text p:last-child {
+  margin-bottom: 0;
+}
+
+/* Buttons */
+.yle-btn-secondary {
+  padding: 10px 20px;
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.yle-btn-secondary:hover {
+  background: var(--bg-secondary);
+}
+
+.yle-btn-primary {
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.yle-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+}
+
+.yle-btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+  .yle-page {
+    padding: 16px;
+  }
+  
+  .yle-header-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .yle-create-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .yle-form-row-3 {
+    grid-template-columns: 1fr;
+  }
+  
+  .yle-theme-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .yle-mascot-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .yle-quick-stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .yle-engagement-stats {
+    grid-template-columns: 1fr;
+  }
+}

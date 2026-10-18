@@ -1,0 +1,424 @@
+/* ============================================================================
+   DQ AI GENERATOR — Tron Blue Edgy Theme
+   Floating panel for AI-powered discussion question generation.
+   ============================================================================ */
+
+/* ── FAB Toggle ── */
+.dqai-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 52px;
+  height: 52px;
+  background: linear-gradient(135deg, #ff6a00, #e05d00);
+  color: #fff;
+  border: none;
+  border-radius: 0;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1001;
+  box-shadow:
+    0 0 20px rgba(255, 106, 0, 0.4),
+    0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: all 0.15s;
+}
+
+.dqai-fab:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 30px rgba(255, 106, 0, 0.6),
+    0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.dqai-fab--active {
+  background: #1a1a2e;
+  border: 2px solid #ff6a00;
+  box-shadow: 0 0 20px rgba(255, 106, 0, 0.3);
+}
+
+/* ── Panel ── */
+.dqai-panel {
+  position: fixed;
+  right: 20px;
+  bottom: 90px;
+  width: 380px;
+  max-height: calc(100vh - 140px);
+  background: #0d0d1a;
+  border: 2px solid rgba(0, 180, 255, 0.3);
+  border-radius: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow:
+    0 0 40px rgba(0, 180, 255, 0.12),
+    0 8px 32px rgba(0, 0, 0, 0.8);
+  animation: dqai-slide-up 0.2s ease-out;
+}
+
+@keyframes dqai-slide-up {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Scan-line overlay */
+.dqai-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 180, 255, 0.02) 2px,
+      rgba(0, 180, 255, 0.02) 4px
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.dqai-panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Header ── */
+.dqai-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  background: linear-gradient(135deg, #00b4ff, #0077bb);
+  border-bottom: 2px solid rgba(0, 180, 255, 0.5);
+}
+
+.dqai-header-icon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 1.125rem;
+  color: #fff;
+}
+
+.dqai-header-text h3 {
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 800;
+  color: #fff;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 1.5px;
+}
+
+.dqai-header-sub {
+  font-size: 0.6875rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.5px;
+}
+
+/* ── Body ── */
+.dqai-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* ── Context Info ── */
+.dqai-context {
+  background: rgba(0, 180, 255, 0.05);
+  border: 1px solid rgba(0, 180, 255, 0.15);
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.dqai-context-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.dqai-context-label {
+  font-size: 0.625rem;
+  font-weight: 800;
+  color: #00b4ff;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 1px;
+  min-width: 48px;
+}
+
+.dqai-context-value {
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-family: 'Courier New', monospace;
+}
+
+/* ── Custom Prompt ── */
+.dqai-prompt-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.dqai-label {
+  font-size: 0.625rem;
+  font-weight: 800;
+  color: rgba(0, 180, 255, 0.7);
+  font-family: 'Courier New', monospace;
+  letter-spacing: 1px;
+}
+
+.dqai-prompt-input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(0, 180, 255, 0.2);
+  border-radius: 0;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.8125rem;
+  font-family: inherit;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.dqai-prompt-input:focus {
+  border-color: #00b4ff;
+}
+
+.dqai-prompt-input::placeholder {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+/* ── Generate Button ── */
+.dqai-generate-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(135deg, #00b4ff, #0099dd);
+  color: #fff;
+  border: none;
+  border-radius: 0;
+  font-size: 0.8125rem;
+  font-weight: 800;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.dqai-generate-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #33c4ff, #00b4ff);
+  box-shadow: 0 0 20px rgba(0, 180, 255, 0.4);
+}
+
+.dqai-generate-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.dqai-spin {
+  animation: dqai-spinner 1s linear infinite;
+}
+
+@keyframes dqai-spinner {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ── Error ── */
+.dqai-error {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #f87171;
+  font-size: 0.8125rem;
+}
+
+/* ── Results ── */
+.dqai-results {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.dqai-results-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0.375rem;
+  border-bottom: 1px solid rgba(0, 180, 255, 0.2);
+}
+
+.dqai-results-title {
+  font-size: 0.6875rem;
+  font-weight: 800;
+  color: #00b4ff;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.dqai-select-all {
+  background: transparent;
+  border: 1px solid rgba(0, 180, 255, 0.3);
+  color: rgba(0, 180, 255, 0.8);
+  font-size: 0.625rem;
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  transition: all 0.1s;
+}
+
+.dqai-select-all:hover {
+  background: rgba(0, 180, 255, 0.1);
+  border-color: #00b4ff;
+}
+
+/* ── Question List ── */
+.dqai-questions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.dqai-question {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+  transition: all 0.1s;
+}
+
+.dqai-question:hover {
+  background: rgba(0, 180, 255, 0.05);
+  border-color: rgba(0, 180, 255, 0.2);
+}
+
+.dqai-question--selected {
+  background: rgba(0, 180, 255, 0.08);
+  border-color: rgba(0, 180, 255, 0.3);
+}
+
+.dqai-question-check {
+  flex-shrink: 0;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.2);
+  line-height: 1;
+  margin-top: 1px;
+}
+
+.dqai-question--selected .dqai-question-check {
+  color: #00b4ff;
+}
+
+.dqai-question-num {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 180, 255, 0.1);
+  color: #00b4ff;
+  font-size: 0.625rem;
+  font-weight: 800;
+  font-family: 'Courier New', monospace;
+  margin-top: 1px;
+}
+
+.dqai-question--selected .dqai-question-num {
+  background: #00b4ff;
+  color: #fff;
+}
+
+.dqai-question-text {
+  flex: 1;
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.4;
+}
+
+/* ── Insert Button ── */
+.dqai-insert-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.625rem 1rem;
+  background: transparent;
+  color: #00b4ff;
+  border: 2px solid #00b4ff;
+  border-radius: 0;
+  font-size: 0.75rem;
+  font-weight: 800;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.15s;
+  margin-top: 0.25rem;
+}
+
+.dqai-insert-btn:hover:not(:disabled) {
+  background: #00b4ff;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(0, 180, 255, 0.3);
+}
+
+.dqai-insert-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* ── Scrollbar ── */
+.dqai-body::-webkit-scrollbar,
+.dqai-questions-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.dqai-body::-webkit-scrollbar-track,
+.dqai-questions-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dqai-body::-webkit-scrollbar-thumb,
+.dqai-questions-list::-webkit-scrollbar-thumb {
+  background: rgba(0, 180, 255, 0.3);
+}

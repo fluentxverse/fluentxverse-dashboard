@@ -1,0 +1,8 @@
+node_modules/
+dist/
+Dockerfile
+*.md
+.env*
+.git/
+.gitignore
+wrangler.jsonc

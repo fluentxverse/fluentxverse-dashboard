@@ -1,0 +1,41 @@
+.tutor-compensation { min-width: 0; letter-spacing: 0; }
+.compensation-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+.tutor-compensation .compensation-header h2 { font-size: 20px; margin: 0; }
+.compensation-editor { display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, 440px); gap: 36px; padding-bottom: 28px; border-bottom: 1px solid var(--border-color, #e2e8f0); }
+.compensation-summary { margin: 0; display: grid; align-content: start; gap: 18px; }
+.compensation-summary dt { font-size: 13px; color: var(--text-secondary, #667085); margin-bottom: 5px; }
+.compensation-summary dd { margin: 0; overflow-wrap: anywhere; }
+.compensation-current dd { font-size: 28px; font-weight: 700; }
+.compensation-current .compensation-unset { font-size: 20px; color: #a15b04; }
+.compensation-editor fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+.compensation-editor label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+.compensation-editor input, .compensation-editor textarea { box-sizing: border-box; width: 100%; border: 1px solid var(--border-color, #d0d5dd); border-radius: 6px; padding: 11px 12px; font: inherit; color: var(--text-primary, #1d2939); background: var(--bg-primary, #fff); }
+.compensation-editor textarea { resize: vertical; margin-bottom: 16px; }
+.compensation-editor input:focus-visible, .compensation-editor textarea:focus-visible { outline: 2px solid #2264cc; outline-offset: 2px; }
+.compensation-amount { display: flex; margin-bottom: 20px; align-items: stretch; }
+.compensation-amount span { display: flex; align-items: center; padding: 0 12px; border: 1px solid var(--border-color, #d0d5dd); border-right: 0; border-radius: 6px 0 0 6px; font-size: 13px; font-weight: 600; }
+.compensation-amount input { border-radius: 0 6px 6px 0; min-width: 0; }
+.compensation-save { display: inline-flex; gap: 8px; align-items: center; min-height: 40px; }
+.lesson-operations .compensation-save { background: #2264cc; color: #fff; border-color: #2264cc; }
+.compensation-success { color: #087443; padding: 12px 0; }
+.compensation-history { padding-top: 24px; min-width: 0; }
+.compensation-history h3 { font-size: 17px; margin: 0 0 16px; }
+.compensation-history .compensation-reason { white-space: normal; overflow-wrap: anywhere; min-width: 170px; max-width: 360px; }
+.compensation-history button { margin-top: 16px; display: inline-flex; align-items: center; gap: 8px; }
+.compensation-confirmation { box-sizing: border-box; width: min(480px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); overflow-y: auto; }
+.compensation-confirmation h2 { font-size: 20px; }
+.compensation-confirmation dl { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.compensation-confirmation dt { font-size: 13px; }
+.compensation-confirmation dd { font-weight: 700; font-size: 20px; margin: 6px 0 0; overflow-wrap: anywhere; }
+.compensation-confirmation-reason { overflow-wrap: anywhere; }
+.compensation-confirmation footer { display: flex; flex-wrap: wrap; gap: 10px; }
+.compensation-confirmation footer button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+.tutors-table .tutor-base-rate { white-space: nowrap; }
+.tutors-page .tutors-table-card { overflow-x: auto; scrollbar-width: thin; }
+.tutor-rate-link { display: inline-flex; gap: 8px; align-items: center; color: inherit; text-decoration: none; border:0; padding:0; background:transparent; font:inherit; cursor:pointer; }
+.tutor-rate-link:hover { text-decoration: underline; }
+@media (max-width: 720px) {
+  .compensation-editor { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .compensation-summary { grid-template-columns: 1fr 1fr; gap: 16px; }
+  .compensation-current { grid-column: 1 / -1; }
+}

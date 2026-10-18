@@ -1,0 +1,5232 @@
+/**
+ * ConversationalSkillsPreview.css
+ * Standalone full-page lesson preview styles
+ * Design inspired by rarejob.com.ph lesson materials
+ */
+
+/* ============================================================================
+   RESET & FULLPAGE LAYOUT
+   ============================================================================ */
+
+.csp-fullpage {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: #f5f5f5;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  user-select: text;
+  cursor: default;
+}
+
+/* ============================================================================
+   LOADING & ERROR STATES
+   ============================================================================ */
+
+.csp-fullpage.csp-loading,
+.csp-fullpage.csp-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #1a1a2e;
+  color: #fff;
+}
+
+.csp-loader {
+  text-align: center;
+}
+
+.csp-loader i {
+  font-size: 3rem;
+  animation: csp-spin 1s linear infinite;
+  color: #4ade80;
+}
+
+.csp-loader p {
+  margin-top: 1rem;
+  font-size: 1.125rem;
+  opacity: 0.8;
+}
+
+@keyframes csp-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.csp-error i {
+  font-size: 4rem;
+  color: #ef4444;
+  margin-bottom: 1rem;
+}
+
+.csp-error h2 {
+  margin: 0 0 1.5rem;
+  font-size: 1.5rem;
+}
+
+.csp-error button {
+  padding: 0.75rem 2rem;
+  background: #4ade80;
+  color: #1a1a2e;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.csp-error button:hover {
+  transform: scale(1.05);
+}
+
+/* ============================================================================
+   TOP NAVIGATION BAR
+   ============================================================================ */
+
+.csp-topbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
+  padding: 0.375rem 0;
+  display: flex;
+  align-items: center;
+}
+
+.csp-topbar-content {
+  padding-left: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.csp-course-info {
+  color: #fff;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  text-align: left;
+  line-height: 1;
+}
+
+/* ============================================================================
+   HERO HEADER SECTION
+   ============================================================================ */
+
+.csp-hero {
+  position: relative;
+  background-color: #134e4a;
+  background-size: cover;
+  background-position: center;
+  padding: 2rem 1.5rem 1rem;
+  padding-top: 2.5rem; /* Account for top bar */
+}
+
+.csp-hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.csp-hero-content {
+  position: relative;
+  z-index: 2;
+  color: #fff;
+  text-align: center;
+}
+
+.csp-lesson-label {
+  font-size: 0.875rem;
+  font-weight: 400;
+  opacity: 0.9;
+  margin: 0 0 0.125rem;
+  line-height: 1.2;
+}
+
+.csp-lesson-name {
+  font-size: 1.125rem;
+  font-weight: 700;
+  font-style: italic;
+  margin: 0 0 0.75rem;
+  line-height: 1.2;
+}
+
+/* Goal Section */
+.csp-goal-wrapper {
+  display: inline-block;
+  text-align: center;
+}
+
+.csp-goal-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.csp-goal-badge {
+  display: inline-block;
+  padding: 0.25rem 0.65rem;
+  background: rgba(255, 255, 255, 0.95);
+  color: #134e4a;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  line-height: 1;
+  border-radius: 3px;
+}
+
+.csp-goal-en {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1;
+}
+
+.csp-goal-jp {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  opacity: 0.85;
+  margin: 0.25rem 0 0 0;
+  line-height: 1.3;
+}
+
+/* ============================================================================
+   MAIN CONTENT AREA
+   ============================================================================ */
+
+.csp-main {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem 1rem 4rem;
+}
+
+.csp-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.csp-section {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.csp-section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.csp-section-header i {
+  font-size: 1.5rem;
+  color: #134e4a;
+}
+
+.csp-section-header h2 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+}
+
+.csp-section-body {
+  padding: 2rem 1.5rem;
+  text-align: center;
+}
+
+.csp-placeholder-text {
+  font-size: 1rem;
+  color: #64748b;
+  margin: 0 0 0.5rem;
+}
+
+.csp-coming-soon {
+  font-size: 0.875rem;
+  color: #94a3b8;
+  font-style: italic;
+}
+
+/* ============================================================================
+   CLOSE BUTTON
+   ============================================================================ */
+
+.csp-close-btn {
+  position: fixed;
+  top: 0.75rem;
+  right: 1rem;
+  z-index: 200;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 1.25rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.csp-close-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.1);
+}
+
+/* Theme toggle */
+.csp-theme-btn {
+  position: fixed;
+  top: 0.75rem;
+  right: 4rem;
+  z-index: 200;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0 0.85rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.csp-theme-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.csp-theme-btn i {
+  font-size: 1rem;
+}
+
+/* ============================================================================
+   CONVERSATIONAL MATERIAL DARK THEME
+   ============================================================================ */
+
+.csp-fullpage.csp-dark {
+  --primary: #4a9eff;
+  --primary-dark: #2f7fe5;
+  --primary-light: #60a5fa;
+  --text-primary: #f4f7fb;
+  --text-secondary: #b8c1cf;
+  --text-muted: #8f99a8;
+  --border-color: #3b3b3b;
+  --info-light: #26364a;
+  --surface: #222222;
+  --surface-raised: #292929;
+  --surface-soft: #303030;
+  --surface-muted: #1d1d1d;
+  background: #1b1b1b;
+  color: var(--text-primary);
+  scrollbar-color: #555 #242424;
+}
+
+.csp-dark::-webkit-scrollbar-track {
+  background: #242424;
+}
+
+.csp-dark::-webkit-scrollbar-thumb {
+  background: #555;
+  border: 3px solid #242424;
+}
+
+.csp-dark::-webkit-scrollbar-thumb:hover {
+  background: #6a6a6a;
+}
+
+.csp-dark .csp-topbar {
+  background: rgba(18, 18, 18, 0.72);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.csp-dark .csp-section,
+.csp-dark .csp-vocab-card,
+.csp-dark .csp-expr-item,
+.csp-dark .csp-lesson-issue,
+.csp-dark .csp-lesson-goal-box,
+.csp-dark .csp-goal-step,
+.csp-dark .csp-step-question,
+.csp-dark .csp-tutor-important,
+.csp-dark .csp-tutor-guide,
+.csp-dark .csp-part-tutor-guide,
+.csp-dark .csp-pronunciation-column,
+.csp-dark .csp-stepb-section,
+.csp-dark .csp-stepb-explanation,
+.csp-dark .csp-stepb-question,
+.csp-dark .csp-apply-section,
+.csp-dark .csp-apply-situation,
+.csp-dark .csp-dialogue-line,
+.csp-dark .csp-apply-step,
+.csp-dark .csp-apply-questions-box,
+.csp-dark .csp-exercise-section,
+.csp-dark .csp-expression-box,
+.csp-dark .csp-expression-item,
+.csp-dark .csp-exercise-example,
+.csp-dark .csp-exercise-item,
+.csp-dark .csp-exercise-speech-bubble,
+.csp-dark .csp-stepb-compare,
+.csp-dark .csp-stepb-speech,
+.csp-dark .csp-tutor-answer-key-box,
+.csp-dark .csp-mission-section,
+.csp-dark .csp-mission-situation-box,
+.csp-dark .csp-mission-instruction-box,
+.csp-dark .csp-mission-grammar-tip,
+.csp-dark .csp-mission-reading-passage,
+.csp-dark .csp-mission-topic-card,
+.csp-dark .csp-feedback-section {
+  background: var(--surface);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.24);
+}
+
+.csp-dark .csp-section-header,
+.csp-dark .csp-goal-step,
+.csp-dark .csp-apply-step,
+.csp-dark .csp-tutor-answer-key-header {
+  background: #242424;
+  border-color: var(--border-color);
+}
+
+.csp-dark .csp-lesson-issue {
+  background: #222222;
+  border: 1px solid var(--border-color);
+  box-shadow: none;
+}
+
+.csp-dark .csp-issue-header {
+  background: #2a2a2a;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.csp-dark .csp-issue-header > small,
+.csp-dark .csp-issue-badges small:not(.csp-warning) {
+  color: var(--text-secondary);
+  opacity: 1;
+}
+
+.csp-dark .csp-issue-badges .csp-warning,
+.csp-dark .csp-issue-header > small.csp-warning {
+  background: #ef4444;
+  color: #fff;
+}
+
+.csp-dark .csp-issue-content {
+  background: #222222;
+}
+
+.csp-dark .csp-issue-content h3 {
+  border-bottom-color: var(--border-color);
+}
+
+.csp-dark .csp-issue-content li {
+  background: var(--surface-raised);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 4px;
+  color: var(--text-primary);
+  padding: 0.35rem 0.5rem 0.35rem 1.25rem;
+}
+
+.csp-dark .csp-issue-content li::before {
+  left: 0.5rem;
+  background: var(--primary);
+}
+
+.csp-dark .csp-lesson-goal-box {
+  background: #222222;
+  border-color: var(--border-color);
+  box-shadow: none;
+}
+
+.csp-dark .csp-goal-header {
+  background: #2a2a2a;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.csp-dark .csp-goal-steps {
+  background: #222222;
+}
+
+.csp-dark .csp-goal-step {
+  background: var(--surface-raised);
+  border-color: var(--border-color);
+}
+
+.csp-dark .csp-step-question {
+  background: var(--surface-soft);
+  border-color: rgba(74, 158, 255, 0.45);
+  color: var(--text-primary);
+}
+
+.csp-dark :is(
+  .csp-section-header h2,
+  .csp-section-title,
+  .csp-intro-text,
+  .csp-issue-content h3,
+  .csp-step-instruction,
+  .csp-step-name,
+  .csp-part-english,
+  .csp-vocab-english,
+  .csp-expr-definition,
+  .csp-discuss-instruction,
+  .csp-pronunciation-instruction,
+  .csp-stepb-explanation,
+  .csp-stepb-question p,
+  .csp-exercise-instruction,
+  .csp-exercise-speech-bubble p,
+  .csp-apply-activity-title,
+  .csp-apply-situation,
+  .csp-dialogue-text,
+  .csp-mission-challenge-name,
+  .csp-mission-situation,
+  .csp-mission-instruction,
+  .csp-mission-topic-header,
+  .csp-placeholder-text
+) {
+  color: var(--text-primary);
+}
+
+.csp-dark :is(
+  .csp-coming-soon,
+  .csp-tutor-note-details,
+  .csp-issue-content li,
+  .csp-part-translation,
+  .csp-vocab-translation,
+  .csp-discuss-instruction-trans,
+  .csp-discuss-img-translation,
+  .csp-pronunciation-instruction-trans,
+  .csp-pronunciation-trans,
+  .csp-stepb-explanation-trans,
+  .csp-exercise-instruction-translation,
+  .csp-apply-tip,
+  .csp-mission-translation,
+  .csp-mission-topic-questions,
+  .csp-mission-topic-questions li
+) {
+  color: var(--text-secondary);
+}
+
+.csp-dark :is(
+  .csp-image-placeholder,
+  .csp-expr-image-placeholder,
+  .csp-discuss-image-placeholder,
+  .csp-pronunciation-img-placeholder,
+  .csp-exercise-item-image .csp-image-placeholder,
+  .csp-exercise-example-image .csp-image-placeholder
+) {
+  background: var(--surface-soft);
+  border-color: var(--border-color);
+  color: var(--text-secondary);
+}
+
+.csp-dark .csp-exercise-speech-bubble {
+  border-color: var(--border-color);
+}
+
+.csp-dark .csp-exercise-conv-left .csp-exercise-speech-bubble::before,
+.csp-dark .csp-exercise-conv-left .csp-exercise-speech-bubble::after,
+.csp-dark .csp-exercise-conv-right .csp-exercise-speech-bubble::before,
+.csp-dark .csp-exercise-conv-right .csp-exercise-speech-bubble::after {
+  border-color: transparent;
+}
+
+.csp-dark .csp-theme-btn,
+.csp-dark .csp-close-btn {
+  background: rgba(35, 35, 35, 0.82);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: var(--text-primary);
+}
+
+.csp-dark .csp-apply-section {
+  background: transparent !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.csp-dark .csp-apply-layout,
+.csp-dark .csp-apply-left,
+.csp-dark .csp-dialogue-lines {
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.csp-dark .csp-apply-situation,
+.csp-dark .csp-dialogue-line {
+  background: transparent !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.csp-dark .csp-apply-image {
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.csp-dark .csp-pronunciation-part,
+.csp-dark .csp-pronunciation-instruction,
+.csp-dark .csp-pronunciation-instruction-trans,
+.csp-dark .csp-pronunciation-table,
+.csp-dark .csp-pronunciation-column,
+.csp-dark .csp-pronunciation-words,
+.csp-dark .csp-pronunciation-word-item {
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.csp-dark .csp-pronunciation-table,
+.csp-dark .csp-pronunciation-column:first-child,
+.csp-dark .csp-pronunciation-words,
+.csp-dark .csp-pronunciation-word-item {
+  border-color: var(--border-color) !important;
+}
+
+/* ============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================ */
+
+@media (max-width: 768px) {
+  .csp-hero {
+    min-height: 180px;
+    padding: 1.75rem 1rem;
+  }
+
+  .csp-lesson-label {
+    font-size: 0.875rem;
+  }
+
+  .csp-lesson-name {
+    font-size: 1.375rem;
+    margin-bottom: 1rem;
+  }
+
+  .csp-goal-box {
+    gap: 0.75rem;
+  }
+
+  .csp-goal-en {
+    font-size: 1.25rem;
+  }
+
+  .csp-goal-jp {
+    font-size: 0.8125rem;
+  }
+
+  .csp-main {
+    padding: 1.5rem 1rem 3rem;
+  }
+
+  .csp-section-header {
+    padding: 0.875rem 1rem;
+  }
+
+  .csp-section-body {
+    padding: 1.5rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .csp-topbar {
+    padding: 0.625rem 1rem;
+  }
+
+  .csp-course-info {
+    font-size: 0.6875rem;
+  }
+
+  .csp-hero {
+    min-height: 160px;
+    padding: 1.5rem 1rem;
+  }
+
+  .csp-lesson-label {
+    font-size: 0.8125rem;
+  }
+
+  .csp-lesson-name {
+    font-size: 1.125rem;
+    margin-bottom: 0.875rem;
+  }
+
+  .csp-goal-en {
+    font-size: 1.125rem;
+  }
+
+  .csp-goal-jp {
+    font-size: 0.75rem;
+  }
+
+  .csp-goal-jp {
+    font-size: 0.8125rem;
+  }
+}
+
+/* ============================================================================
+   INTRODUCTION SECTION - FluentXverse Style
+   ============================================================================ */
+
+.csp-intro-section {
+  margin-bottom: 2rem;
+}
+
+.csp-intro-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 3rem;
+}
+
+/* Left Column */
+.csp-intro-left {
+  padding: 1.5rem 0;
+}
+
+.csp-section-number {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  margin-bottom: 1.5rem;
+}
+
+.csp-number-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: var(--primary, #0245ae);
+  color: #fff;
+  border-radius: var(--radius-sm, 6px);
+  font-size: 0.9375rem;
+  font-weight: 700;
+}
+
+.csp-section-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary, #1e293b);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.csp-section-line {
+  flex: 1;
+  height: 2px;
+  background: var(--primary, #0245ae);
+  margin-left: 1rem;
+}
+
+.csp-intro-text {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text-primary, #1e293b);
+  margin: 0 0 1.5rem;
+}
+
+.csp-intro-image {
+  border-radius: var(--radius-lg, 14px);
+  overflow: hidden;
+}
+
+.csp-intro-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Right Column - Tutor Guide */
+.csp-intro-right {
+  position: relative;
+  padding: 1.5rem 0;
+}
+
+.csp-intro-right-sticky {
+  position: sticky;
+  top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Important Note Card */
+.csp-tutor-important {
+  background: var(--info-light, #dbeafe);
+  border-radius: var(--radius-md, 10px);
+  padding: 1.25rem;
+}
+
+.csp-tutor-important > p:first-child {
+  margin: 0 0 0.5rem;
+  font-size: 0.875rem;
+  color: var(--text-primary, #1e293b);
+}
+
+.csp-tutor-important strong {
+  color: var(--primary, #0245ae);
+}
+
+.csp-tutor-note-details {
+  font-size: 0.8125rem;
+  color: var(--text-secondary, #64748b);
+  margin: 0 0 1rem;
+  line-height: 1.6;
+}
+
+.csp-copy-btn {
+  width: 100%;
+  padding: 0.75rem 1.25rem;
+  background: var(--primary, #0245ae);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm, 6px);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition-fast, 0.15s ease);
+}
+
+.csp-copy-btn:hover {
+  background: var(--primary-dark, #01337d);
+}
+
+/* Lesson Issue Card */
+.csp-lesson-issue {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid var(--border-color, #e2e8f0);
+  overflow: hidden;
+}
+
+.csp-issue-header {
+  background: var(--primary, #0245ae);
+  color: #fff;
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.375rem;
+}
+
+.csp-issue-header > span {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+.csp-issue-header > small {
+  font-size: 0.6875rem;
+  opacity: 0.9;
+}
+
+.csp-issue-badges {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.csp-issue-badges .csp-warning {
+  background: var(--error, #ef4444);
+  color: #fff;
+  font-weight: 600;
+  padding: 0.25rem 0.625rem;
+  border-radius: 4px;
+  font-size: 0.6875rem;
+}
+
+.csp-issue-header > small.csp-warning {
+  background: var(--error, #ef4444);
+  color: #fff;
+  font-weight: 600;
+}
+
+.csp-issue-content {
+  padding: 1rem;
+}
+
+.csp-issue-content h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary, #1e293b);
+  margin: 0 0 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--primary, #0245ae);
+}
+
+.csp-issue-content ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.csp-issue-content li {
+  font-size: 0.8125rem;
+  color: var(--text-secondary, #64748b);
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+  padding-left: 1rem;
+  position: relative;
+}
+
+.csp-issue-content li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.5rem;
+  width: 6px;
+  height: 6px;
+  background: var(--primary, #0245ae);
+  border-radius: 50%;
+}
+
+.csp-issue-content li:last-child {
+  margin-bottom: 0;
+}
+
+/* Lesson Goal Card */
+.csp-lesson-goal-box {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--border-color, #e2e8f0);
+}
+
+.csp-goal-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: var(--primary, #0245ae);
+  color: white;
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-decoration: underline;
+}
+
+.csp-goal-steps {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.csp-goal-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 8px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.csp-goal-step:last-child {
+  margin-bottom: 0;
+}
+
+.csp-step-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  background: var(--primary, #0245ae);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.csp-step-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.csp-step-instruction {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-primary, #1e293b);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.csp-step-script {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  font-size: 0.875rem;
+  color: #16a34a;
+  font-style: normal;
+  padding-left: 0.5rem;
+}
+
+.csp-script-dot {
+  display: inline-block;
+  color: #16a34a;
+  font-size: 0.625rem;
+  flex-shrink: 0;
+}
+
+.csp-step-question {
+  margin-top: 0;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #16a34a;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary, #1e293b);
+}
+
+.csp-step-question span {
+  margin-right: 0.25rem;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .csp-intro-layout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .csp-intro-right {
+    order: -1;
+    padding: 0;
+  }
+  
+  .csp-intro-right-sticky {
+    position: relative;
+    top: 0;
+  }
+  
+  .csp-intro-left {
+    padding: 0 0 1rem;
+  }
+}
+/* ============================================================================
+   LEARN SECTION (Section 2 - Vocabulary Template)
+   ============================================================================ */
+
+.csp-learn-section {
+  margin-bottom: 2rem;
+}
+
+.csp-learn-step {
+  margin-top: 0.5rem;
+}
+
+.csp-step-name {
+  font-size: 1.375rem;
+  font-weight: 300;
+  color: #64748b;
+  margin: 0 0 1.5rem;
+  letter-spacing: 0.5px;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.csp-learn-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 3rem;
+}
+
+/* Left Column - Main Content */
+.csp-learn-left {
+  padding: 0 0 1.5rem;
+}
+
+.csp-part-label {
+  margin-bottom: 1.5rem;
+}
+
+.csp-part-english {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary, #1e293b);
+  margin: 0 0 0.25rem;
+}
+
+.csp-part-translation {
+  font-size: 0.875rem;
+  font-style: italic;
+  color: #64748b;
+  margin: 0;
+}
+
+/* Vocabulary Grid */
+.csp-vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.csp-vocab-card {
+  text-align: center;
+}
+
+.csp-vocab-image {
+  width: 100%;
+  aspect-ratio: 4/3;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid #e2e8f0;
+  margin-bottom: 0.75rem;
+}
+
+.csp-vocab-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.csp-checkpoint .csp-vocab-image { display: none; }
+.csp-checkpoint .csp-vocab-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem; }
+.csp-checkpoint .csp-vocab-card { text-align: left; padding: 0.75rem; border: 1px solid var(--border-color, #dbe2ea); border-radius: 6px; }
+
+.csp-vocab-english {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-primary, #1e293b);
+  margin: 0 0 0.25rem;
+}
+
+.csp-highlight {
+  color: #10b981;
+  font-weight: 700;
+}
+
+.csp-vocab-translation {
+  font-size: 0.875rem;
+  font-style: italic;
+  color: #64748b;
+  margin: 0;
+}
+
+/* ============================================================================
+   EXPRESSIONS TEMPLATE STYLES (Step A Expressions)
+   ============================================================================ */
+
+.csp-expr-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.csp-expr-item {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+}
+
+.csp-expr-image {
+  width: 200px;
+  aspect-ratio: 4/3;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid #e2e8f0;
+  flex-shrink: 0;
+  background: #f8fafc;
+}
+
+.csp-expr-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.csp-expr-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #cbd5e1;
+  font-size: 2rem;
+}
+
+/* Generic image placeholder with dimensions */
+.csp-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #f1f5f9;
+  border: 2px dashed #cbd5e1;
+  border-radius: 6px;
+}
+
+.csp-placeholder-dims {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #94a3b8;
+  letter-spacing: 0.05em;
+}
+
+.csp-expr-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.csp-expr-definition {
+  font-size: 1rem;
+  color: var(--text-primary, #1e293b);
+  margin: 0 0 0.375rem;
+  line-height: 1.5;
+}
+
+.csp-expr-definition strong {
+  color: var(--primary, #0245ae);
+  font-weight: 700;
+}
+
+.csp-expr-number {
+  font-weight: 700;
+  color: var(--text-primary, #1e293b);
+}
+
+.csp-expr-example {
+  font-size: 0.9375rem;
+  color: #64748b;
+  margin: 0.75rem 0 0 0;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.csp-expr-example strong {
+  color: var(--primary, #0245ae);
+  font-style: normal;
+}
+
+.csp-expr-extra {
+  font-size: 1rem;
+  color: var(--text-primary, #1e293b);
+  margin: 0.75rem 0 0 0;
+  line-height: 1.5;
+}
+
+.csp-expr-extra strong {
+  color: var(--primary, #0245ae);
+  font-weight: 700;
+}
+
+/* Part II - Discussion */
+.csp-discuss-part {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.csp-discuss-instruction {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary, #1e293b);
+  margin: 0 0 1rem;
+  line-height: 1.6;
+}
+
+/* Discussion Images Grid - Horizontal layout */
+.csp-discuss-images {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+/* Scale images based on count */
+.csp-discuss-images-1 .csp-discuss-image-item {
+  flex: 0 1 100%;
+  max-width: 400px;
+}
+
+.csp-discuss-images-2 .csp-discuss-image-item {
+  flex: 0 1 calc(50% - 0.625rem);
+  max-width: 280px;
+}
+
+.csp-discuss-images-3 .csp-discuss-image-item {
+  flex: 0 1 calc(33.333% - 0.833rem);
+  max-width: 200px;
+}
+
+.csp-discuss-image-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.csp-discuss-image {
+  width: 100%;
+  aspect-ratio: 4/3;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+.csp-discuss-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.csp-discuss-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #cbd5e1;
+  font-size: 2.5rem;
+}
+
+.csp-discuss-img-label {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-primary, #1e293b);
+  margin: 0;
+  text-align: center;
+}
+
+.csp-discuss-img-translation {
+  font-size: 0.875rem;
+  font-style: italic;
+  color: #64748b;
+  margin: 0;
+  text-align: center;
+}
+
+/* Right Column - Tutor Guide (matches Lesson Goal box style) */
+.csp-learn-right {
+  position: sticky;
+  top: 1rem;
+  align-self: start;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.csp-tutor-guide {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid var(--border-color, #e2e8f0);
+  overflow: hidden;
+}
+
+.csp-learn-right .csp-tutor-guide:first-child {
+  position: sticky;
+  top: 1rem;
+}
+
+.csp-part-tutor-guide {
+  margin-top: 0;
+}
+
+.csp-guide-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--primary, #0245ae);
+  color: white;
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-decoration: underline;
+}
+
+.csp-guide-subheader {
+  display: none; /* Hide subheader to match Lesson Goal style */
+}
+
+.csp-guide-steps {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.csp-guide-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 8px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.csp-guide-step:last-child {
+  margin-bottom: 0;
+}
+
+.csp-guide-number {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--primary, #0245ae);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.csp-guide-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.csp-guide-instruction {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-primary, #1e293b);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.csp-guide-script {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #16a34a;
+  font-style: normal;
+  padding-left: 0.375rem;
+}
+
+.csp-guide-tip {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  padding-left: 0.375rem;
+  font-size: 0.8125rem;
+  color: #dc2626;
+  font-weight: 500;
+}
+
+/* Script and tip bullets */
+.csp-apply-script {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin: 0;
+  font-size: 0.8125rem;
+  color: #16a34a;
+  padding-left: 0.375rem;
+}
+
+.csp-script-bullet {
+  display: none;
+}
+
+.csp-apply-tip {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin: 0;
+  padding-left: 0.375rem;
+  font-size: 0.8125rem;
+  color: #dc2626;
+}
+
+.csp-tip-icon {
+  color: #dc2626;
+  font-size: 0.625rem;
+  flex-shrink: 0;
+  margin-top: 0.35rem;
+}
+
+/* Responsive for Learn Section */
+@media (max-width: 1024px) {
+  .csp-learn-layout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .csp-learn-right {
+    order: -1;
+  }
+  
+  .csp-vocab-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .csp-vocab-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Expressions responsive */
+  .csp-expr-item {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .csp-expr-image {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .csp-discuss-content {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .csp-discuss-image {
+    width: 100px;
+    height: 75px;
+  }
+}
+
+/* ============================================================================
+   PRONUNCIATION PART
+   ============================================================================ */
+
+.csp-pronunciation-part {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.csp-pronunciation-instruction {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary, #1e293b);
+  margin: 0 0 0.25rem;
+}
+
+.csp-pronunciation-instruction-trans {
+  font-size: 0.875rem;
+  color: var(--text-secondary, #64748b);
+  margin: 0 0 1rem;
+}
+
+.csp-pronunciation-table {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.csp-pronunciation-column {
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.csp-pronunciation-column:first-child {
+  border-right: 1px solid #e2e8f0;
+}
+
+.csp-pronunciation-images {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.csp-pronunciation-images img {
+  width: 120px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.csp-pronunciation-img-placeholder {
+  width: 120px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1f5f9;
+  border: 1px dashed #cbd5e1;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.csp-pronunciation-sound {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary, #1e293b);
+  margin: 0.5rem 0;
+}
+
+.csp-pronunciation-words {
+  width: 100%;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 0.75rem;
+}
+
+.csp-pronunciation-word-item {
+  text-align: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.csp-pronunciation-word-item:last-child {
+  border-bottom: none;
+}
+
+.csp-pronunciation-word {
+  font-size: 1rem;
+  color: var(--text-primary, #1e293b);
+  margin: 0 0 0.125rem;
+}
+
+.csp-pronunciation-word.highlighted {
+  color: var(--success, #16a34a);
+  font-weight: 700;
+}
+
+.csp-pronunciation-trans {
+  font-size: 0.875rem;
+  color: var(--text-secondary, #64748b);
+  margin: 0;
+}
+
+.csp-discuss-instruction-trans {
+  font-size: 0.875rem;
+  color: var(--text-secondary, #64748b);
+  margin: 0 0 1rem;
+}
+
+/* ============================================================================
+   STEP B SECTION STYLES (Speak Your Mind / Grammar Tip / Pronunciation)
+   ============================================================================ */
+
+.csp-stepb-section {
+  background: transparent;
+  border-radius: 0;
+  padding: 2rem 0;
+  box-shadow: none;
+}
+
+.csp-stepb-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 2rem;
+  margin-top: 1.5rem;
+  align-items: start;
+}
+
+.csp-stepb-left {
+  min-width: 0;
+}
+
+.csp-stepb-right {
+  position: sticky;
+  top: 1rem;
+  align-self: start;
+}
+
+/* Speak Your Mind Styles */
+.csp-stepb-explanation {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary, #1e293b);
+  margin: 0 0 0.5rem;
+  line-height: 1.5;
+}
+
+.csp-stepb-explanation-trans {
+  font-size: 0.875rem;
+  color: var(--text-secondary, #64748b);
+  margin: 0 0 1.5rem;
+  line-height: 1.5;
+}
+
+.csp-conversation {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.csp-conversation-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.csp-speaker-left {
+  flex-direction: row;
+}
+
+.csp-speaker-right {
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.csp-speaker-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 4px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.csp-speaker-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.csp-speech-bubble {
+  position: relative;
+  max-width: 350px;
+  background: #f8fafc;
+  border: 1px solid var(--text-primary, #1e293b);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+}
+
+.csp-speech-bubble p {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--text-primary, #1e293b);
+}
+
+.csp-speech-bubble strong {
+  font-weight: 700;
+}
+
+.csp-speech-left {
+  border-radius: 0 8px 8px 8px;
+}
+
+.csp-speech-left::before {
+  content: '';
+  position: absolute;
+  left: -10px;
+  top: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 10px 10px 0;
+  border-color: transparent var(--text-primary, #1e293b) transparent transparent;
+}
+
+.csp-speech-left::after {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: 1px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 9px 9px 0;
+  border-color: transparent #f8fafc transparent transparent;
+}
+
+.csp-speech-right {
+  border-radius: 8px 0 8px 8px;
+}
+
+.csp-speech-right::before {
+  content: '';
+  position: absolute;
+  right: -10px;
+  top: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 10px 10px 0 0;
+  border-color: var(--text-primary, #1e293b) transparent transparent transparent;
+}
+
+.csp-speech-right::after {
+  content: '';
+  position: absolute;
+  right: -8px;
+  top: 1px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 9px 9px 0 0;
+  border-color: #f8fafc transparent transparent transparent;
+}
+
+.csp-stepb-question {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  background: transparent;
+  border: 1px solid var(--success, #16a34a);
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+}
+
+.csp-stepb-question .csp-question-bullet {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary, #1e293b);
+  line-height: 1.5;
+}
+
+.csp-stepb-question p {
+  margin: 0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-primary, #1e293b);
+  line-height: 1.5;
+}
+
+/* Grammar Tip Styles */
+.csp-grammar-blocks {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.csp-grammar-block {
+  position: relative;
+}
+
+.csp-grammar-rule {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary, #1e293b);
+  line-height: 1.5;
+  margin: 0 0 0.5rem;
+}
+
+.csp-grammar-rule em {
+  font-style: italic;
+}
+
+.csp-grammar-rule strong {
+  font-weight: 700;
+}
+
+.csp-grammar-translation {
+  font-size: 0.875rem;
+  font-style: italic;
+  color: #64748b;
+  margin: 0 0 1rem;
+}
+
+.csp-grammar-examples {
+  background: #f8fafc;
+  border: 1px solid var(--border-color, #e2e8f0);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.csp-examples-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-secondary, #64748b);
+  margin: 0 0 0.75rem;
+}
+
+.csp-examples-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.csp-example-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.csp-example-item::before {
+  content: '•';
+  position: absolute;
+  left: 1rem;
+  color: var(--text-primary, #1e293b);
+}
+
+.csp-example-sentence {
+  font-size: 1rem;
+  color: var(--text-primary, #1e293b);
+  line-height: 1.5;
+  margin: 0;
+  padding-left: 1rem;
+}
+
+.csp-example-sentence strong {
+  font-weight: 700;
+}
+
+.csp-example-translation {
+  font-size: 0.875rem;
+  font-style: italic;
+  color: #64748b;
+  margin: 0;
+  padding-left: 1rem;
+}
+
+/* Step B Pronunciation Styles */
+.csp-pronunciation-tip {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary, #1e293b);
+  line-height: 1.6;
+  margin: 0 0 1.5rem;
+}
+
+.csp-pronunciation-tip strong {
+  font-weight: 700;
+}
+
+.csp-pronunciation-phrases-table {
+  border: 1px solid var(--border-color, #e2e8f0);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.csp-phrases-header {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  background: var(--primary, #0245ae);
+  color: white;
+}
+
+.csp-phrases-header .csp-phrases-col-phrase,
+.csp-phrases-header .csp-phrases-col-example {
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.csp-phrases-row {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  border-bottom: 1px solid var(--border-color, #e2e8f0);
+}
+
+.csp-phrases-row:last-child {
+  border-bottom: none;
+}
+
+.csp-phrases-col-phrase {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  border-right: 1px solid var(--border-color, #e2e8f0);
+}
+
+.csp-phrases-col-example {
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.csp-phrases-col-example p {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--text-primary, #1e293b);
+  line-height: 1.5;
+}
+
+.csp-phrases-col-example strong {
+  font-weight: 700;
+}
+
+.csp-phrase-text {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-primary, #1e293b);
+  margin: 0;
+}
+
+.csp-phrase-guide {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--primary, #0245ae);
+  margin: 0;
+}
+
+/* ============================================================================
+   STEP B EXERCISE STYLES
+   ============================================================================ */
+
+.csp-exercise-instruction {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary, #1e293b);
+  margin: 0 0 0.5rem;
+}
+
+.csp-exercise-instruction-translation {
+  font-size: 0.875rem;
+  font-style: italic;
+  color: #64748b;
+  margin: 0 0 1.5rem;
+}
+
+.csp-exercise-conversations {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.csp-exercise-conv-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.csp-exercise-conv-left {
+  flex-direction: row;
+}
+
+.csp-exercise-conv-right {
+  flex-direction: row-reverse;
+}
+
+.csp-exercise-speaker-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #f1f5f9;
+}
+
+.csp-exercise-speaker-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.csp-exercise-speech-bubble {
+  flex: 1;
+  position: relative;
+  background: #f8fafc;
+  border: 1px solid var(--border-color, #e2e8f0);
+  border-radius: 16px;
+  padding: 1rem 1.25rem;
+  min-height: 80px;
+}
+
+/* Speech bubble pointer - left side */
+.csp-exercise-conv-left .csp-exercise-speech-bubble {
+  border-bottom-left-radius: 4px;
+}
+
+.csp-exercise-conv-left .csp-exercise-speech-bubble::before {
+  content: '';
+  position: absolute;
+  left: -10px;
+  top: 20px;
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+  border-right-color: var(--border-color, #e2e8f0);
+  border-left: 0;
+}
+
+.csp-exercise-conv-left .csp-exercise-speech-bubble::after {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: 21px;
+  width: 0;
+  height: 0;
+  border: 9px solid transparent;
+  border-right-color: #f8fafc;
+  border-left: 0;
+}
+
+/* Speech bubble pointer - right side */
+.csp-exercise-conv-right .csp-exercise-speech-bubble {
+  border-bottom-right-radius: 4px;
+}
+
+.csp-exercise-conv-right .csp-exercise-speech-bubble::before {
+  content: '';
+  position: absolute;
+  right: -10px;
+  top: 20px;
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+  border-left-color: var(--border-color, #e2e8f0);
+  border-right: 0;
+}
+
+.csp-exercise-conv-right .csp-exercise-speech-bubble::after {
+  content: '';
+  position: absolute;
+  right: -8px;
+  top: 21px;
+  width: 0;
+  height: 0;
+  border: 9px solid transparent;
+  border-left-color: #f8fafc;
+  border-right: 0;
+}
+
+.csp-exercise-speech-bubble p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-primary, #1e293b);
+}
+
+/* ============================================================================
+   APPLY SECTION STYLES (Section 3 - Speaking/Understanding)
+   ============================================================================ */
+
+.csp-apply-section {
+  background: transparent;
+  border-radius: 0;
+  padding: 2rem 0;
+  box-shadow: none;
+}
+
+.csp-apply-activity-title {
+  font-size: 1.375rem;
+  font-weight: 300;
+  color: #64748b;
+  margin: 0 0 1.5rem;
+  letter-spacing: 0.5px;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.csp-apply-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 2rem;
+  align-items: start;
+}
+
+.csp-apply-left {
+  min-width: 0;
+}
+
+.csp-apply-right {
+  position: sticky;
+  top: 1rem;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.csp-apply-situation {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary, #1e293b);
+  margin: 0 0 1rem;
+}
+
+.csp-apply-image {
+  width: 100%;
+  max-width: 800px;
+  aspect-ratio: 5 / 3;
+  margin-bottom: 1.5rem;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.csp-apply-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Dialogue Lines */
+.csp-dialogue-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.csp-dialogue-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  line-height: 1.5;
+}
+
+.csp-dialogue-speaker {
+  font-weight: 700;
+  color: var(--text-primary, #1e293b);
+  flex-shrink: 0;
+}
+
+.csp-dialogue-text {
+  font-size: 0.9375rem;
+  color: var(--text-primary, #1e293b);
+}
+
+.csp-dialogue-text u {
+  text-decoration: underline;
+}
+
+.csp-dialogue-action .csp-dialogue-speaker {
+  font-weight: 700;
+}
+
+.csp-action-text {
+  font-style: italic;
+  color: var(--text-secondary, #64748b);
+}
+
+/* Apply Guide - no extra header styling, uses shared .csp-guide-header */
+
+/* Apply Guide Steps */
+.csp-apply-step {
+  position: relative;
+}
+
+.csp-apply-script {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.375rem;
+  margin: 0.125rem 0 0;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  font-style: italic;
+  color: #16a34a;
+}
+
+.csp-apply-script .csp-script-bullet {
+  font-size: 0.5rem;
+  padding-top: 0.25rem;
+  flex-shrink: 0;
+}
+
+.csp-apply-prompt {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.375rem;
+  margin: 0.125rem 0 0;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  font-style: normal;
+  color: #1e293b;
+}
+
+.csp-apply-prompt .csp-prompt-bullet {
+  font-size: 0.625rem;
+  padding-top: 0.125rem;
+  flex-shrink: 0;
+}
+
+.csp-apply-tip {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.375rem;
+  margin: 0.125rem 0 0;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  font-style: italic;
+  color: #dc2626;
+}
+
+.csp-apply-tip .csp-tip-icon {
+  font-size: 0.625rem;
+  padding-top: 0.125rem;
+  flex-shrink: 0;
+}
+
+/* Questions Box */
+.csp-apply-questions-box {
+  margin-top: 0.375rem;
+  padding: 0.5rem;
+  border: 1px solid #16a34a;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.csp-apply-question-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.csp-apply-question-item .csp-question-bullet {
+  color: var(--text-primary, #1e293b);
+  font-size: 0.875rem;
+  flex-shrink: 0;
+}
+
+.csp-apply-question-item .csp-question-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.csp-question-text {
+  font-size: 0.8125rem;
+  color: var(--text-primary, #1e293b);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.csp-answer-text {
+  font-size: 0.75rem;
+  font-style: italic;
+  color: #16a34a;
+  margin: 0.125rem 0 0;
+}
+
+/* Listening Script Box (green box for listening activity) */
+.csp-listening-script-box {
+  margin-top: 0.75rem;
+  padding: 1rem;
+  background: rgba(22, 163, 74, 0.08);
+  border-radius: 4px;
+  font-size: 0.8125rem;
+  font-style: italic;
+  color: #16a34a;
+  line-height: 1.7;
+}
+
+.csp-listening-script-box u {
+  text-decoration: underline;
+}
+
+.csp-listening-script-box em {
+  font-style: italic;
+}
+
+/* Reading Text Box (for READING activity) */
+.csp-reading-text-box {
+  background: #f8fafc;
+  padding: 1.5rem 6rem 1.5rem 1.5rem;
+  border-radius: 8px;
+  font-size: 0.9375rem;
+  color: var(--text-primary, #1e293b);
+  line-height: 1.8;
+}
+
+.csp-reading-image {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px dashed var(--border-color, #e2e8f0);
+}
+
+.csp-reading-image img {
+  max-width: 200px;
+  max-height: 200px;
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.csp-reading-image-label {
+  text-align: center;
+  font-size: 0.9375rem;
+  color: var(--text-primary, #1e293b);
+  line-height: 1.4;
+}
+
+.csp-reading-image-label b,
+.csp-reading-image-label strong {
+  font-weight: 700;
+}
+
+.csp-reading-image-label i,
+.csp-reading-image-label em {
+  font-style: italic;
+}
+
+.csp-reading-text-content {
+  white-space: pre-wrap;
+}
+
+.csp-reading-text-box u,
+.csp-reading-text-content u {
+  text-decoration: underline;
+}
+
+/* ============================================================================
+   TRIVIA TIME SECTION
+   ============================================================================ */
+
+/* Trivia Row - Two Column Layout */
+.csp-trivia-row {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 2rem;
+  margin-top: 5rem;
+  padding-top: 2rem;
+  border-top: 2px dashed var(--border-color, #e2e8f0);
+  align-items: start;
+}
+
+.csp-trivia-left {
+  min-width: 0;
+}
+
+.csp-trivia-right {
+  min-width: 0;
+}
+
+/* Trivia Box (Left side) */
+.csp-trivia-box-inner {
+  border-radius: var(--radius-md, 10px);
+  overflow: hidden;
+  background: #c7d5ea;
+}
+
+.csp-trivia-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: #a8bdd8;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #1e40af;
+}
+
+.csp-trivia-header i {
+  font-size: 1.125rem;
+}
+
+.csp-trivia-body {
+  padding: 1rem;
+}
+
+.csp-trivia-image {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px dashed #a8bdd8;
+}
+
+.csp-trivia-image img {
+  width: 25%;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.csp-trivia-content {
+  font-size: 0.9375rem;
+  color: var(--text-primary, #1e293b);
+  line-height: 1.6;
+}
+
+.csp-trivia-translation {
+  font-size: 0.875rem;
+  font-style: italic;
+  color: #64748b;
+  line-height: 1.5;
+  margin-top: 0.5rem;
+}
+
+/* Trivia Tutor Guide (Right side) - matches regular tutor guide */
+.csp-trivia-guide {
+  position: relative;
+  top: 0;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid var(--border-color, #e2e8f0);
+  overflow: hidden;
+}
+
+.csp-trivia-guide .csp-guide-header {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  background: var(--primary, #0245ae);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.csp-trivia-guide .csp-guide-steps {
+  padding: 0.25rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.csp-trivia-guide .csp-guide-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.25rem;
+  padding: 0.25rem 0.25rem;
+  border-radius: 4px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.csp-trivia-guide .csp-guide-step:last-child {
+  margin-bottom: 0;
+}
+
+.csp-trivia-guide .csp-guide-number {
+  flex-shrink: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--primary, #0245ae);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.4375rem;
+  font-weight: 600;
+}
+
+.csp-trivia-guide .csp-guide-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.csp-trivia-guide .csp-guide-instruction {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-primary, #1e293b);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Trivia Scripts */
+.csp-trivia-guide .csp-apply-script {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.375rem;
+  margin: 0.125rem 0 0;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--success, #10b981);
+}
+
+.csp-trivia-guide .csp-script-bullet {
+  display: inline-block;
+  color: var(--success, #10b981);
+  font-size: 0.625rem;
+  line-height: 1.6;
+}
+
+/* Trivia Questions Box */
+.csp-trivia-guide .csp-apply-questions-box {
+  margin-top: 0.5rem;
+  padding: 0.625rem 0.75rem;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px dashed var(--border-color, #cbd5e1);
+  border-radius: 6px;
+}
+
+.csp-trivia-guide .csp-apply-question-item {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.375rem;
+}
+
+.csp-trivia-guide .csp-apply-question-item:last-child {
+  margin-bottom: 0;
+}
+
+.csp-trivia-guide .csp-question-bullet {
+  color: var(--text-primary, #1e293b);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.csp-trivia-guide .csp-question-content {
+  flex: 1;
+}
+
+.csp-trivia-guide .csp-question-text {
+  font-size: 0.875rem;
+  color: var(--text-primary, #1e293b);
+  margin: 0;
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.csp-trivia-guide .csp-answer-text {
+  font-size: 0.75rem;
+  color: var(--success, #10b981);
+  margin: 0.125rem 0 0;
+  font-style: italic;
+}
+
+/* ============================================================================
+   EXERCISE SECTION (Section 4)
+   ============================================================================ */
+
+.csp-exercise-section {
+  margin-top: 3rem;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: visible;
+}
+
+.csp-exercise-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 2rem;
+  padding: 1.5rem 0;
+  align-items: start;
+}
+
+.csp-exercise-left {
+  min-width: 0;
+}
+
+.csp-exercise-right {
+  position: sticky;
+  top: 1rem;
+  align-self: start;
+  min-width: 0;
+}
+
+/* Instructions */
+.csp-exercise-instructions {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--text-primary, #1e293b);
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+/* Expression Box */
+.csp-expression-box {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem 2rem;
+  justify-items: center;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+  border: 4px solid var(--border-color, #cbd5e1);
+  border-radius: 8px;
+  background: transparent;
+}
+
+.csp-expression-item {
+  font-size: 0.9375rem;
+  color: var(--text-primary, #1e293b);
+  text-align: center;
+}
+
+/* Info Box (Comparison Table) */
+.csp-info-box {
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.5rem;
+  border: 2px solid var(--border-color, #cbd5e1);
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+}
+
+.csp-info-box-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary, #1e293b);
+  text-align: center;
+  margin: 0 0 1rem;
+}
+
+.csp-info-box-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.csp-info-box-table th,
+.csp-info-box-table td {
+  padding: 0.5rem 0.75rem;
+  text-align: center;
+  font-size: 0.9375rem;
+}
+
+.csp-info-box-table thead tr {
+  border-bottom: 2px solid var(--border-color, #cbd5e1);
+}
+
+.csp-info-box-header {
+  font-weight: 600;
+  color: var(--text-primary, #1e293b);
+  background: #e0f2fe;
+  border-radius: 6px;
+}
+
+.csp-info-box-row-label {
+  font-size: 1.125rem;
+  width: 50px;
+  min-width: 50px;
+}
+
+.csp-info-box-cell {
+  color: var(--text-primary, #1e293b);
+  background: #fff;
+  border-radius: 4px;
+}
+
+/* Example */
+.csp-exercise-example {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+}
+
+.csp-exercise-example-image {
+  width: 120px;
+  height: 80px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #f1f5f9;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.csp-exercise-example-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.csp-example-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.csp-example-sentence {
+  font-size: 0.9375rem;
+  color: var(--text-primary, #1e293b);
+  margin: 0 0 0.5rem;
+}
+
+.csp-example-answer {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding-left: 1rem;
+  margin: 0;
+}
+
+.csp-arrow {
+  color: var(--text-secondary, #64748b);
+  font-size: 0.875rem;
+}
+
+.csp-answer-underline {
+  font-size: 0.9375rem;
+  font-style: italic;
+  color: var(--text-primary, #1e293b);
+  text-decoration: underline;
+}
+
+/* Exercise Items */
+.csp-exercise-items {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.csp-exercise-item {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.csp-exercise-item-image {
+  width: 120px;
+  height: 80px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #f1f5f9;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.csp-exercise-item-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Image placeholder styling */
+.csp-exercise-item-image .csp-image-placeholder,
+.csp-exercise-example-image .csp-image-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: #f1f5f9;
+  border: 1px dashed #cbd5e1;
+  border-radius: 6px;
+}
+
+.csp-exercise-item-image .csp-placeholder-dims,
+.csp-exercise-example-image .csp-placeholder-dims {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.csp-exercise-item-text {
+  flex: 1;
+  display: flex;
+  gap: 0.5rem;
+  line-height: 1.5;
+}
+
+.csp-item-number {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-primary, #1e293b);
+}
+
+.csp-item-sentence {
+  font-size: 0.9375rem;
+  color: var(--text-primary, #1e293b);
+}
+
+/* Answer Key Box */
+.csp-answer-key-box {
+  margin-top: 1.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  background: #dcfce7;
+}
+
+.csp-answer-key-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.csp-answer-key-item {
+  display: flex;
+  gap: 0.5rem;
+  margin: 0;
+  font-size: 0.8125rem;
+  color: #15803d;
+}
+
+.csp-answer-number {
+  font-weight: 500;
+  min-width: 1.25rem;
+}
+
+.csp-answer-key-item .csp-answer-text {
+  flex: 1;
+}
+
+/* Step A/B Labels */
+.csp-step-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary, #1e293b);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Step B Section */
+.csp-stepb-section {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 2px dashed #e2e8f0;
+}
+
+.csp-stepb-instruction {
+  margin-bottom: 1rem;
+}
+
+.csp-stepb-instruction-text {
+  font-size: 0.9375rem;
+  color: var(--text-primary, #1e293b);
+}
+
+.csp-stepb-instruction-translation {
+  font-size: 0.875rem;
+  color: var(--text-secondary, #64748b);
+  font-style: italic;
+  margin-top: 0.25rem;
+}
+
+.csp-stepb-tutor-guide {
+  margin-top: 1.5rem;
+}
+
+/* Choose Exercise Type Styles */
+.csp-choose-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.csp-choose-item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.csp-choose-item .csp-item-number {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-primary, #1e293b);
+  min-width: 1.5rem;
+}
+
+.csp-choose-item .csp-item-sentence {
+  font-size: 0.9375rem;
+  color: var(--text-primary, #1e293b);
+}
+
+.csp-choose-image {
+  margin-top: 1.5rem;
+  max-width: 400px;
+}
+
+.csp-choose-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+/* Change Exercise Type Styles */
+.csp-change-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.csp-change-item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.csp-change-item .csp-item-number {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-primary, #1e293b);
+  min-width: 1.5rem;
+}
+
+.csp-change-text {
+  font-size: 0.9375rem;
+  color: var(--text-primary, #1e293b);
+  line-height: 1.6;
+}
+
+.csp-change-context {
+  color: var(--text-primary, #1e293b);
+}
+
+.csp-change-underlined {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Step B Multiple Choice Styles */
+.csp-stepb-multiple-choice {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.csp-mc-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.csp-mc-sentence {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.csp-mc-number {
+  font-weight: 700;
+  color: var(--text-primary, #1e293b);
+}
+
+.csp-mc-sentence strong {
+  font-weight: 700;
+  color: var(--text-primary, #1e293b);
+}
+
+.csp-mc-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding-left: 1.5rem;
+}
+
+.csp-mc-option {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.9375rem;
+  color: var(--text-primary, #1e293b);
+  margin: 0;
+}
+
+.csp-mc-label {
+  font-weight: 500;
+  color: var(--text-secondary, #64748b);
+  min-width: 1rem;
+}
+
+.csp-mc-image {
+  margin-top: 1rem;
+  max-width: 400px;
+}
+
+.csp-mc-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+.csp-stepb-compare {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.csp-compare-word-box {
+  margin-bottom: 0;
+}
+
+.csp-compare-images {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.csp-compare-image-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.csp-compare-image {
+  aspect-ratio: 4 / 3;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border-color, #e2e8f0);
+  background: #f8fafc;
+}
+
+.csp-compare-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.csp-compare-image .csp-image-placeholder {
+  width: 100%;
+  height: 100%;
+}
+
+.csp-compare-image-label {
+  margin: 0;
+  text-align: center;
+  font-weight: 700;
+  color: var(--text-primary, #1e293b);
+}
+
+.csp-compare-example {
+  margin: 0;
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.csp-compare-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.csp-compare-item {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+/* Step B Speech Type Styles */
+.csp-stepb-speech {
+  margin-top: 1rem;
+}
+
+.csp-speech-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.csp-speech-speaker-image {
+  width: 150px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border-color, #e2e8f0);
+  background: #f1f5f9;
+}
+
+.csp-speech-speaker-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.csp-speech-bubble {
+  flex: 1;
+  position: relative;
+  background: #fff;
+  border: 1px solid var(--border-color, #e2e8f0);
+  border-radius: 16px;
+  border-bottom-left-radius: 4px;
+  padding: 1rem 1.25rem;
+  min-height: 150px;
+}
+
+/* Speech bubble pointer */
+.csp-speech-bubble::before {
+  content: '';
+  position: absolute;
+  left: -10px;
+  top: 30px;
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+  border-right-color: var(--border-color, #e2e8f0);
+  border-left: 0;
+}
+
+.csp-speech-bubble::after {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: 31px;
+  width: 0;
+  height: 0;
+  border: 9px solid transparent;
+  border-right-color: #fff;
+  border-left: 0;
+}
+
+.csp-speech-bubble p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-primary, #1e293b);
+}
+
+/* Tutor Answer Key Box (inline in steps) */
+.csp-tutor-answer-key-box {
+  margin-top: 0.75rem;
+  background: #16a34a;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.csp-tutor-answer-key-header {
+  padding: 0.5rem 0.75rem;
+  background: #16a34a;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.csp-tutor-answer-key-items {
+  padding: 0.75rem;
+  background: #f0fdf4;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.csp-tutor-answer-key-item {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  color: var(--text-primary, #1e293b);
+  margin: 0;
+}
+
+.csp-tutor-answer-number {
+  font-weight: 500;
+  min-width: 1.25rem;
+}
+
+/* ============================================================================
+   MISSION SECTION (Section 5)
+   ============================================================================ */
+
+.csp-mission-section {
+  background: transparent;
+  border-radius: 0;
+  padding: 2rem 0;
+  margin-bottom: 1.5rem;
+  box-shadow: none;
+}
+
+.csp-challenge-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary, #1e293b);
+  margin: 0 0 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* If Time Allows Badge Row - matches editor layout */
+.csp-optional-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.csp-optional-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: #dbeafe;
+  border: 2px solid #60a5fa;
+  border-radius: 8px;
+  color: #1d4ed8;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.csp-optional-badge i {
+  font-size: 1.25rem;
+}
+
+.csp-mission-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 2rem;
+}
+
+.csp-mission-left {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.csp-mission-right {
+  position: sticky;
+  top: 1rem;
+  align-self: start;
+}
+
+/* Mission Tutor Guide Challenge Header */
+.csp-mission-challenge-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: #f8fafc;
+  border-bottom: 1px solid var(--border-color, #e2e8f0);
+}
+
+.csp-mission-challenge-name {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-primary, #1e293b);
+  text-transform: uppercase;
+}
+
+.csp-mission-challenge-duration {
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+/* Situation Box - no card, just text like editor */
+.csp-mission-situation-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.csp-mission-situation {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.6;
+  color: var(--text-primary, #1e293b);
+  margin: 0;
+}
+
+.csp-mission-translation {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin: 0;
+  font-style: italic;
+}
+
+/* Instruction Box - no card, just text like editor */
+.csp-mission-instruction-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.csp-mission-instruction {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary, #1e293b);
+  margin: 0;
+}
+
+/* Grammar Tip - blue styling like editor */
+.csp-mission-grammar-tip {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.csp-grammar-tip-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: #dbeafe;
+  font-weight: 600;
+  color: #1e40af;
+}
+
+.csp-grammar-tip-header i {
+  font-size: 1.125rem;
+  color: #1e40af;
+}
+
+.csp-grammar-tip-items {
+  margin: 0;
+  padding: 1rem 1rem 1rem 2rem;
+  list-style: disc;
+  background: #eff6ff;
+}
+
+.csp-grammar-tip-items li {
+  font-size: 0.9375rem;
+  color: #1e293b;
+  margin-bottom: 0.25rem;
+}
+
+/* Mission Image - maximized to the right */
+.csp-mission-image {
+  width: 100%;
+  aspect-ratio: 5 / 3;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.csp-mission-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Reading Passage (Block-based structure) */
+.csp-mission-reading-passage {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+.csp-reading-header {
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.csp-reading-title {
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 0.25rem;
+}
+
+.csp-reading-author {
+  font-size: 0.9375rem;
+  color: #64748b;
+  font-style: italic;
+  margin: 0;
+}
+
+.csp-reading-blocks {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.csp-reading-block {
+  margin: 0;
+}
+
+.csp-reading-paragraph {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--text-primary, #1e293b);
+  margin: 0;
+}
+
+.csp-reading-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 0.5rem 0;
+}
+
+.csp-reading-images .csp-reading-image {
+  max-width: 200px;
+  height: auto;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+}
+
+.csp-reading-closing-question {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-primary, #1e293b);
+  margin: 1rem 0 0;
+  padding-top: 1rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+/* Topics Grid (Discussion type) */
+.csp-mission-topics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.csp-mission-topic-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.csp-mission-topic-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: var(--primary, #0245ae);
+  color: #fff;
+}
+
+.csp-topic-label {
+  font-size: 0.625rem;
+  font-weight: 700;
+  background: rgba(255,255,255,0.2);
+  padding: 0.125rem 0.5rem;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+
+.csp-topic-title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.csp-mission-topic-questions {
+  list-style: none;
+  padding: 1rem;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  counter-reset: topic-q;
+}
+
+.csp-mission-topic-questions li {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.9375rem;
+  color: var(--text-primary, #1e293b);
+  counter-increment: topic-q;
+}
+
+.csp-mission-topic-questions li::before {
+  content: counter(topic-q) ".";
+  font-weight: 500;
+  min-width: 1.25rem;
+}
+
+/* Questions Section */
+.csp-mission-questions {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.csp-questions-intro {
+  background: #fef08a;
+  padding: 0.75rem 1rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: #854d0e;
+}
+
+.csp-questions-list {
+  list-style: none;
+  padding: 1rem;
+  margin: 0;
+  counter-reset: mission-q;
+}
+
+.csp-questions-list .csp-question-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 0.75rem;
+  counter-increment: mission-q;
+}
+
+.csp-questions-list .csp-question-item::before {
+  content: counter(mission-q) ".";
+  font-weight: 600;
+  color: var(--primary, #0245ae);
+}
+
+.csp-questions-list .csp-question-text {
+  font-size: 1rem;
+  color: var(--text-primary, #1e293b);
+  margin-left: 1.5rem;
+}
+
+.csp-question-hints {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-left: 1.5rem;
+  margin-top: 0.25rem;
+}
+
+.csp-hint {
+  background: #f1f5f9;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.8125rem;
+  color: #64748b;
+}
+
+
+/* ============================================================================
+   FEEDBACK SECTION (Section 6)
+   ============================================================================ */
+
+/* ---- Feedback Section - Card-Based Layout ---- */
+.csp-feedback-section {
+  background: transparent;
+  border-radius: 0;
+  padding: 2rem 0;
+  margin-bottom: 1.5rem;
+  box-shadow: none;
+}
+
+.csp-feedback-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.csp-feedback-left {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.csp-feedback-right {
+  position: sticky;
+  top: 1rem;
+  align-self: start;
+}
+
+/* ---- GOAL CARD ---- */
+.csp-fb-goal-card {
+  display: flex;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.csp-fb-goal-accent {
+  width: 5px;
+  background: linear-gradient(180deg, #0245ae 0%, #0ea5e9 100%);
+  flex-shrink: 0;
+}
+
+.csp-fb-goal-body {
+  flex: 1;
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.csp-fb-goal-label {
+  font-size: 0.625rem;
+  font-weight: 700;
+  color: #0245ae;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.csp-fb-goal-text {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.csp-fb-goal-jp {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin: 0;
+}
+
+/* ---- RUBRIC CARD ---- */
+.csp-fb-rubric-card {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.csp-fb-rubric-title-row {
+  padding: 0.75rem 1.25rem;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.csp-fb-rubric-scale {
+  display: flex;
+  flex-direction: column;
+}
+
+.csp-fb-rubric-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.875rem;
+  padding: 0.625rem 1.25rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.csp-fb-rubric-item:last-child {
+  border-bottom: none;
+}
+
+.csp-fb-rubric-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-weight: 800;
+  color: white;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.csp-fb-rubric-4 .csp-fb-rubric-circle { background: #16a34a; }
+.csp-fb-rubric-3 .csp-fb-rubric-circle { background: #ca8a04; }
+.csp-fb-rubric-2 .csp-fb-rubric-circle { background: #ea580c; }
+.csp-fb-rubric-1 .csp-fb-rubric-circle { background: #dc2626; }
+
+.csp-fb-rubric-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.csp-fb-rubric-label {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.csp-fb-rubric-desc {
+  font-size: 0.75rem;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+/* ---- CATEGORIES HEADER ---- */
+.csp-fb-categories-header {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #334155;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.5rem 0;
+}
+
+/* ---- CATEGORY CARD ---- */
+.csp-fb-category-card {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.csp-fb-cat-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1.25rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.csp-fb-cat-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.125rem;
+  color: white;
+  flex-shrink: 0;
+}
+
+.csp-fb-cat-range .csp-fb-cat-icon { background: linear-gradient(135deg, #0369a1, #0ea5e9); }
+.csp-fb-cat-accuracy .csp-fb-cat-icon { background: linear-gradient(135deg, #dc2626, #f87171); }
+.csp-fb-cat-fluency .csp-fb-cat-icon { background: linear-gradient(135deg, #16a34a, #4ade80); }
+
+.csp-fb-cat-titles {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.csp-fb-cat-name {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.csp-fb-cat-range .csp-fb-cat-name { color: #0369a1; }
+.csp-fb-cat-accuracy .csp-fb-cat-name { color: #dc2626; }
+.csp-fb-cat-fluency .csp-fb-cat-name { color: #16a34a; }
+
+.csp-fb-cat-jp {
+  font-size: 0.6875rem;
+  color: #94a3b8;
+  line-height: 1.4;
+}
+
+/* What to assess */
+.csp-fb-cat-assess {
+  padding: 0.75rem 1.25rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.csp-fb-assess-label {
+  font-size: 0.625rem;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: block;
+  margin-bottom: 0.375rem;
+}
+
+.csp-fb-assess-text {
+  font-size: 0.8125rem;
+  color: #475569;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Focus tags */
+.csp-fb-cat-focus {
+  padding: 0.75rem 1.25rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.csp-fb-focus-label {
+  font-size: 0.625rem;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.csp-fb-focus-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+.csp-fb-focus-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #334155;
+  background: #f1f5f9;
+  border-radius: 20px;
+  padding: 0.3rem 0.75rem;
+}
+
+/* Example feedback */
+.csp-fb-cat-examples {
+  padding: 0.75rem 1.25rem 1rem;
+}
+
+.csp-fb-examples-label {
+  font-size: 0.625rem;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.csp-fb-vocab-highlight {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #eff6ff 0%, #e0f2fe 100%);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #0369a1;
+}
+
+.csp-fb-vocab-highlight i {
+  font-size: 0.875rem;
+  flex-shrink: 0;
+}
+
+.csp-fb-example-card {
+  background: #f8fafc;
+  border-radius: 8px;
+  padding: 0.625rem 0.75rem;
+  margin-bottom: 0.5rem;
+  border-left: 3px solid #e2e8f0;
+}
+
+.csp-fb-example-said,
+.csp-fb-example-better {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+  font-size: 0.8125rem;
+}
+
+.csp-fb-example-better {
+  margin-bottom: 0;
+}
+
+.csp-fb-example-icon {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  flex-shrink: 0;
+  color: #dc2626;
+  background: #fef2f2;
+}
+
+.csp-fb-better-icon {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  flex-shrink: 0;
+  color: #16a34a;
+  background: #f0fdf4;
+}
+
+.csp-fb-said-text {
+  color: #64748b;
+  text-decoration: line-through;
+  text-decoration-color: #fca5a5;
+}
+
+.csp-fb-better-text {
+  color: #15803d;
+  font-weight: 500;
+}
+
+/* ============================================================================
+   DARK MODE HARDENING - PREVIEW
+   Keep this last so later light-mode lesson templates cannot leak into preview.
+   ============================================================================ */
+
+.csp-fullpage.csp-dark {
+  --csp-dark-bg: #1b1b1b;
+  --csp-dark-panel: #202020;
+  --csp-dark-panel-soft: #242424;
+  --csp-dark-field: #262626;
+  --csp-dark-border: rgba(255, 255, 255, 0.12);
+  --csp-dark-border-strong: rgba(255, 255, 255, 0.18);
+  --csp-dark-text: #f4f4f5;
+  --csp-dark-muted: #b8bec8;
+  --csp-dark-muted-soft: #8f98a6;
+  background: var(--csp-dark-bg) !important;
+  color: var(--csp-dark-text) !important;
+}
+
+.csp-fullpage.csp-dark .csp-container,
+.csp-fullpage.csp-dark .csp-main,
+.csp-fullpage.csp-dark .csp-sections,
+.csp-fullpage.csp-dark .csp-section,
+.csp-fullpage.csp-dark .csp-section-body,
+.csp-fullpage.csp-dark .csp-intro-section,
+.csp-fullpage.csp-dark .csp-learn-section,
+.csp-fullpage.csp-dark .csp-learn-left,
+.csp-fullpage.csp-dark .csp-stepb-section,
+.csp-fullpage.csp-dark .csp-stepb-left,
+.csp-fullpage.csp-dark .csp-apply-section,
+.csp-fullpage.csp-dark .csp-apply-left,
+.csp-fullpage.csp-dark .csp-exercise-section,
+.csp-fullpage.csp-dark .csp-exercise-left,
+.csp-fullpage.csp-dark .csp-mission-section,
+.csp-fullpage.csp-dark .csp-mission-left,
+.csp-fullpage.csp-dark .csp-feedback-section,
+.csp-fullpage.csp-dark .csp-feedback-left {
+  background: var(--csp-dark-bg) !important;
+  box-shadow: none !important;
+}
+
+.csp-fullpage.csp-dark .csp-section {
+  border-color: transparent !important;
+}
+
+.csp-fullpage.csp-dark .csp-section-header,
+.csp-fullpage.csp-dark .csp-stepb-type-selector,
+.csp-fullpage.csp-dark .csp-exercise-layout,
+.csp-fullpage.csp-dark .csp-apply-layout,
+.csp-fullpage.csp-dark .csp-mission-layout,
+.csp-fullpage.csp-dark .csp-feedback-layout {
+  background: transparent !important;
+  border-color: var(--csp-dark-border) !important;
+}
+
+.csp-fullpage.csp-dark h1,
+.csp-fullpage.csp-dark h2,
+.csp-fullpage.csp-dark h3,
+.csp-fullpage.csp-dark h4,
+.csp-fullpage.csp-dark .csp-section-title,
+.csp-fullpage.csp-dark .csp-section-header h2,
+.csp-fullpage.csp-dark .csp-intro-text,
+.csp-fullpage.csp-dark .csp-goal-en,
+.csp-fullpage.csp-dark .csp-issue-content h3,
+.csp-fullpage.csp-dark .csp-vocab-english,
+.csp-fullpage.csp-dark .csp-expr-definition,
+.csp-fullpage.csp-dark .csp-discuss-instruction,
+.csp-fullpage.csp-dark .csp-pronunciation-instruction,
+.csp-fullpage.csp-dark .csp-pronunciation-sound,
+.csp-fullpage.csp-dark .csp-pronunciation-word,
+.csp-fullpage.csp-dark .csp-stepb-explanation,
+.csp-fullpage.csp-dark .csp-stepb-question p,
+.csp-fullpage.csp-dark .csp-grammar-rule,
+.csp-fullpage.csp-dark .csp-example-sentence,
+.csp-fullpage.csp-dark .csp-pronunciation-tip,
+.csp-fullpage.csp-dark .csp-phrases-col-example p,
+.csp-fullpage.csp-dark .csp-phrase-text,
+.csp-fullpage.csp-dark .csp-exercise-instruction,
+.csp-fullpage.csp-dark .csp-exercise-instructions,
+.csp-fullpage.csp-dark .csp-exercise-speech-bubble p,
+.csp-fullpage.csp-dark .csp-expression-item,
+.csp-fullpage.csp-dark .csp-info-box-title,
+.csp-fullpage.csp-dark .csp-info-box-cell,
+.csp-fullpage.csp-dark .csp-item-number,
+.csp-fullpage.csp-dark .csp-item-sentence,
+.csp-fullpage.csp-dark .csp-change-text,
+.csp-fullpage.csp-dark .csp-mc-option,
+.csp-fullpage.csp-dark .csp-compare-image-label,
+.csp-fullpage.csp-dark .csp-compare-example,
+.csp-fullpage.csp-dark .csp-speech-bubble p,
+.csp-fullpage.csp-dark .csp-apply-situation,
+.csp-fullpage.csp-dark .csp-dialogue-speaker,
+.csp-fullpage.csp-dark .csp-dialogue-text,
+.csp-fullpage.csp-dark .csp-reading-text-box,
+.csp-fullpage.csp-dark .csp-reading-text-content,
+.csp-fullpage.csp-dark .csp-trivia-content,
+.csp-fullpage.csp-dark .csp-guide-instruction,
+.csp-fullpage.csp-dark .csp-question-text,
+.csp-fullpage.csp-dark .csp-mission-challenge-name,
+.csp-fullpage.csp-dark .csp-mission-situation,
+.csp-fullpage.csp-dark .csp-mission-instruction,
+.csp-fullpage.csp-dark .csp-reading-title,
+.csp-fullpage.csp-dark .csp-reading-paragraph,
+.csp-fullpage.csp-dark .csp-reading-closing-question,
+.csp-fullpage.csp-dark .csp-mission-topic-questions li,
+.csp-fullpage.csp-dark .csp-questions-list .csp-question-text,
+.csp-fullpage.csp-dark .csp-fb-goal-text,
+.csp-fullpage.csp-dark .csp-fb-rubric-label {
+  color: var(--csp-dark-text) !important;
+}
+
+.csp-fullpage.csp-dark .csp-fb-goal-label {
+  color: #93c5fd;
+  font-size: 0.75rem;
+}
+
+.csp-fullpage.csp-dark .csp-fb-rubric-title-row,
+.csp-fullpage.csp-dark .csp-fb-categories-header {
+  color: #e2e8f0;
+}
+
+.csp-fullpage.csp-dark .csp-fb-rubric-title-row {
+  font-size: 0.75rem;
+}
+
+.csp-fullpage.csp-dark .csp-goal-jp,
+.csp-fullpage.csp-dark .csp-tutor-note-details,
+.csp-fullpage.csp-dark .csp-vocab-translation,
+.csp-fullpage.csp-dark .csp-expr-translation,
+.csp-fullpage.csp-dark .csp-expr-example,
+.csp-fullpage.csp-dark .csp-expr-extra,
+.csp-fullpage.csp-dark .csp-discuss-instruction-trans,
+.csp-fullpage.csp-dark .csp-discuss-img-translation,
+.csp-fullpage.csp-dark .csp-pronunciation-instruction-trans,
+.csp-fullpage.csp-dark .csp-pronunciation-trans,
+.csp-fullpage.csp-dark .csp-stepb-explanation-trans,
+.csp-fullpage.csp-dark .csp-grammar-translation,
+.csp-fullpage.csp-dark .csp-example-translation,
+.csp-fullpage.csp-dark .csp-exercise-instruction-translation,
+.csp-fullpage.csp-dark .csp-action-text,
+.csp-fullpage.csp-dark .csp-trivia-translation,
+.csp-fullpage.csp-dark .csp-mission-challenge-duration,
+.csp-fullpage.csp-dark .csp-mission-translation,
+.csp-fullpage.csp-dark .csp-reading-author,
+.csp-fullpage.csp-dark .csp-fb-goal-jp,
+.csp-fullpage.csp-dark .csp-fb-rubric-desc,
+.csp-fullpage.csp-dark .csp-fb-cat-jp,
+.csp-fullpage.csp-dark .csp-fb-assess-text,
+.csp-fullpage.csp-dark .csp-fb-said-text {
+  color: var(--csp-dark-muted) !important;
+}
+
+.csp-fullpage.csp-dark .csp-goal-step,
+.csp-fullpage.csp-dark .csp-tutor-important,
+.csp-fullpage.csp-dark .csp-tutor-guide,
+.csp-fullpage.csp-dark .csp-part-tutor-guide,
+.csp-fullpage.csp-dark .csp-guide-step,
+.csp-fullpage.csp-dark .csp-vocab-card,
+.csp-fullpage.csp-dark .csp-expr-item,
+.csp-fullpage.csp-dark .csp-grammar-examples,
+.csp-fullpage.csp-dark .csp-pronunciation-table,
+.csp-fullpage.csp-dark .csp-pronunciation-column,
+.csp-fullpage.csp-dark .csp-pronunciation-words,
+.csp-fullpage.csp-dark .csp-pronunciation-word-item,
+.csp-fullpage.csp-dark .csp-stepb-question,
+.csp-fullpage.csp-dark .csp-speech-bubble,
+.csp-fullpage.csp-dark .csp-exercise-speech-bubble,
+.csp-fullpage.csp-dark .csp-expression-box,
+.csp-fullpage.csp-dark .csp-info-box,
+.csp-fullpage.csp-dark .csp-exercise-example,
+.csp-fullpage.csp-dark .csp-exercise-item,
+.csp-fullpage.csp-dark .csp-answer-key-box,
+.csp-fullpage.csp-dark .csp-stepb-compare,
+.csp-fullpage.csp-dark .csp-stepb-speech,
+.csp-fullpage.csp-dark .csp-tutor-answer-key-box,
+.csp-fullpage.csp-dark .csp-trivia-box-inner,
+.csp-fullpage.csp-dark .csp-trivia-guide,
+.csp-fullpage.csp-dark .csp-trivia-guide .csp-guide-step,
+.csp-fullpage.csp-dark .csp-trivia-guide .csp-apply-questions-box,
+.csp-fullpage.csp-dark .csp-reading-text-box,
+.csp-fullpage.csp-dark .csp-mission-situation-box,
+.csp-fullpage.csp-dark .csp-mission-instruction-box,
+.csp-fullpage.csp-dark .csp-mission-grammar-tip,
+.csp-fullpage.csp-dark .csp-mission-reading-passage,
+.csp-fullpage.csp-dark .csp-mission-topic-card,
+.csp-fullpage.csp-dark .csp-mission-questions,
+.csp-fullpage.csp-dark .csp-fb-goal-card,
+.csp-fullpage.csp-dark .csp-fb-rubric-card,
+.csp-fullpage.csp-dark .csp-fb-category-card,
+.csp-fullpage.csp-dark .csp-fb-example-card {
+  background: var(--csp-dark-panel) !important;
+  border-color: var(--csp-dark-border) !important;
+  box-shadow: none !important;
+}
+
+.csp-fullpage.csp-dark .csp-issue-content,
+.csp-fullpage.csp-dark .csp-goal-steps,
+.csp-fullpage.csp-dark .csp-guide-steps,
+.csp-fullpage.csp-dark .csp-trivia-body,
+.csp-fullpage.csp-dark .csp-tutor-answer-key-items,
+.csp-fullpage.csp-dark .csp-mission-challenge-header,
+.csp-fullpage.csp-dark .csp-grammar-tip-items,
+.csp-fullpage.csp-dark .csp-mission-topic-questions,
+.csp-fullpage.csp-dark .csp-questions-list,
+.csp-fullpage.csp-dark .csp-fb-goal-body,
+.csp-fullpage.csp-dark .csp-fb-rubric-title-row,
+.csp-fullpage.csp-dark .csp-fb-rubric-item,
+.csp-fullpage.csp-dark .csp-fb-cat-header,
+.csp-fullpage.csp-dark .csp-fb-cat-assess,
+.csp-fullpage.csp-dark .csp-fb-cat-focus,
+.csp-fullpage.csp-dark .csp-fb-cat-examples {
+  background: transparent !important;
+  border-color: var(--csp-dark-border) !important;
+}
+
+.csp-fullpage.csp-dark .csp-image-placeholder,
+.csp-fullpage.csp-dark .csp-expr-image-placeholder,
+.csp-fullpage.csp-dark .csp-discuss-image-placeholder,
+.csp-fullpage.csp-dark .csp-pronunciation-img-placeholder,
+.csp-fullpage.csp-dark .csp-exercise-speaker-image,
+.csp-fullpage.csp-dark .csp-exercise-item-image,
+.csp-fullpage.csp-dark .csp-exercise-example-image,
+.csp-fullpage.csp-dark .csp-exercise-item-image .csp-image-placeholder,
+.csp-fullpage.csp-dark .csp-exercise-example-image .csp-image-placeholder,
+.csp-fullpage.csp-dark .csp-compare-image,
+.csp-fullpage.csp-dark .csp-speech-speaker-image {
+  background: var(--csp-dark-field) !important;
+  border-color: var(--csp-dark-border) !important;
+  color: var(--csp-dark-muted) !important;
+}
+
+.csp-fullpage.csp-dark .csp-section-line,
+.csp-fullpage.csp-dark .csp-pronunciation-part,
+.csp-fullpage.csp-dark .csp-pronunciation-column:first-child,
+.csp-fullpage.csp-dark .csp-pronunciation-words,
+.csp-fullpage.csp-dark .csp-pronunciation-word-item,
+.csp-fullpage.csp-dark .csp-reading-image,
+.csp-fullpage.csp-dark .csp-reading-header,
+.csp-fullpage.csp-dark .csp-reading-closing-question,
+.csp-fullpage.csp-dark .csp-trivia-row,
+.csp-fullpage.csp-dark .csp-trivia-image,
+.csp-fullpage.csp-dark .csp-info-box-table thead tr,
+.csp-fullpage.csp-dark .csp-phrases-row,
+.csp-fullpage.csp-dark .csp-phrases-col-phrase,
+.csp-fullpage.csp-dark .csp-fb-rubric-title-row,
+.csp-fullpage.csp-dark .csp-fb-rubric-item,
+.csp-fullpage.csp-dark .csp-fb-cat-header,
+.csp-fullpage.csp-dark .csp-fb-cat-assess,
+.csp-fullpage.csp-dark .csp-fb-cat-focus {
+  border-color: var(--csp-dark-border) !important;
+}
+
+.csp-fullpage.csp-dark .csp-guide-header,
+.csp-fullpage.csp-dark .csp-trivia-guide .csp-guide-header,
+.csp-fullpage.csp-dark .csp-tutor-answer-key-header,
+.csp-fullpage.csp-dark .csp-mission-topic-header {
+  background: var(--primary, #4f9cff) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+}
+
+.csp-fullpage.csp-dark .csp-trivia-header,
+.csp-fullpage.csp-dark .csp-grammar-tip-header,
+.csp-fullpage.csp-dark .csp-phrases-header,
+.csp-fullpage.csp-dark .csp-questions-intro {
+  background: var(--csp-dark-panel-soft) !important;
+  color: var(--csp-dark-text) !important;
+  border-color: var(--csp-dark-border) !important;
+}
+
+.csp-fullpage.csp-dark .csp-mission-grammar-tip,
+.csp-fullpage.csp-dark .csp-answer-key-box {
+  background: rgba(22, 163, 74, 0.08) !important;
+}
+
+.csp-fullpage.csp-dark .csp-info-box-header,
+.csp-fullpage.csp-dark .csp-info-box-cell,
+.csp-fullpage.csp-dark .csp-hint,
+.csp-fullpage.csp-dark .csp-fb-focus-tag,
+.csp-fullpage.csp-dark .csp-fb-vocab-highlight {
+  background: var(--csp-dark-field) !important;
+  border-color: var(--csp-dark-border) !important;
+  color: var(--csp-dark-text) !important;
+}
+
+.csp-fullpage.csp-dark .csp-fb-example-icon {
+  background: rgba(220, 38, 38, 0.14) !important;
+}
+
+.csp-fullpage.csp-dark .csp-fb-better-icon {
+  background: rgba(22, 163, 74, 0.14) !important;
+}
+
+.csp-fullpage.csp-dark .csp-fb-better-text {
+  color: #7ddf9c !important;
+}
+
+.csp-fullpage.csp-dark .csp-speech-left::after,
+.csp-fullpage.csp-dark .csp-exercise-conv-left .csp-exercise-speech-bubble::after,
+.csp-fullpage.csp-dark .csp-speech-bubble::after {
+  border-right-color: var(--csp-dark-panel) !important;
+}
+
+.csp-fullpage.csp-dark .csp-speech-right::after,
+.csp-fullpage.csp-dark .csp-exercise-conv-right .csp-exercise-speech-bubble::after {
+  border-left-color: var(--csp-dark-panel) !important;
+}
+
+.csp-fullpage.csp-dark .csp-speech-left::before,
+.csp-fullpage.csp-dark .csp-exercise-conv-left .csp-exercise-speech-bubble::before,
+.csp-fullpage.csp-dark .csp-speech-bubble::before {
+  border-right-color: var(--csp-dark-border-strong) !important;
+}
+
+.csp-fullpage.csp-dark .csp-speech-right::before,
+.csp-fullpage.csp-dark .csp-exercise-conv-right .csp-exercise-speech-bubble::before {
+  border-left-color: var(--csp-dark-border-strong) !important;
+}
+
+.csp-fullpage.csp-dark .csp-optional-badge {
+  background: rgba(79, 156, 255, 0.14) !important;
+  border-color: rgba(79, 156, 255, 0.35) !important;
+  color: #9bc8ff !important;
+}
+
+.csp-fullpage.csp-dark .csp-fb-cat-icon,
+.csp-fullpage.csp-dark .csp-fb-rubric-circle {
+  box-shadow: none !important;
+}
+
+.csp-fullpage.csp-dark .csp-reading-image img,
+.csp-fullpage.csp-dark .csp-trivia-image img,
+.csp-fullpage.csp-dark .csp-intro-image img {
+  box-shadow: none !important;
+}
+
+.csp-fullpage.csp-dark [style*="background"]:not(.csp-hero):not(.csp-hero-overlay) {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+.csp-fullpage.csp-dark .csp-guide-header[style*="background"],
+.csp-fullpage.csp-dark .csp-trivia-guide .csp-guide-header[style*="background"],
+.csp-fullpage.csp-dark .csp-tutor-answer-key-header[style*="background"],
+.csp-fullpage.csp-dark .csp-mission-topic-header[style*="background"] {
+  background: var(--primary, #4f9cff) !important;
+}
+
+.csp-fullpage.csp-dark {
+  --csp-dark-border: #303030;
+  --csp-dark-border-strong: #383838;
+}
+
+.csp-fullpage.csp-dark .csp-section,
+.csp-fullpage.csp-dark .csp-section-header,
+.csp-fullpage.csp-dark .csp-section-body,
+.csp-fullpage.csp-dark .csp-section-line,
+.csp-fullpage.csp-dark .csp-intro-section,
+.csp-fullpage.csp-dark .csp-learn-section,
+.csp-fullpage.csp-dark .csp-stepb-section,
+.csp-fullpage.csp-dark .csp-apply-section,
+.csp-fullpage.csp-dark .csp-exercise-section,
+.csp-fullpage.csp-dark .csp-mission-section,
+.csp-fullpage.csp-dark .csp-feedback-section,
+.csp-fullpage.csp-dark .csp-tutor-guide,
+.csp-fullpage.csp-dark .csp-guide-steps,
+.csp-fullpage.csp-dark .csp-guide-step,
+.csp-fullpage.csp-dark .csp-apply-step,
+.csp-fullpage.csp-dark .csp-stepb-type-selector,
+.csp-fullpage.csp-dark .csp-pronunciation-part,
+.csp-fullpage.csp-dark .csp-trivia-row,
+.csp-fullpage.csp-dark .csp-fb-rubric-item,
+.csp-fullpage.csp-dark .csp-fb-cat-header,
+.csp-fullpage.csp-dark .csp-fb-cat-assess,
+.csp-fullpage.csp-dark .csp-fb-cat-focus {
+  border-color: var(--csp-dark-border) !important;
+}
+
+.csp-fullpage.csp-dark .csp-guide-step,
+.csp-fullpage.csp-dark .csp-apply-step {
+  background: #232323 !important;
+}
+
+.csp-fullpage.csp-dark .csp-guide-content,
+.csp-fullpage.csp-dark .csp-guide-content p,
+.csp-fullpage.csp-dark .csp-guide-content span,
+.csp-fullpage.csp-dark .csp-guide-content em,
+.csp-fullpage.csp-dark .csp-guide-content strong {
+  color: inherit;
+}
+
+.csp-fullpage.csp-dark .csp-apply-prompt,
+.csp-fullpage.csp-dark .csp-apply-prompt span,
+.csp-fullpage.csp-dark .csp-prompt-bullet {
+  color: #aeb7c5 !important;
+}
+
+.csp-fullpage.csp-dark .csp-apply-script,
+.csp-fullpage.csp-dark .csp-guide-script,
+.csp-fullpage.csp-dark .csp-answer-text {
+  color: #22c55e !important;
+}
+
+.csp-fullpage.csp-dark .csp-apply-tip,
+.csp-fullpage.csp-dark .csp-guide-tip,
+.csp-fullpage.csp-dark .csp-tip-icon {
+  color: #d7dbe2 !important;
+}
+
+.csp-fullpage.csp-dark .csp-guide-instruction {
+  color: #f5f5f5 !important;
+}
+
+.csp-fullpage.csp-dark .csp-apply-questions-box,
+.csp-fullpage.csp-dark .csp-trivia-guide .csp-apply-questions-box {
+  border-color: #3a3a3a !important;
+}
+
+.csp-fullpage.csp-dark .csp-reading-image,
+.csp-fullpage.csp-dark .csp-trivia-image,
+.csp-fullpage.csp-dark .csp-reading-header,
+.csp-fullpage.csp-dark .csp-reading-closing-question,
+.csp-fullpage.csp-dark .csp-info-box-table thead tr,
+.csp-fullpage.csp-dark .csp-phrases-row,
+.csp-fullpage.csp-dark .csp-phrases-col-phrase {
+  border-color: var(--csp-dark-border) !important;
+}
+
+.csp-fullpage.csp-dark *,
+.csp-fullpage.csp-dark *::before,
+.csp-fullpage.csp-dark *::after {
+  border-color: var(--csp-dark-border) !important;
+}
+
+.csp-fullpage.csp-dark .csp-guide-header,
+.csp-fullpage.csp-dark .csp-trivia-guide .csp-guide-header,
+.csp-fullpage.csp-dark .csp-tutor-answer-key-header,
+.csp-fullpage.csp-dark .csp-mission-topic-header {
+  border-color: transparent !important;
+}
+
+.csp-fullpage.csp-dark .csp-stepb-question,
+.csp-fullpage.csp-dark .csp-apply-questions-box,
+.csp-fullpage.csp-dark .csp-trivia-guide .csp-apply-questions-box {
+  border-color: #315a40 !important;
+}
+
+.csp-fullpage.csp-dark .csp-issue-content h3,
+.csp-fullpage.csp-dark .csp-section-line,
+.csp-fullpage.csp-dark .csp-apply-activity-title,
+.csp-fullpage.csp-dark .csp-step-name,
+.csp-fullpage.csp-dark .csp-stepb-section,
+.csp-fullpage.csp-dark .csp-trivia-row {
+  border-color: #303030 !important;
+}
+
+.csp-fullpage.csp-dark .csp-mission-situation-box,
+.csp-fullpage.csp-dark .csp-mission-instruction-box,
+.csp-fullpage.csp-dark .csp-mission-situation,
+.csp-fullpage.csp-dark .csp-mission-instruction,
+.csp-fullpage.csp-dark .csp-mission-situation *,
+.csp-fullpage.csp-dark .csp-mission-instruction * {
+  background: transparent !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.csp-fullpage.csp-dark .csp-mission-situation,
+.csp-fullpage.csp-dark .csp-mission-instruction {
+  color: var(--csp-dark-text) !important;
+}
+
+.csp-fullpage.csp-dark .csp-mission-translation {
+  color: var(--csp-dark-muted) !important;
+}
+
+.csp-fullpage.csp-dark .csp-mission-grammar-tip {
+  background: var(--csp-dark-panel) !important;
+  background-color: var(--csp-dark-panel) !important;
+  border-color: var(--csp-dark-border) !important;
+  box-shadow: none !important;
+}
+
+.csp-fullpage.csp-dark .csp-grammar-tip-header {
+  background: var(--csp-dark-panel) !important;
+  background-color: var(--csp-dark-panel) !important;
+  color: var(--csp-dark-text) !important;
+  border-bottom: 1px solid var(--csp-dark-border) !important;
+}
+
+.csp-fullpage.csp-dark .csp-grammar-tip-header i {
+  color: #4f9cff !important;
+}
+
+.csp-fullpage.csp-dark .csp-grammar-tip-items {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+.csp-fullpage.csp-dark .csp-grammar-tip-items li {
+  color: var(--csp-dark-text) !important;
+}
+
+.csp-fullpage.csp-dark .csp-grammar-tip-items li::marker {
+  color: #4f9cff !important;
+}
+
+.csp-fullpage.csp-dark .csp-expr-list,
+.csp-fullpage.csp-dark .csp-expr-item,
+.csp-fullpage.csp-dark .csp-expr-content,
+.csp-fullpage.csp-dark .csp-expr-definition,
+.csp-fullpage.csp-dark .csp-expr-example,
+.csp-fullpage.csp-dark .csp-expr-translation,
+.csp-fullpage.csp-dark .csp-expr-extra,
+.csp-fullpage.csp-dark .csp-expr-definition *,
+.csp-fullpage.csp-dark .csp-expr-example *,
+.csp-fullpage.csp-dark .csp-expr-extra * {
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.csp-fullpage.csp-dark .csp-expr-item {
+  border-color: transparent !important;
+}
+
+.csp-fullpage.csp-dark .csp-expr-image {
+  background: var(--csp-dark-field) !important;
+  background-color: var(--csp-dark-field) !important;
+  border-color: var(--csp-dark-border) !important;
+}
+
+.csp-fullpage.csp-dark .csp-expr-number {
+  color: var(--csp-dark-text) !important;
+}
+
+.csp-fullpage.csp-dark .csp-expr-example {
+  color: #d7dbe2 !important;
+}
+
+/* ============================================================================
+   MOBILE PREVIEW OPTIMIZATION
+   Keep this last so full lesson templates cannot reintroduce desktop overflow.
+   ============================================================================ */
+@media (max-width: 900px) {
+  .csp-fullpage {
+    width: 100%;
+    min-width: 0;
+    overflow-x: hidden;
+  }
+
+  .csp-topbar {
+    position: sticky;
+    top: 0;
+    padding: 0.625rem 0.875rem;
+  }
+
+  .csp-topbar-content {
+    width: 100%;
+    min-width: 0;
+    gap: 0.75rem;
+  }
+
+  .csp-course-info {
+    min-width: 0;
+    white-space: normal;
+  }
+
+  .csp-theme-btn,
+  .csp-close-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .csp-hero {
+    min-height: 220px;
+    padding: 2rem 1rem;
+  }
+
+  .csp-hero-content {
+    max-width: 100%;
+  }
+
+  .csp-lesson-name {
+    font-size: clamp(1.75rem, 9vw, 2.75rem);
+    line-height: 1.02;
+  }
+
+  .csp-goal-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .csp-goal-badge {
+    width: max-content;
+  }
+
+  .csp-main {
+    width: 100%;
+    max-width: none;
+    padding: 1.25rem 0.875rem 3rem;
+  }
+
+  .csp-sections {
+    gap: 2rem;
+  }
+
+  .csp-section-number {
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .csp-section-title {
+    font-size: 1rem;
+  }
+
+  .csp-section-line {
+    min-width: 0;
+  }
+
+  .csp-section,
+  .csp-intro-section,
+  .csp-learn-section,
+  .csp-stepb-section,
+  .csp-apply-section,
+  .csp-exercise-section,
+  .csp-mission-section,
+  .csp-feedback-section {
+    width: 100%;
+    min-width: 0;
+    overflow: visible;
+  }
+
+  .csp-intro-layout,
+  .csp-learn-layout,
+  .csp-stepb-layout,
+  .csp-apply-layout,
+  .csp-trivia-row,
+  .csp-exercise-layout,
+  .csp-mission-layout,
+  .csp-feedback-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 1.25rem;
+    width: 100%;
+  }
+
+  .csp-intro-left,
+  .csp-intro-right,
+  .csp-learn-left,
+  .csp-learn-right,
+  .csp-stepb-left,
+  .csp-stepb-right,
+  .csp-apply-left,
+  .csp-apply-right,
+  .csp-trivia-left,
+  .csp-trivia-right,
+  .csp-exercise-left,
+  .csp-exercise-right,
+  .csp-mission-left,
+  .csp-mission-right,
+  .csp-feedback-left,
+  .csp-feedback-right {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+  }
+
+  .csp-intro-right,
+  .csp-learn-right,
+  .csp-stepb-right,
+  .csp-apply-right,
+  .csp-trivia-right,
+  .csp-exercise-right,
+  .csp-mission-right,
+  .csp-feedback-right {
+    order: 2;
+  }
+
+  .csp-intro-right-sticky,
+  .csp-learn-right,
+  .csp-stepb-right,
+  .csp-apply-right,
+  .csp-exercise-right,
+  .csp-mission-right,
+  .csp-feedback-right {
+    position: static !important;
+    top: auto !important;
+  }
+
+  .csp-tutor-guide,
+  .csp-part-tutor-guide,
+  .csp-trivia-guide,
+  .csp-stepb-tutor-guide {
+    width: 100%;
+    max-width: none;
+    overflow: hidden;
+  }
+
+  .csp-guide-header {
+    padding: 0.875rem 1rem;
+    font-size: 0.875rem;
+    line-height: 1.25;
+  }
+
+  .csp-guide-steps {
+    padding: 0.875rem;
+    gap: 0.75rem;
+  }
+
+  .csp-guide-step,
+  .csp-apply-step {
+    gap: 0.75rem;
+    padding: 0.875rem;
+  }
+
+  .csp-guide-content {
+    min-width: 0;
+  }
+
+  .csp-guide-instruction,
+  .csp-guide-script,
+  .csp-apply-script,
+  .csp-apply-prompt,
+  .csp-apply-tip,
+  .csp-question-text,
+  .csp-answer-text {
+    overflow-wrap: anywhere;
+  }
+
+  .csp-vocab-grid,
+  .csp-discuss-images,
+  .csp-expression-box,
+  .csp-compare-images,
+  .csp-feedback-layout .csp-fb-rubric-scale,
+  .csp-feedback-layout .csp-fb-categories {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .csp-expr-item,
+  .csp-exercise-example,
+  .csp-exercise-item,
+  .csp-dialogue-line,
+  .csp-fb-rubric-item,
+  .csp-fb-cat-header,
+  .csp-fb-example-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .csp-expr-image,
+  .csp-exercise-example-image,
+  .csp-exercise-item-image {
+    width: 100% !important;
+    max-width: none;
+  }
+
+  .csp-expr-image,
+  .csp-expr-image img,
+  .csp-exercise-example-image,
+  .csp-exercise-example-image img,
+  .csp-exercise-item-image,
+  .csp-exercise-item-image img {
+    height: auto;
+  }
+
+  .csp-intro-image,
+  .csp-apply-image,
+  .csp-reading-image,
+  .csp-trivia-image,
+  .csp-mission-image,
+  .csp-choose-image,
+  .csp-mc-image,
+  .csp-compare-image {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .csp-intro-image img,
+  .csp-apply-image img,
+  .csp-reading-image img,
+  .csp-mission-image img,
+  .csp-choose-image img,
+  .csp-mc-image img,
+  .csp-compare-image img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .csp-trivia-image img {
+    width: 25%;
+    max-width: 100%;
+  }
+
+  .csp-pronunciation-table,
+  .csp-phrases-header,
+  .csp-phrases-row {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .csp-pronunciation-column:first-child,
+  .csp-phrases-col-phrase {
+    border-right: 0 !important;
+  }
+
+  .csp-phrases-header {
+    display: none;
+  }
+
+  .csp-phrases-col-phrase,
+  .csp-phrases-col-example {
+    padding: 0.875rem;
+  }
+
+  .csp-conversation-row,
+  .csp-exercise-conv-row,
+  .csp-speech-layout {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .csp-speaker-left,
+  .csp-exercise-conv-left {
+    align-items: flex-start;
+  }
+
+  .csp-speaker-right,
+  .csp-exercise-conv-right {
+    align-items: flex-end;
+  }
+
+  .csp-speaker-image,
+  .csp-exercise-speaker-image,
+  .csp-speech-speaker-image {
+    width: 92px !important;
+    min-width: 92px;
+    max-width: 92px;
+  }
+
+  .csp-speech-bubble,
+  .csp-exercise-speech-bubble {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 10px !important;
+  }
+
+  .csp-speech-bubble::before,
+  .csp-speech-bubble::after,
+  .csp-exercise-speech-bubble::before,
+  .csp-exercise-speech-bubble::after {
+    display: none !important;
+  }
+
+  .csp-reading-text-box,
+  .csp-info-box,
+  .csp-pronunciation-table {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .csp-info-box-table {
+    min-width: 520px;
+  }
+
+  .csp-mission-topic-card,
+  .csp-fb-goal-card,
+  .csp-fb-rubric-card,
+  .csp-fb-category-card {
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 520px) {
+  .csp-topbar-content {
+    justify-content: flex-start;
+  }
+
+  .csp-course-info {
+    font-size: 0.72rem;
+  }
+
+  .csp-theme-btn {
+    margin-left: auto;
+  }
+
+  .csp-hero {
+    min-height: 190px;
+  }
+
+  .csp-main {
+    padding-inline: 0.75rem;
+  }
+
+  .csp-section-number {
+    align-items: center;
+  }
+
+  .csp-number-badge {
+    width: 30px;
+    height: 30px;
+    font-size: 0.875rem;
+  }
+
+  .csp-step-name,
+  .csp-apply-activity-title,
+  .csp-challenge-name {
+    font-size: 1.15rem;
+    line-height: 1.25;
+  }
+
+  .csp-intro-text,
+  .csp-part-english,
+  .csp-stepb-explanation,
+  .csp-apply-situation,
+  .csp-exercise-instruction,
+  .csp-mission-situation,
+  .csp-mission-instruction {
+    font-size: 0.96rem;
+    line-height: 1.65;
+  }
+
+  .csp-lesson-issue,
+  .csp-lesson-goal-box,
+  .csp-vocab-card,
+  .csp-expr-item,
+  .csp-stepb-question,
+  .csp-expression-box,
+  .csp-info-box,
+  .csp-exercise-example,
+  .csp-exercise-item,
+  .csp-answer-key-box,
+  .csp-mission-situation-box,
+  .csp-mission-instruction-box,
+  .csp-mission-grammar-tip,
+  .csp-mission-reading-passage,
+  .csp-mission-topic-card,
+  .csp-fb-goal-card,
+  .csp-fb-rubric-card,
+  .csp-fb-category-card {
+    border-radius: 10px;
+  }
+
+  .csp-issue-header,
+  .csp-goal-header,
+  .csp-guide-header,
+  .csp-trivia-header,
+  .csp-tutor-answer-key-header,
+  .csp-mission-topic-header {
+    padding-inline: 0.875rem;
+  }
+
+  .csp-issue-content,
+  .csp-goal-steps,
+  .csp-trivia-body,
+  .csp-tutor-answer-key-items,
+  .csp-fb-goal-body,
+  .csp-fb-rubric-scale,
+  .csp-fb-category-card {
+    padding: 0.875rem;
+  }
+
+  .csp-guide-step,
+  .csp-apply-step {
+    padding: 0.75rem;
+  }
+
+  .csp-dialogue-line {
+    gap: 0.35rem;
+  }
+
+  .csp-dialogue-speaker {
+    min-width: 0;
+  }
+
+  .csp-reading-text-content,
+  .csp-listening-script-box {
+    font-size: 0.95rem;
+    line-height: 1.75;
+  }
+
+  .csp-fb-focus-tags {
+    gap: 0.4rem;
+  }
+
+  .csp-fb-focus-tag {
+    white-space: normal;
+  }
+}
+
+/* Alternate lesson layout used only by Preview 2. */
+.csp-fullpage.csp-preview-2 {
+  --primary: #177f79;
+  --primary-dark: #116b66;
+  background: #eef3f3;
+}
+
+.csp-fullpage.csp-preview-2.csp-dark {
+  --primary: #168980;
+  --primary-dark: #0d7169;
+  background: #171c1d;
+}
+
+.csp-preview-2 .csp-hero {
+  min-height: 220px;
+  display: flex;
+  align-items: flex-end;
+  padding: 3.25rem 2rem 1.75rem;
+}
+
+.csp-preview-2 .csp-hero-content {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.csp-preview-2 .csp-lesson-name {
+  font-size: 2rem;
+  font-style: normal;
+  line-height: 1.2;
+  margin-bottom: 0.75rem;
+}
+
+.csp-preview-2 .csp-goal-wrapper {
+  display: block;
+  text-align: left;
+}
+
+.csp-preview-2 .csp-goal-row {
+  display: flex;
+  flex-wrap: wrap;
+  line-height: 1.4;
+}
+
+.csp-preview-2 .csp-goal-en {
+  line-height: 1.4;
+}
+
+.csp-preview-2 .csp-main {
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr);
+  gap: 2rem;
+  max-width: 1480px;
+  padding: 2rem 1.5rem 5rem;
+}
+
+.csp-preview-2 .csp-preview-outline {
+  position: sticky;
+  top: 1.5rem;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.75rem;
+  background: #fff;
+  border: 1px solid #d6e1e2;
+  border-radius: 6px;
+}
+
+.csp-preview-2.csp-dark .csp-preview-outline {
+  background: #252b2d;
+  border-color: #424b4d;
+}
+
+.csp-preview-2 .csp-preview-outline-title {
+  padding: 0.5rem 0.65rem 0.75rem;
+  color: #577174;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.csp-preview-2.csp-dark .csp-preview-outline-title {
+  color: #aec6c7;
+}
+
+.csp-preview-2 .csp-preview-outline button {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: 100%;
+  min-height: 38px;
+  padding: 0.5rem 0.65rem;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: #26393b;
+  font: inherit;
+  font-size: 0.82rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.csp-preview-2 .csp-preview-outline button:hover,
+.csp-preview-2 .csp-preview-outline button:focus-visible {
+  background: #e5f3f1;
+  outline-color: #177f79;
+}
+
+.csp-preview-2.csp-dark .csp-preview-outline button {
+  color: #eef3f3;
+}
+
+.csp-preview-2.csp-dark .csp-preview-outline button:hover,
+.csp-preview-2.csp-dark .csp-preview-outline button:focus-visible {
+  background: #314746;
+}
+
+.csp-preview-2 .csp-preview-outline-number {
+  color: #b16343;
+  font-size: 0.73rem;
+  font-weight: 700;
+}
+
+.csp-preview-2.csp-dark .csp-preview-outline-number {
+  color: #e0a88a;
+}
+
+.csp-preview-2 .csp-sections {
+  min-width: 0;
+  gap: 0;
+}
+
+.csp-preview-2 .csp-sections > * {
+  min-width: 0;
+  margin: 0;
+  padding: 1.25rem 0 2.5rem;
+  border-bottom: 1px solid #d4dfe0;
+  scroll-margin-top: 1.5rem;
+}
+
+.csp-preview-2.csp-dark .csp-sections > * {
+  border-bottom-color: #394345;
+}
+
+.csp-preview-2 .csp-sections > *:first-child {
+  padding-top: 0;
+}
+
+.csp-preview-2 :is(.csp-intro-layout, .csp-learn-layout, .csp-stepb-layout, .csp-apply-layout, .csp-trivia-row, .csp-exercise-layout, .csp-mission-layout, .csp-feedback-layout) {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.25rem;
+}
+
+.csp-preview-2 :is(.csp-intro-left, .csp-intro-right, .csp-learn-left, .csp-stepb-left, .csp-exercise-layout) {
+  padding-top: 0;
+}
+
+.csp-preview-2 :is(.csp-intro-right-sticky, .csp-learn-right .csp-tutor-guide:first-child, .csp-stepb-right, .csp-apply-right, .csp-exercise-right, .csp-mission-right, .csp-feedback-right) {
+  position: static;
+  top: auto;
+}
+
+.csp-preview-2 .csp-vocab-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.csp-preview-2 .csp-learn-right {
+  order: initial;
+}
+
+.csp-preview-2 .csp-vocab-image {
+  aspect-ratio: 3 / 2;
+}
+
+.csp-preview-2 .csp-guide-steps {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.csp-preview-2 .csp-tutor-guide {
+  border-radius: 4px;
+  border-left: 3px solid var(--primary);
+}
+
+.csp-preview-2 .csp-guide-step {
+  min-width: 0;
+  border-radius: 4px;
+}
+
+.csp-preview-2 .csp-guide-header {
+  text-decoration: none;
+}
+
+.csp-preview-2 .csp-trivia-row {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+}
+
+@media (max-width: 1000px) {
+  .csp-preview-2 .csp-main {
+    display: block;
+    padding: 1.25rem 1rem 4rem;
+  }
+
+  .csp-preview-2 .csp-preview-outline {
+    position: static;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 0.25rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .csp-preview-2 .csp-preview-outline-title {
+    display: none;
+  }
+
+  .csp-preview-2 .csp-preview-outline button {
+    flex: 0 0 auto;
+    width: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .csp-preview-2 .csp-topbar {
+    min-height: 44px;
+    padding-right: 6rem;
+  }
+
+  .csp-preview-2 .csp-course-info {
+    font-size: 0.625rem;
+    line-height: 1.2;
+  }
+
+  .csp-preview-2 .csp-theme-btn,
+  .csp-preview-2 .csp-close-btn {
+    top: 0.25rem;
+  }
+
+  .csp-preview-2 .csp-theme-btn {
+    right: 3.25rem;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .csp-preview-2 .csp-theme-btn span {
+    display: none;
+  }
+
+  .csp-preview-2 .csp-close-btn {
+    right: 0.75rem;
+  }
+
+  .csp-preview-2 .csp-hero {
+    min-height: 180px;
+    padding: 3rem 1rem 1.25rem;
+  }
+
+  .csp-preview-2 .csp-lesson-name {
+    font-size: 1.5rem;
+  }
+
+  .csp-preview-2 .csp-vocab-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .csp-preview-2 .csp-guide-steps {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

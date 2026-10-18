@@ -1,0 +1,17 @@
+.qa-recordings-page{max-width:1500px;margin:0 auto;color:var(--text-primary,#202934)}
+.qa-recordings-page header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+.qa-recordings-page h1{font-size:24px;margin:0}.qa-recordings-page h2{font-size:18px;margin:0}
+.qa-recordings-page p{font-size:14px}.qa-recordings-page button,.qa-recordings-page input{font:inherit;color:inherit;background:var(--bg-secondary,#fff);border:1px solid var(--border-color,#c9d3de);border-radius:6px;padding:8px 12px}
+.qa-recordings-page button{cursor:pointer;min-height:36px}.qa-recordings-page button:disabled{opacity:.45;cursor:default}
+.qa-recordings-search{display:flex;gap:8px;margin-bottom:18px}.qa-recordings-search input{min-width:0;flex:1;max-width:420px}
+.qa-recordings-table{overflow-x:auto}.qa-recordings-page table{width:100%;border-collapse:collapse;font-size:13px;text-align:left}
+.qa-recordings-page th,.qa-recordings-page td{padding:12px;border-bottom:1px solid var(--border-color,#d8e0e8);vertical-align:top}
+.qa-recordings-page td:first-child{min-width:220px;max-width:340px;overflow-wrap:anywhere}.qa-recordings-page small{display:block;opacity:.8;margin-top:4px}
+.qa-recordings-actions{display:flex;gap:6px}.qa-recordings-actions button{width:36px;padding:6px;flex-shrink:0}
+.qa-recordings-error{color:#c63333}.qa-recordings-pagination{display:flex;align-items:center;justify-content:flex-end;gap:12px;margin-top:16px}
+.qa-recordings-overlay{position:fixed;inset:0;z-index:1500;background:#0009;display:flex;align-items:center;justify-content:center;padding:16px}
+.qa-recordings-dialog{width:100%;max-width:900px;max-height:90vh;overflow:auto;background:var(--bg-secondary,#fff);padding:20px;border-radius:8px}
+.qa-recordings-dialog p{overflow-wrap:anywhere}.qa-recordings-dialog video{width:100%;aspect-ratio:16/9;display:block;background:#000}
+.qa-recordings-audit p{border-bottom:1px solid var(--border-color,#d8e0e8);padding:8px 0;overflow-wrap:anywhere}
+@media(max-width:600px){.qa-recordings-page h1{font-size:20px}.qa-recordings-dialog{padding:12px}.qa-recordings-search input{width:100%}}
+@media(max-width:600px){.qa-recordings-table table,.qa-recordings-table tbody{display:block}.qa-recordings-table thead{display:none}.qa-recordings-table tr{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border-color,#d8e0e8);padding:8px 0}.qa-recordings-table td{display:block;min-width:0;border:0;padding:8px}.qa-recordings-table td:first-child,.qa-recordings-table td:last-child{grid-column:1/-1;min-width:0;max-width:none}.qa-recordings-table td::before{content:attr(data-label);display:block;font-size:12px;opacity:.75;margin-bottom:5px}}

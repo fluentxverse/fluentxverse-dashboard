@@ -1,0 +1,132 @@
+/* BusinessEnglishEditorPage.css
+ * Imports the shared Conversational Skills Editor base styles,
+ * then applies Business English-specific overrides (colour accent, writing skill, etc.).
+ */
+@import './ConversationalSkillsEditorPage.css';
+
+/* ========================================
+   BRAND OVERRIDES
+   ======================================== */
+
+/* Title icon gradient — briefcase purple/indigo */
+.bee-title-icon {
+  background: linear-gradient(135deg, #6366f1 0%, #4338ca 100%) !important;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3) !important;
+}
+
+/* Primary button accent */
+.bee-create-btn {
+  background: #4338ca !important;
+  box-shadow: 0 2px 8px rgba(67, 56, 202, 0.3) !important;
+}
+
+.bee-create-btn:hover {
+  background: #3730a3 !important;
+}
+
+.bee-btn-primary {
+  background: #4338ca !important;
+}
+
+.bee-btn-primary:hover:not(:disabled) {
+  background: #3730a3 !important;
+}
+
+/* Progress ring accent */
+.bee-progress-fill {
+  stroke: #6366f1 !important;
+}
+
+/* ========================================
+   WRITING SKILL DOT & BAR
+   ======================================== */
+
+.cse-skill-dot.cse-skill-writing {
+  background-color: #f59e0b;
+}
+
+.cse-skill-dot.cse-skill-review {
+  background-color: #06b6d4;
+}
+
+.cse-skill-bar-fill.writing {
+  background: #f59e0b;
+}
+
+.cse-skill-bar-fill.review {
+  background: #06b6d4;
+}
+
+.cse-skill-tag[data-skill="writing"] {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+/* ========================================
+   TOEIC & METHOD BADGES (level header)
+   ======================================== */
+
+.bee-level-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bee-toeic-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  background: rgba(99, 102, 241, 0.08);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #4338ca;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+.bee-method-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #047857;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+.bee-method-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 6px;
+  background: rgba(16, 185, 129, 0.1);
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #047857;
+  margin-left: 4px;
+}
+
+/* ========================================
+   SKILL DISPLAY (read-only in modal)
+   ======================================== */
+.cse-skill-display {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(99, 102, 241, 0.06);
+  border: 1px solid rgba(99, 102, 241, 0.15);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #e0e0e8;
+  letter-spacing: 0.2px;
+}

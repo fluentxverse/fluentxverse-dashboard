@@ -1,0 +1,798 @@
+/**
+ * DailyDispatchEditorPage styles
+ * Read-only viewer for Daily Dispatch articles
+ */
+
+/* ============================================================================
+   BASE & PAGE STYLES
+   ============================================================================ */
+
+.dd-page {
+  padding: 1rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ============================================================================
+   PAGE HEADER
+   ============================================================================ */
+
+.dd-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color, #e5e7eb);
+}
+
+.dd-header-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.dd-header-icon {
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, #121212 0%, #374151 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dd-header-icon i {
+  font-size: 1.5rem;
+  color: #ffcb05;
+}
+
+.dd-page-header h1 {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-primary, #1f2937);
+}
+
+.dd-page-header p {
+  margin: 0.25rem 0 0;
+  color: var(--text-secondary, #6b7280);
+  font-size: 0.875rem;
+}
+
+.dd-header-stats {
+  display: flex;
+  gap: 1rem;
+}
+
+.dd-stat {
+  text-align: center;
+  padding: 0.75rem 1.5rem;
+  background: var(--bg-secondary, #f3f4f6);
+  border-radius: 8px;
+}
+
+.dd-stat-value {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary, #1f2937);
+}
+
+.dd-stat-label {
+  font-size: 0.75rem;
+  color: var(--text-secondary, #6b7280);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ============================================================================
+   FILTERS
+   ============================================================================ */
+
+.dd-filters {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.dd-search {
+  flex: 1;
+  min-width: 200px;
+  position: relative;
+}
+
+.dd-search i {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary, #6b7280);
+}
+
+.dd-search input {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.75rem;
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  background: var(--bg-primary, white);
+}
+
+.dd-search input:focus {
+  outline: none;
+  border-color: #121212;
+}
+
+.dd-filter-select {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  background: var(--bg-primary, white);
+  min-width: 150px;
+}
+
+/* ============================================================================
+   BUTTONS
+   ============================================================================ */
+
+.dd-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.dd-btn-primary {
+  background: #121212;
+  color: white;
+}
+
+.dd-btn-primary:hover {
+  background: #000;
+}
+
+.dd-btn-secondary {
+  background: #ffcb05;
+  color: #121212;
+}
+
+.dd-btn-secondary:hover {
+  background: #e6b800;
+}
+
+.dd-btn-outline {
+  background: transparent;
+  color: #121212;
+  border: 1px solid #121212;
+}
+
+.dd-btn-outline:hover {
+  background: #121212;
+  color: white;
+}
+
+.dd-btn-ghost {
+  background: transparent;
+  color: var(--text-secondary, #6b7280);
+  border: 1px solid var(--border-color, #e5e7eb);
+}
+
+.dd-btn-ghost:hover {
+  background: var(--bg-secondary, #f3f4f6);
+  color: var(--text-primary, #1f2937);
+}
+
+.dd-btn-sm {
+  padding: 0.5rem 0.875rem;
+  font-size: 0.8125rem;
+}
+
+.dd-btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 8px;
+  color: var(--text-secondary, #6b7280);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.dd-btn-back:hover {
+  background: var(--bg-secondary, #f3f4f6);
+  color: var(--text-primary, #1f2937);
+}
+
+/* ============================================================================
+   LOADING & EMPTY STATES
+   ============================================================================ */
+
+.dd-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem;
+  color: var(--text-secondary, #6b7280);
+}
+
+.dd-loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border-color, #e5e7eb);
+  border-top-color: #121212;
+  border-radius: 50%;
+  animation: dd-spin 0.7s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes dd-spin {
+  to { transform: rotate(360deg); }
+}
+
+.dd-empty {
+  text-align: center;
+  padding: 4rem;
+  color: var(--text-secondary, #6b7280);
+}
+
+.dd-empty i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.dd-empty h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.125rem;
+  color: var(--text-primary, #1f2937);
+}
+
+.dd-empty p {
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+/* ============================================================================
+   ARTICLE GRID (List View)
+   ============================================================================ */
+
+.dd-article-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.5rem;
+}
+
+.dd-article-card {
+  background: var(--bg-primary, white);
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.2s;
+}
+
+.dd-article-card:hover {
+  border-color: #121212;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.dd-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.dd-card-category {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: white;
+  background: #121212;
+  padding: 0.25rem 0.75rem;
+}
+
+.dd-card-date {
+  font-size: 0.75rem;
+  color: var(--text-secondary, #6b7280);
+}
+
+.dd-card-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text-primary, #1f2937);
+  line-height: 1.3;
+}
+
+.dd-card-topic {
+  margin: 0 0 1.25rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary, #6b7280);
+}
+
+.dd-card-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+/* ============================================================================
+   DETAIL PAGE
+   ============================================================================ */
+
+.dd-detail-page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0.5rem;
+}
+
+.dd-detail-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  background: var(--bg-primary, white);
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  position: sticky;
+  top: 1rem;
+  z-index: 100;
+}
+
+.dd-detail-title {
+  flex: 1;
+}
+
+.dd-detail-title h2 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary, #1f2937);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dd-detail-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ============================================================================
+   DETAIL SECTIONS
+   ============================================================================ */
+
+.dd-detail-section {
+  background: var(--bg-primary, white);
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+}
+
+.dd-section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.875rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border-color, #e5e7eb);
+}
+
+.dd-section-header i {
+  font-size: 1.25rem;
+  color: #ffcb05;
+  background: #121212;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+.dd-section-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary, #1f2937);
+  flex: 1;
+}
+
+.dd-count {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary, #6b7280);
+  background: var(--bg-secondary, #f3f4f6);
+  padding: 0.25rem 0.75rem;
+  border-radius: 100px;
+}
+
+/* ============================================================================
+   METADATA GRID
+   ============================================================================ */
+
+.dd-metadata-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.dd-metadata-item {
+  padding: 1rem;
+  background: var(--bg-secondary, #f9fafb);
+  border-radius: 8px;
+}
+
+.dd-metadata-label {
+  display: block;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary, #6b7280);
+  margin-bottom: 0.375rem;
+}
+
+.dd-metadata-value {
+  font-size: 0.9375rem;
+  color: var(--text-primary, #1f2937);
+  word-break: break-word;
+}
+
+.dd-metadata-value.dd-mono {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.75rem;
+}
+
+.dd-metadata-value.dd-badge {
+  display: inline-block;
+  background: #ffcb05;
+  color: #121212;
+  padding: 0.25rem 0.75rem;
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+
+/* ============================================================================
+   QUESTION LIST (Warm-up)
+   ============================================================================ */
+
+.dd-question-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: question-counter;
+}
+
+.dd-question-list li {
+  position: relative;
+  padding: 1rem 0 1rem 3rem;
+  border-bottom: 1px solid var(--border-color, #e5e7eb);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--text-primary, #1f2937);
+  counter-increment: question-counter;
+}
+
+.dd-question-list li:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.dd-question-list li::before {
+  content: counter(question-counter);
+  position: absolute;
+  left: 0;
+  top: 1rem;
+  width: 1.75rem;
+  height: 1.75rem;
+  background: #121212;
+  color: #ffcb05;
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============================================================================
+   VOCABULARY GRID
+   ============================================================================ */
+
+.dd-vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 0.75rem;
+}
+
+.dd-vocab-card {
+  padding: 0.75rem 1rem;
+  background: var(--bg-secondary, #f9fafb);
+  border-radius: 6px;
+  border-left: 3px solid #ffcb05;
+}
+
+.dd-vocab-top {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.dd-vocab-word {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--text-primary, #1f2937);
+}
+
+.dd-vocab-pos {
+  font-size: 0.625rem;
+  font-weight: 600;
+  color: white;
+  background: #6b7280;
+  padding: 0.125rem 0.375rem;
+  text-transform: uppercase;
+}
+
+.dd-vocab-pronunciation {
+  font-family: 'SF Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text-secondary, #6b7280);
+  margin-bottom: 0.375rem;
+}
+
+.dd-vocab-definition {
+  font-size: 0.8125rem;
+  color: var(--text-primary, #1f2937);
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+
+.dd-vocab-example {
+  font-size: 0.75rem;
+  color: var(--text-secondary, #6b7280);
+  font-style: italic;
+  line-height: 1.4;
+  margin-top: 0.25rem;
+}
+
+.dd-vocab-note {
+  font-size: 0.6875rem;
+  color: var(--text-secondary, #6b7280);
+  margin-top: 0.375rem;
+  padding-top: 0.375rem;
+  border-top: 1px dashed var(--border-color, #e5e7eb);
+}
+
+/* ============================================================================
+   ARTICLE CONTENT
+   ============================================================================ */
+
+.dd-article-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.dd-paragraph-block {
+  display: flex;
+  gap: 1rem;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--border-color, #e5e7eb);
+}
+
+.dd-paragraph-block:last-child {
+  border-bottom: none;
+}
+
+.dd-paragraph-number {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  background: var(--bg-secondary, #f3f4f6);
+  color: var(--text-secondary, #6b7280);
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+.dd-paragraph-content {
+  flex: 1;
+}
+
+.dd-paragraph-text {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.8;
+  color: var(--text-primary, #1f2937);
+}
+
+.dd-inline-qa {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, #fef3c7, #fffbeb);
+  border-left: 3px solid #ffcb05;
+  border-radius: 0 8px 8px 0;
+}
+
+.dd-qa-question,
+.dd-qa-answer {
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.dd-qa-question {
+  color: #92400e;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.dd-qa-answer {
+  color: #065f46;
+}
+
+.dd-qa-label {
+  font-weight: 700;
+  margin-right: 0.5rem;
+}
+
+.dd-source {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--border-color, #e5e7eb);
+  font-size: 0.8125rem;
+  color: var(--text-secondary, #6b7280);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ============================================================================
+   SUMMARY BOX
+   ============================================================================ */
+
+.dd-summary-box {
+  padding: 1.5rem;
+  background: #121212;
+  color: white;
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1.5;
+  border-radius: 8px;
+}
+
+/* ============================================================================
+   DISCUSSIONS
+   ============================================================================ */
+
+.dd-discussions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.dd-discussion-block {
+  padding: 1.25rem;
+  background: var(--bg-secondary, #f9fafb);
+  border-radius: 8px;
+}
+
+.dd-discussion-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.dd-discussion-badge {
+  width: 2rem;
+  height: 2rem;
+  background: #ffcb05;
+  color: #121212;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dd-discussion-header h4 {
+  margin: 0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-primary, #1f2937);
+}
+
+.dd-discussion-questions {
+  list-style: decimal;
+  padding-left: 1.25rem;
+  margin: 0;
+}
+
+.dd-discussion-questions li {
+  padding: 0.5rem 0;
+  font-size: 0.875rem;
+  color: var(--text-secondary, #374151);
+  line-height: 1.5;
+}
+
+/* ============================================================================
+   RAW JSON
+   ============================================================================ */
+
+.dd-raw-section .dd-section-header {
+  align-items: center;
+}
+
+.dd-raw-json {
+  margin: 0;
+  padding: 1rem;
+  background: #1f2937;
+  color: #e5e7eb;
+  border-radius: 8px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  overflow-x: auto;
+  max-height: 400px;
+}
+
+/* ============================================================================
+   RESPONSIVE
+   ============================================================================ */
+
+@media (max-width: 768px) {
+  .dd-page {
+    padding: 1rem;
+  }
+
+  .dd-page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .dd-article-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dd-detail-toolbar {
+    flex-wrap: wrap;
+    position: static;
+  }
+
+  .dd-detail-title {
+    order: 3;
+    flex-basis: 100%;
+  }
+
+  .dd-metadata-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dd-vocab-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dd-discussions {
+    grid-template-columns: 1fr;
+  }
+}
