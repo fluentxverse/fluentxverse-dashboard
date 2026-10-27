@@ -9,8 +9,8 @@ const screenshots = resolve(__dirname, '../../../output/screenshots');
   const browser = await chromium.launch({ executablePath: '/usr/bin/google-chrome', headless: true, args: ['--no-sandbox'] });
   mkdirSync(screenshots, { recursive: true });
   try {
-    for (const width of [1440, 1024, 768, 375, 320]) {
-      const context = await browser.newContext({ viewport: { width, height: 900 }, timezoneId: 'Asia/Manila' });
+    for (const width of [1440, 1024, 768, 375, 320]) for (const theme of ['light', 'dark']) {
+      const context = await browser.newContext({ viewport: { width, height: 900 }, timezoneId: 'Asia/Manila', colorScheme: theme });
       const page = await context.newPage(), errors = [], mutations = [];
       await page.clock.install({ time: new Date('2026-10-13T01:00:00Z') });
       let slots = [
@@ -48,6 +48,24 @@ const screenshots = resolve(__dirname, '../../../output/screenshots');
         fits: [...document.querySelectorAll('.period-tab,.nav-btn,.time-label,.slot-badge')].every(n => n.scrollWidth <= n.clientWidth),
       }));
       assert.equal(geometry.rowHeight, 32); assert.equal(geometry.calendarHeight, 432);
+      if (theme === 'dark') {
+        const grid = await page.evaluate(() => {
+          const normal = document.querySelector('.slot-cell:not(.past)'), past = document.querySelector('.slot-cell.past');
+          const border = getComputedStyle(normal).borderRightColor;
+          const luminance = rgb => {
+            const channels = rgb.match(/[\d.]+/g).slice(0, 3).map(Number).map(n => n / 255).map(n => n <= .04045 ? n / 12.92 : ((n + .055) / 1.055) ** 2.4);
+            return channels.reduce((sum,n,i) => sum + n * [.2126,.7152,.0722][i], 0);
+          };
+          const contrast = element => (luminance(border) + .05) / (luminance(getComputedStyle(element).backgroundColor) + .05);
+          return {border,pastBorder:getComputedStyle(past).borderRightColor,pastOpacity:getComputedStyle(past).opacity,
+            horizontal:getComputedStyle(normal).borderBottomColor,time:getComputedStyle(document.querySelector('.time-label')).borderRightColor,
+            header:getComputedStyle(document.querySelector('.day-header')).borderRightColor,contrast:contrast(normal),pastContrast:contrast(past)};
+        });
+        assert.equal(grid.border,'rgb(104, 115, 131)');
+        assert.equal(grid.pastBorder,grid.border); assert.equal(grid.horizontal,grid.border);
+        assert.equal(grid.time,grid.border); assert.equal(grid.header,grid.border); assert.equal(grid.pastOpacity,'1');
+        assert(grid.contrast >= 3 && grid.pastContrast >= 3,'Dividers must retain at least 3:1 contrast, including past slots');
+      }
       assert(!geometry.pageOverflow, `No document overflow at ${width}`); assert(geometry.fits, `Labels fit at ${width}`);
       if (width === 1440) {
         const nav = await page.locator('.week-navigation').boundingBox(), periods = await page.locator('.period-tabs').boundingBox();
@@ -60,7 +78,7 @@ const screenshots = resolve(__dirname, '../../../output/screenshots');
         await scroll.evaluate(n => { n.scrollLeft = n.scrollWidth; });
         await scroll.evaluate(n => { n.scrollLeft = 0; });
       }
-      await page.screenshot({ path: resolve(screenshots, `interview-calendar-compact-${width}.png`), fullPage: true });
+      await page.screenshot({ path: resolve(screenshots, `interview-calendar-compact-${width}-${theme}.png`), fullPage: true });
       const booked = page.getByRole('button', { name: /Friday, Oct 16, 1:30 PM, booked/ });
       assert(await booked.isDisabled(), 'Booked slots remain non-selectable');
       assert(await page.getByRole('button', { name: 'Monday, Oct 12, 12:00 PM, available', exact: true }).isDisabled(), 'Past empty slots remain disabled');
@@ -80,7 +98,7 @@ const screenshots = resolve(__dirname, '../../../output/screenshots');
       await page.getByRole('button', { name: 'Next', exact: true }).click(); await page.locator('.week-range').filter({ hasText: 'Oct 19 - Oct 25' }).waitFor();
       await page.getByRole('button', { name: 'Today', exact: true }).click(); await page.locator('.week-range').filter({ hasText: 'Oct 12 - Oct 18' }).waitFor();
       assert.deepEqual(errors, []); await context.close();
-      console.log(`PASS interview calendar ${width}: compact grid, responsive scrolling, labels, keyboard selection, opening slots, completed results and navigation`);
+      console.log(`PASS interview calendar ${width} ${theme}: divider contrast, compact grid, responsive scrolling, labels, keyboard selection, opening slots, completed results and navigation`);
     }
   } finally { await browser.close(); }
 })().catch(error => { console.error(error); process.exitCode = 1; });

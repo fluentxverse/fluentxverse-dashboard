@@ -1,0 +1,8 @@
+.private-dispute-evidence { min-width: 0; width: 100%; }
+.private-dispute-evidence > section { padding-block: 14px; margin-top: 12px; border-block: 1px solid var(--admin-border, #cbd5e1); }
+.private-dispute-evidence header { display: flex; gap: 12px; align-items: center; justify-content: space-between; }
+.private-dispute-evidence article { margin-top: 14px; border-top: 1px solid var(--admin-border, #cbd5e1); padding-top: 10px; }
+.private-dispute-evidence p,.private-dispute-evidence dd { font-size: 13px; overflow-wrap: anywhere; line-height: 1.6; }
+.private-dispute-evidence dt { font-size: 13px; font-weight: 600; margin-top: 8px; }
+.private-dispute-evidence dd { margin: 3px 0 0; }
+.operations-report-list > article:has(.private-dispute-evidence) { flex-wrap: wrap; }

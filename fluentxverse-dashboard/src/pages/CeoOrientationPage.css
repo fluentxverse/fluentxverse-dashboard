@@ -32,7 +32,7 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   background: rgba(2, 69, 174, 0.15);
-  color: var(--primary);
+  color: var(--admin-accent, var(--primary));
   border: 1px solid rgba(2, 69, 174, 0.2);
   margin-bottom: 1rem;
 }
@@ -139,7 +139,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--primary);
+  color: var(--admin-accent, var(--primary));
 }
 
 .snapshot-title {
@@ -168,7 +168,7 @@
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--primary);
+  color: var(--admin-accent, var(--primary));
   font-weight: 600;
 }
 
@@ -206,7 +206,7 @@
 }
 
 .ceo-card-header i {
-  color: var(--primary);
+  color: var(--admin-accent, var(--primary));
   font-size: 1.2rem;
 }
 
@@ -237,7 +237,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--primary);
+  color: var(--admin-accent, var(--primary));
   margin-bottom: 0.75rem;
 }
 
@@ -320,7 +320,7 @@
 }
 
 .ceo-pill i {
-  color: var(--primary);
+  color: var(--admin-accent, var(--primary));
 }
 
 .ceo-solution-grid {
@@ -350,7 +350,7 @@
   padding: 0.3rem 0.6rem;
   border-radius: 999px;
   background: rgba(16, 185, 129, 0.12);
-  color: var(--success);
+  color: var(--admin-success, var(--success));
   font-size: 0.75rem;
   font-weight: 600;
 }
@@ -379,7 +379,7 @@
 
 .ceo-checklist li::before {
   content: "✓";
-  color: var(--success);
+  color: var(--admin-success, var(--success));
   font-weight: 700;
   margin-top: 0.1rem;
 }

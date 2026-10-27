@@ -34,7 +34,7 @@
 
 /* Progress ring accent */
 .bee-progress-fill {
-  stroke: #6366f1 !important;
+  stroke: var(--admin-accent, #6366f1) !important;
 }
 
 /* ========================================
@@ -58,8 +58,8 @@
 }
 
 .cse-skill-tag[data-skill="writing"] {
-  background: #fef3c7;
-  color: #92400e;
+  background: var(--admin-bg-warning, #fef3c7);
+  color: var(--admin-warning, #92400e);
 }
 
 /* ========================================
@@ -81,7 +81,7 @@
   border-radius: 4px;
   font-size: 10px;
   font-weight: 600;
-  color: #4338ca;
+  color: var(--admin-accent, #4338ca);
   text-transform: uppercase;
   letter-spacing: 0.3px;
   white-space: nowrap;
@@ -96,7 +96,7 @@
   border-radius: 4px;
   font-size: 10px;
   font-weight: 600;
-  color: #047857;
+  color: var(--admin-success, #047857);
   text-transform: uppercase;
   letter-spacing: 0.3px;
   white-space: nowrap;
@@ -110,7 +110,7 @@
   border-radius: 3px;
   font-size: 10px;
   font-weight: 600;
-  color: #047857;
+  color: var(--admin-success, #047857);
   margin-left: 4px;
 }
 

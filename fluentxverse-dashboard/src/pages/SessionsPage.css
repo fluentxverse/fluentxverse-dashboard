@@ -40,13 +40,13 @@
   margin: 0;
   font-size: 28px;
   font-weight: 800;
-  color: #0f172a;
+  color: var(--admin-text, #0f172a);
 }
 
 .page-header p {
   margin: 4px 0 0 0;
   font-size: 14px;
-  color: #64748b;
+  color: var(--admin-muted, #64748b);
 }
 
 .btn-refresh {
@@ -55,7 +55,7 @@
   gap: 8px;
   padding: 12px 20px;
   background: rgba(2, 69, 174, 0.08);
-  color: #0245ae;
+  color: var(--admin-accent, #0245ae);
   border: none;
   border-radius: 12px;
   font-weight: 600;
@@ -93,14 +93,14 @@
 }
 
 .stat-card {
-  background: #fff;
+  background: var(--admin-surface, #fff);
   border-radius: 16px;
   padding: 20px;
   display: flex;
   align-items: center;
   gap: 16px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--admin-border, #e2e8f0);
   transition: all 0.2s ease;
 }
 
@@ -145,7 +145,7 @@
 }
 
 .stat-icon.today {
-  background: linear-gradient(135deg, #a855f7 0%, #c084fc 100%);
+  background: linear-gradient(135deg, #a855f7 0%, var(--admin-bg-purple, #c084fc) 100%);
   box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
 }
 
@@ -172,22 +172,22 @@
 .stat-value {
   font-size: 24px;
   font-weight: 800;
-  color: #0f172a;
+  color: var(--admin-text, #0f172a);
 }
 
 .stat-label {
   font-size: 13px;
-  color: #64748b;
+  color: var(--admin-muted, #64748b);
   font-weight: 500;
 }
 
 /* Filters Section */
 .filters-section {
-  background: #fff;
+  background: var(--admin-surface, #fff);
   border-radius: 16px;
   padding: 20px;
   margin-bottom: 24px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--admin-border, #e2e8f0);
 }
 
 .search-form {
@@ -206,14 +206,14 @@
   left: 16px;
   top: 50%;
   transform: translateY(-50%);
-  color: #94a3b8;
+  color: var(--admin-muted, #94a3b8);
   font-size: 18px;
 }
 
 .search-input-wrapper input {
   width: 100%;
   padding: 12px 16px 12px 48px;
-  border: 2px solid #e2e8f0;
+  border: 2px solid var(--admin-border, #e2e8f0);
   border-radius: 12px;
   font-size: 14px;
   transition: all 0.2s ease;
@@ -221,7 +221,7 @@
 
 .search-input-wrapper input:focus {
   outline: none;
-  border-color: #0245ae;
+  border-color: var(--admin-border-accent, #0245ae);
   box-shadow: 0 0 0 3px rgba(2, 69, 174, 0.1);
 }
 
@@ -252,7 +252,7 @@
 .status-tabs {
   display: flex;
   gap: 8px;
-  background: #f1f5f9;
+  background: var(--admin-surface-soft, #f1f5f9);
   padding: 4px;
   border-radius: 12px;
 }
@@ -267,18 +267,18 @@
   border-radius: 8px;
   font-size: 13px;
   font-weight: 600;
-  color: #64748b;
+  color: var(--admin-muted, #64748b);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .status-tabs .tab:hover {
-  color: #0245ae;
+  color: var(--admin-accent, #0245ae);
 }
 
 .status-tabs .tab.active {
-  background: #fff;
-  color: #0245ae;
+  background: var(--admin-surface, #fff);
+  color: var(--admin-accent, #0245ae);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
@@ -300,20 +300,20 @@
 
 .date-input label {
   font-size: 13px;
-  color: #64748b;
+  color: var(--admin-muted, #64748b);
   font-weight: 500;
 }
 
 .date-input input {
   padding: 8px 12px;
-  border: 2px solid #e2e8f0;
+  border: 2px solid var(--admin-border, #e2e8f0);
   border-radius: 8px;
   font-size: 13px;
 }
 
 .date-input input:focus {
   outline: none;
-  border-color: #0245ae;
+  border-color: var(--admin-border-accent, #0245ae);
 }
 
 .btn-clear-dates {
@@ -323,7 +323,7 @@
   align-items: center;
   justify-content: center;
   background: rgba(239, 68, 68, 0.1);
-  color: #ef4444;
+  color: var(--admin-danger, #ef4444);
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -343,7 +343,7 @@
   background: rgba(239, 68, 68, 0.1);
   border: 1px solid rgba(239, 68, 68, 0.2);
   border-radius: 12px;
-  color: #dc2626;
+  color: var(--admin-danger, #dc2626);
   font-weight: 500;
   margin-bottom: 24px;
 }
@@ -356,16 +356,16 @@
   margin-left: auto;
   background: none;
   border: none;
-  color: #dc2626;
+  color: var(--admin-danger, #dc2626);
   cursor: pointer;
   padding: 4px;
 }
 
 /* Sessions Table */
 .sessions-table-container {
-  background: #fff;
+  background: var(--admin-surface, #fff);
   border-radius: 16px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--admin-border, #e2e8f0);
   overflow-x: auto;
 }
 
@@ -378,8 +378,8 @@
 .loading-state .spinner {
   width: 40px;
   height: 40px;
-  border: 4px solid #e2e8f0;
-  border-top-color: #0245ae;
+  border: 4px solid var(--admin-border, #e2e8f0);
+  border-top-color: var(--admin-border-accent, #0245ae);
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin: 0 auto 16px;
@@ -391,20 +391,20 @@
 
 .loading-state p,
 .empty-state p {
-  color: #64748b;
+  color: var(--admin-muted, #64748b);
   font-size: 14px;
   margin: 0;
 }
 
 .empty-state i {
   font-size: 48px;
-  color: #cbd5e1;
+  color: var(--admin-muted, #cbd5e1);
   margin-bottom: 16px;
 }
 
 .empty-state h3 {
   margin: 0 0 8px 0;
-  color: #0f172a;
+  color: var(--admin-text, #0f172a);
   font-size: 18px;
 }
 
@@ -417,22 +417,22 @@
 .sessions-table td {
   padding: 16px;
   text-align: left;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid var(--admin-border, #e2e8f0);
   vertical-align: top;
 }
 
 .sessions-table th {
-  background: #f8fafc;
+  background: var(--admin-surface, #f8fafc);
   font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: #64748b;
+  color: var(--admin-muted, #64748b);
   white-space: nowrap;
 }
 
 .sessions-table tbody tr:hover {
-  background: #f8fafc;
+  background: var(--admin-surface, #f8fafc);
 }
 
 .sessions-table tbody tr:last-child td {
@@ -446,13 +446,13 @@
 
 .datetime-cell .date {
   font-weight: 600;
-  color: #0f172a;
+  color: var(--admin-text, #0f172a);
   font-size: 14px;
 }
 
 .datetime-cell .time {
   font-size: 12px;
-  color: #64748b;
+  color: var(--admin-muted, #64748b);
   margin-top: 4px;
 }
 
@@ -509,7 +509,7 @@
 }
 
 .avatar-placeholder.student {
-  background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
+  background: linear-gradient(135deg, #8b5cf6 0%, var(--admin-bg-accent, #a78bfa) 100%);
   color: #fff;
 }
 
@@ -521,7 +521,7 @@
 
 .user-name {
   font-weight: 600;
-  color: #0f172a;
+  color: var(--admin-text, #0f172a);
   font-size: 14px;
   white-space: nowrap;
   overflow: hidden;
@@ -530,7 +530,7 @@
 
 .user-email {
   font-size: 12px;
-  color: #64748b;
+  color: var(--admin-muted, #64748b);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -538,7 +538,7 @@
 
 .duration-cell {
   font-weight: 600;
-  color: #64748b;
+  color: var(--admin-muted, #64748b);
 }
 
 /* Status Badges */
@@ -554,17 +554,17 @@
 
 .status-badge.confirmed {
   background: rgba(59, 130, 246, 0.1);
-  color: #3b82f6;
+  color: var(--admin-accent, #3b82f6);
 }
 
 .status-badge.completed {
   background: rgba(16, 185, 129, 0.1);
-  color: #10b981;
+  color: var(--admin-success, #10b981);
 }
 
 .status-badge.cancelled {
   background: rgba(239, 68, 68, 0.1);
-  color: #ef4444;
+  color: var(--admin-danger, #ef4444);
 }
 
 /* Attendance Badges */
@@ -586,7 +586,7 @@
 .attendance-label {
   font-size: 11px;
   font-weight: 700;
-  color: #94a3b8;
+  color: var(--admin-muted, #94a3b8);
   width: 16px;
 }
 
@@ -601,18 +601,18 @@
 }
 
 .attendance-badge.pending {
-  background: #f1f5f9;
-  color: #64748b;
+  background: var(--admin-surface-soft, #f1f5f9);
+  color: var(--admin-muted, #64748b);
 }
 
 .attendance-badge.present {
   background: rgba(16, 185, 129, 0.1);
-  color: #10b981;
+  color: var(--admin-success, #10b981);
 }
 
 .attendance-badge.absent {
   background: rgba(239, 68, 68, 0.1);
-  color: #ef4444;
+  color: var(--admin-danger, #ef4444);
 }
 
 .btn-view {
@@ -622,7 +622,7 @@
   align-items: center;
   justify-content: center;
   background: rgba(2, 69, 174, 0.08);
-  color: #0245ae;
+  color: var(--admin-accent, #0245ae);
   border: none;
   border-radius: 10px;
   cursor: pointer;
@@ -643,12 +643,12 @@
   align-items: center;
   justify-content: space-between;
   padding: 16px 20px;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid var(--admin-border, #e2e8f0);
 }
 
 .pagination-info {
   font-size: 13px;
-  color: #64748b;
+  color: var(--admin-muted, #64748b);
 }
 
 .pagination-buttons {
@@ -662,24 +662,24 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #fff;
-  border: 1px solid #e2e8f0;
+  background: var(--admin-surface, #fff);
+  border: 1px solid var(--admin-border, #e2e8f0);
   border-radius: 8px;
   font-size: 14px;
   font-weight: 500;
-  color: #64748b;
+  color: var(--admin-muted, #64748b);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .pagination-buttons button:hover:not(:disabled) {
-  border-color: #0245ae;
-  color: #0245ae;
+  border-color: var(--admin-border-accent, #0245ae);
+  color: var(--admin-accent, #0245ae);
 }
 
 .pagination-buttons button.active {
   background: #0245ae;
-  border-color: #0245ae;
+  border-color: var(--admin-border-accent, #0245ae);
   color: #fff;
 }
 
@@ -705,7 +705,7 @@
 }
 
 .modal-content {
-  background: #fff;
+  background: var(--admin-surface, #fff);
   border-radius: 20px;
   width: 100%;
   max-width: 640px;
@@ -792,14 +792,14 @@
 
 .cancel-reason {
   font-size: 13px;
-  color: #64748b;
+  color: var(--admin-muted, #64748b);
 }
 
 .detail-section h3 {
   margin: 0 0 16px 0;
   font-size: 14px;
   font-weight: 700;
-  color: #64748b;
+  color: var(--admin-muted, #64748b);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   display: flex;
@@ -809,7 +809,7 @@
 
 .detail-section h3 i {
   font-size: 16px;
-  color: #0245ae;
+  color: var(--admin-accent, #0245ae);
 }
 
 .participants-grid {
@@ -825,7 +825,7 @@
 }
 
 .participant-card {
-  background: #f8fafc;
+  background: var(--admin-surface, #f8fafc);
   border-radius: 12px;
   padding: 16px;
 }
@@ -841,7 +841,7 @@
   font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
-  color: #64748b;
+  color: var(--admin-muted, #64748b);
 }
 
 .participant-info {
@@ -869,18 +869,18 @@
 .participant-name {
   display: block;
   font-weight: 600;
-  color: #0f172a;
+  color: var(--admin-text, #0f172a);
   font-size: 14px;
 }
 
 .participant-email {
   display: block;
   font-size: 12px;
-  color: #64748b;
+  color: var(--admin-muted, #64748b);
 }
 
 .schedule-info {
-  background: #f8fafc;
+  background: var(--admin-surface, #f8fafc);
   border-radius: 12px;
   padding: 16px;
 }
@@ -890,7 +890,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px 0;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid var(--admin-border, #e2e8f0);
 }
 
 .schedule-row:last-child {
@@ -907,18 +907,18 @@
   align-items: center;
   gap: 8px;
   font-size: 13px;
-  color: #64748b;
+  color: var(--admin-muted, #64748b);
 }
 
 .schedule-row .label i {
-  color: #0245ae;
+  color: var(--admin-accent, #0245ae);
   font-size: 16px;
 }
 
 .schedule-row .value {
   font-size: 14px;
   font-weight: 600;
-  color: #0f172a;
+  color: var(--admin-text, #0f172a);
 }
 
 /* Timeline */
@@ -934,7 +934,7 @@
   top: 0;
   bottom: 0;
   width: 2px;
-  background: #e2e8f0;
+  background: var(--admin-surface-muted, #e2e8f0);
 }
 
 .timeline-item {
@@ -953,7 +953,7 @@
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  border: 3px solid #fff;
+  border: 3px solid var(--admin-border, #fff);
 }
 
 .timeline-dot.booked {
@@ -975,18 +975,18 @@
 
 .timeline-label {
   font-weight: 600;
-  color: #0f172a;
+  color: var(--admin-text, #0f172a);
   font-size: 14px;
 }
 
 .timeline-time {
   font-size: 12px;
-  color: #64748b;
+  color: var(--admin-muted, #64748b);
   margin-top: 2px;
 }
 
 .ticket-info {
-  background: #f8fafc;
+  background: var(--admin-surface, #f8fafc);
   border-radius: 12px;
   padding: 16px;
 }
@@ -994,7 +994,7 @@
 .ticket-id {
   font-family: monospace;
   font-size: 13px;
-  color: #0245ae;
+  color: var(--admin-accent, #0245ae);
   background: rgba(2, 69, 174, 0.08);
   padding: 8px 12px;
   border-radius: 8px;
@@ -1007,12 +1007,12 @@
 
 .error-state i {
   font-size: 48px;
-  color: #ef4444;
+  color: var(--admin-danger, #ef4444);
   margin-bottom: 16px;
 }
 
 .error-state p {
-  color: #64748b;
+  color: var(--admin-muted, #64748b);
   margin: 0;
 }
 

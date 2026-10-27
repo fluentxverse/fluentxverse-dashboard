@@ -17,11 +17,11 @@
 .loading-state i,
 .error-state i {
   font-size: 48px;
-  color: var(--primary);
+  color: var(--admin-accent, var(--primary));
 }
 
 .error-state i {
-  color: #ef4444;
+  color: var(--admin-danger, #ef4444);
 }
 
 .retry-btn {
@@ -138,7 +138,7 @@
 
 .refresh-btn:hover:not(:disabled) {
   border-color: var(--primary);
-  color: var(--primary);
+  color: var(--admin-accent, var(--primary));
 }
 
 .refresh-btn:disabled {
@@ -237,11 +237,11 @@
 }
 
 .stat-trend.positive {
-  color: #10b981;
+  color: var(--admin-success, #10b981);
 }
 
 .stat-trend.negative {
-  color: #ef4444;
+  color: var(--admin-danger, #ef4444);
 }
 
 .stat-trend i {
@@ -271,7 +271,7 @@
 }
 
 .quick-actions-section .section-header h2 i {
-  color: #f59e0b;
+  color: var(--admin-warning, #f59e0b);
   font-size: 16px;
 }
 
@@ -312,7 +312,7 @@
 
 .quick-action-card .action-icon i {
   font-size: 16px;
-  color: var(--action-color, var(--primary));
+  color: var(--action-color, var(--admin-accent, var(--primary)));
 }
 
 .quick-action-card .action-title {
@@ -396,13 +396,13 @@
 }
 
 .card-header h2 i {
-  color: var(--primary);
+  color: var(--admin-accent, var(--primary));
   font-size: 18px;
 }
 
 .view-all-link {
   font-size: 13px;
-  color: var(--primary);
+  color: var(--admin-accent, var(--primary));
   text-decoration: none;
   font-weight: 500;
   transition: opacity 0.2s;
@@ -483,15 +483,15 @@
 }
 
 .passed-label {
-  color: #10b981;
+  color: var(--admin-success, #10b981);
 }
 
 .processing-label {
-  color: #f59e0b;
+  color: var(--admin-warning, #f59e0b);
 }
 
 .failed-label {
-  color: #ef4444;
+  color: var(--admin-danger, #ef4444);
 }
 
 /* Activity Card */
@@ -535,7 +535,7 @@
 }
 
 .activity-icon.info {
-  background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+  background: linear-gradient(135deg, #8b5cf6, var(--admin-bg-accent, #a78bfa));
 }
 
 .activity-icon.warning {
@@ -622,22 +622,22 @@
 
 .status-badge.pending {
   background: rgba(239, 68, 68, 0.1);
-  color: #ef4444;
+  color: var(--admin-danger, #ef4444);
 }
 
 .status-badge.in-progress {
   background: rgba(245, 158, 11, 0.1);
-  color: #f59e0b;
+  color: var(--admin-warning, #f59e0b);
 }
 
 .status-badge.processing {
   background: rgba(139, 92, 246, 0.1);
-  color: #8b5cf6;
+  color: var(--admin-accent, #8b5cf6);
 }
 
 .status-badge.certified {
   background: rgba(16, 185, 129, 0.1);
-  color: #10b981;
+  color: var(--admin-success, #10b981);
 }
 
 /* Interview Analytics Card */
@@ -711,9 +711,9 @@
   margin-bottom: 4px;
 }
 
-.count-item.passed i { color: #10b981; }
-.count-item.failed i { color: #ef4444; }
-.count-item.pending i { color: #f59e0b; }
+.count-item.passed i { color: var(--admin-success, #10b981); }
+.count-item.failed i { color: var(--admin-danger, #ef4444); }
+.count-item.pending i { color: var(--admin-warning, #f59e0b); }
 
 .count-value {
   font-size: 24px;
@@ -835,7 +835,7 @@
 
 .score-icon i {
   font-size: 12px;
-  color: #3b82f6;
+  color: var(--admin-accent, #3b82f6);
 }
 
 .score-bar-bg {
@@ -877,7 +877,7 @@
 
 .overall-score strong {
   font-size: 18px;
-  color: #3b82f6;
+  color: var(--admin-accent, #3b82f6);
 }
 
 /* Today's Queue Card */
@@ -922,7 +922,7 @@
 }
 
 .queue-time i {
-  color: #3b82f6;
+  color: var(--admin-accent, #3b82f6);
 }
 
 .queue-tutor {

@@ -5,6 +5,7 @@ import { operationError } from '../api/operations.api';
 import { dateText, IconButton } from './OperationsShared';
 import { usdRateCents, usdRateInput, type TutorCompensationDetail, type TutorRateUpdate } from '../../../fluentxverse-server/src/shared/tutorCompensation';
 import './TutorCompensation.css';
+import { TutorPayoutAuthorization } from './TutorPayoutAuthorization';
 
 function RateConfirmation({ draft, previous, busy, error, onClose, onConfirm }: {
   draft: TutorRateUpdate; previous: number | null; busy: boolean; error: string; onClose: () => void; onConfirm: () => void;
@@ -116,6 +117,7 @@ export function TutorCompensation({ tutorId }: { tutorId: string }) {
         {data.nextHistoryBeforeVersion !== null && <button type="button" disabled={loading || saving || moreLoading} onClick={more}><i aria-hidden="true" className="ri-arrow-down-line" />{moreLoading ? 'Loading...' : 'Earlier changes'}</button>}
       </div>
     </>}
+    {data && <TutorPayoutAuthorization key={tutorId} tutorId={tutorId} />}
     {draft && data && <RateConfirmation draft={draft} previous={data.compensation.baseRateCents} busy={saving} error={saveError} onClose={() => setDraft(null)} onConfirm={confirm} />}
   </section>;
 }

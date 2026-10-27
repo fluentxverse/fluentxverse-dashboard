@@ -227,11 +227,14 @@ const TutorsPage = ({ initialAccount, onAccountClose }: { initialAccount?: { id:
 
   const getProofStatusBadge = (tutor: TutorListItem) => {
     const status = tutor.zkCertificationStatus || (
-      tutor.status === 'certified' ? 'ready_for_proving' : 'requirements_incomplete'
+      'retired'
     );
     const statusClass = status.replace(/_/g, '-');
 
     const labels: Record<string, { icon: string; label: string }> = {
+      retired: { icon: 'ri-shield-line', label: 'Retired' },
+      expired: { icon: 'ri-time-line', label: 'Expired' },
+      revoked: { icon: 'ri-close-circle-line', label: 'Revoked' },
       requirements_incomplete: { icon: 'ri-time-line', label: 'Incomplete' },
       ready_for_proving: { icon: 'ri-flask-line', label: 'Ready' },
       local_proof_generated: { icon: 'ri-shield-keyhole-line', label: 'Local Proof' },
@@ -267,7 +270,7 @@ const TutorsPage = ({ initialAccount, onAccountClose }: { initialAccount?: { id:
 
   const canRetryProof = (tutor: TutorListItem) => {
     if (tutor.status !== 'certified') return false;
-    return tutor.zkCertificationStatus !== 'verified' && tutor.zkCertificationStatus !== 'submitted';
+    return false; // Legacy keys cannot be retried; V2 has its own approval gate.
   };
 
   const totalPages = Math.ceil(total / limit);

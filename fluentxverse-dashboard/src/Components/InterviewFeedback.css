@@ -40,7 +40,7 @@
 }
 
 .required {
-  color: #ef4444;
+  color: var(--admin-danger, #ef4444);
 }
 
 .decision-buttons {
@@ -70,21 +70,21 @@
 }
 
 .decision-btn.pass {
-  color: #10b981;
+  color: var(--admin-success, #10b981);
 }
 
 .decision-btn.pass.selected {
-  background: #d1fae5;
-  border-color: #10b981;
+  background: var(--admin-bg-success, #d1fae5);
+  border-color: var(--admin-border-success, #10b981);
 }
 
 .decision-btn.fail {
-  color: #ef4444;
+  color: var(--admin-danger, #ef4444);
 }
 
 .decision-btn.fail.selected {
-  background: #fee2e2;
-  border-color: #ef4444;
+  background: var(--admin-bg-danger, #fee2e2);
+  border-color: var(--admin-border-danger, #ef4444);
 }
 
 .feedback-notes {
@@ -102,7 +102,7 @@
 
 .feedback-notes:focus {
   outline: none;
-  border-color: #0245ae;
+  border-color: var(--admin-border-accent, #0245ae);
   box-shadow: 0 0 0 3px rgba(2, 69, 174, 0.1);
 }
 
@@ -115,8 +115,8 @@
 
 .error-message {
   background: rgba(239, 68, 68, 0.1);
-  border: 1px solid #fecaca;
-  color: #dc2626;
+  border: 1px solid var(--admin-border-danger, #fecaca);
+  color: var(--admin-danger, #dc2626);
   padding: 12px;
   border-radius: 8px;
   font-size: 13px;

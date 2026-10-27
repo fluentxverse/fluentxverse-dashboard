@@ -12,6 +12,15 @@ export const apiClient = axios.create({
 // Session expired event - components can listen to this
 export const SESSION_EXPIRED_EVENT = 'fxv:session-expired';
 
+export function isAdminAuthRequest(url?: string): boolean {
+  try {
+    const path = new URL(url || '', 'https://admin-request.invalid').pathname;
+    return /^\/(?:api\/)?admin\/(?:login|logout|me|register)\/?$/.test(path);
+  } catch {
+    return false;
+  }
+}
+
 // Flag to prevent multiple redirects
 let isHandlingUnauthorized = false;
 
@@ -28,10 +37,7 @@ apiClient.interceptors.response.use(
       
       // Don't show session expired modal for auth-related endpoints
       // These are expected to return 401 when not logged in
-      const isAuthEndpoint = url.includes('/login') || 
-                             url.includes('/logout') || 
-                             url.includes('/me') ||
-                             url.includes('/register');
+      const isAuthEndpoint = isAdminAuthRequest(url);
       
       // Only show session expired for non-auth endpoints (actual session timeouts)
       if (!isAuthEndpoint && !isHandlingUnauthorized) {
@@ -40,7 +46,7 @@ apiClient.interceptors.response.use(
         console.warn('[API] Session expired or unauthorized');
         
         // Clear any stored auth data
-        localStorage.removeItem('fxv_admin_id');
+        try { localStorage.removeItem('fxv_admin_id'); } catch {}
         
         // Dispatch custom event for session expired
         // Components can listen to this to show a modal or redirect

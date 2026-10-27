@@ -66,7 +66,7 @@
 }
 
 .stat-icon.purple {
-  background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+  background: linear-gradient(135deg, #8b5cf6, var(--admin-bg-accent, #a78bfa));
 }
 
 .stat-icon.yellow {
@@ -217,7 +217,7 @@
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+  background: linear-gradient(135deg, #8b5cf6, var(--admin-bg-accent, #a78bfa));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -314,7 +314,7 @@
 .language-tag {
   padding: 3px 8px;
   background: rgba(139, 92, 246, 0.1);
-  color: #8b5cf6;
+  color: var(--admin-accent, #8b5cf6);
   border-radius: 4px;
   font-size: 11px;
   font-weight: 500;
@@ -392,7 +392,7 @@
   background: rgba(16, 185, 129, 0.1);
   border: 1px solid rgba(16, 185, 129, 0.2);
   border-radius: 10px;
-  color: #10b981;
+  color: var(--admin-success, #10b981);
   font-size: 14px;
   margin-bottom: 20px;
 }
@@ -418,7 +418,7 @@
 .suspended-badge {
   display: inline-flex;
   margin-left: 6px;
-  color: #ef4444;
+  color: var(--admin-danger, #ef4444);
   font-size: 14px;
 }
 
@@ -428,7 +428,7 @@
   gap: 6px;
   padding: 8px 12px;
   background: rgba(239, 68, 68, 0.1);
-  color: #ef4444;
+  color: var(--admin-danger, #ef4444);
   border-radius: 6px;
   font-size: 12px;
   font-weight: 500;
@@ -437,7 +437,7 @@
 
 /* Action Buttons */
 .action-btn.suspend {
-  color: #f59e0b;
+  color: var(--admin-warning, #f59e0b);
 }
 
 .action-btn.suspend:hover {
@@ -445,7 +445,7 @@
 }
 
 .action-btn.unsuspend {
-  color: #10b981;
+  color: var(--admin-success, #10b981);
 }
 
 .action-btn.unsuspend:hover {
@@ -740,7 +740,7 @@
   margin-top: 8px;
   padding: 4px 10px;
   background: rgba(239, 68, 68, 0.1);
-  color: #ef4444;
+  color: var(--admin-danger, #ef4444);
   border-radius: 6px;
   font-size: 12px;
   font-weight: 500;
@@ -786,11 +786,11 @@
 }
 
 .profile-item .value.status-active {
-  color: #10b981;
+  color: var(--admin-success, #10b981);
 }
 
 .profile-item .value.status-inactive {
-  color: #6b7280;
+  color: var(--admin-muted, #6b7280);
 }
 
 .suspension-section {
@@ -801,7 +801,7 @@
 }
 
 .suspension-section h4 {
-  color: #ef4444;
+  color: var(--admin-danger, #ef4444);
 }
 
 .suspension-details {
@@ -871,7 +871,7 @@
 
 /* History Button */
 .action-btn.history {
-  color: #8b5cf6;
+  color: var(--admin-accent, #8b5cf6);
 }
 
 .action-btn.history:hover {
@@ -955,7 +955,7 @@
 .history-empty i {
   font-size: 48px;
   margin-bottom: 12px;
-  color: #22c55e;
+  color: var(--admin-success, #22c55e);
 }
 
 .history-empty p {
@@ -993,20 +993,20 @@
 
 .history-item.suspended .history-icon {
   background: rgba(239, 68, 68, 0.1);
-  color: #ef4444;
-  border: 2px solid #ef4444;
+  color: var(--admin-danger, #ef4444);
+  border: 2px solid var(--admin-border-danger, #ef4444);
 }
 
 .history-item.unsuspended .history-icon {
   background: rgba(34, 197, 94, 0.1);
-  color: #22c55e;
-  border: 2px solid #22c55e;
+  color: var(--admin-success, #22c55e);
+  border: 2px solid var(--admin-border-success, #22c55e);
 }
 
 .history-item.auto-unsuspended .history-icon {
   background: rgba(59, 130, 246, 0.1);
-  color: #3b82f6;
-  border: 2px solid #3b82f6;
+  color: var(--admin-accent, #3b82f6);
+  border: 2px solid var(--admin-border-accent, #3b82f6);
 }
 
 .history-line {
@@ -1026,15 +1026,15 @@
 }
 
 .history-item.suspended .history-content {
-  border-left-color: #ef4444;
+  border-left-color: var(--admin-border-danger, #ef4444);
 }
 
 .history-item.unsuspended .history-content {
-  border-left-color: #22c55e;
+  border-left-color: var(--admin-border-success, #22c55e);
 }
 
 .history-item.auto-unsuspended .history-content {
-  border-left-color: #3b82f6;
+  border-left-color: var(--admin-border-accent, #3b82f6);
 }
 
 .history-action {

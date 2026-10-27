@@ -13,6 +13,19 @@
     <script>
       (function () {
         var path = window.location.pathname;
+        if (/^\/(business-english|conversational-skills|young-learners)-(preview|visual-editor)(\/|$)/.test(path)
+          || /^\/(discussion-questions-visual-editor|daily-dispatch-preview|interview-room)(\/|$)/.test(path)
+          || /^\/daily-dispatch\/(preview|archives|student)(\/|$)/.test(path)
+          || (path === '/lesson-material-maker' && ['previewToken', 'src'].some(function (key) { return new URLSearchParams(window.location.search).has(key); }))) return;
+        var preference;
+        try { preference = localStorage.getItem('fxv_admin_theme'); } catch (error) {}
+        var dark = preference === 'dark' || (preference !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.dataset.adminTheme = dark ? 'dark' : 'light';
+        document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
+        document.querySelector('meta[name="theme-color"]').content = dark ? '#141619' : '#f5f7fa';
+      })();
+      (function () {
+        var path = window.location.pathname;
         if (!/^\/(business-english|conversational-skills)-preview\//.test(path)) return;
         var theme = new URLSearchParams(window.location.search).get('theme');
         if (theme !== 'dark' && theme !== 'light') {
@@ -27,6 +40,7 @@
       })();
     </script>
     <style>
+      @media screen { html[data-admin-theme='dark'],html[data-admin-theme='dark'] body{background:#141619;color:#e6e8ec} }
       html[data-material-page='true'],html[data-material-page='true'] body{margin:0;background:#f5f5f5}
       html[data-material-theme='dark'],html[data-material-theme='dark'] body{background:#1a1a1a!important;transition:none}
     </style>

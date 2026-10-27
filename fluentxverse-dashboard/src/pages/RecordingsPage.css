@@ -8,7 +8,7 @@
 .qa-recordings-page th,.qa-recordings-page td{padding:12px;border-bottom:1px solid var(--border-color,#d8e0e8);vertical-align:top}
 .qa-recordings-page td:first-child{min-width:220px;max-width:340px;overflow-wrap:anywhere}.qa-recordings-page small{display:block;opacity:.8;margin-top:4px}
 .qa-recordings-actions{display:flex;gap:6px}.qa-recordings-actions button{width:36px;padding:6px;flex-shrink:0}
-.qa-recordings-error{color:#c63333}.qa-recordings-pagination{display:flex;align-items:center;justify-content:flex-end;gap:12px;margin-top:16px}
+.qa-recordings-error{color:var(--admin-danger, #c63333)}.qa-recordings-pagination{display:flex;align-items:center;justify-content:flex-end;gap:12px;margin-top:16px}
 .qa-recordings-overlay{position:fixed;inset:0;z-index:1500;background:#0009;display:flex;align-items:center;justify-content:center;padding:16px}
 .qa-recordings-dialog{width:100%;max-width:900px;max-height:90vh;overflow:auto;background:var(--bg-secondary,#fff);padding:20px;border-radius:8px}
 .qa-recordings-dialog p{overflow-wrap:anywhere}.qa-recordings-dialog video{width:100%;aspect-ratio:16/9;display:block;background:#000}

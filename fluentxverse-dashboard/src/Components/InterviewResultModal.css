@@ -62,7 +62,7 @@
 }
 
 .interview-result-modal .error-state {
-  color: #ef4444;
+  color: var(--admin-danger, #ef4444);
 }
 
 /* Tutor Info */
@@ -120,12 +120,12 @@
 
 .result-badge.pass {
   background: rgba(16, 185, 129, 0.1);
-  color: #10b981;
+  color: var(--admin-success, #10b981);
 }
 
 .result-badge.fail {
   background: rgba(239, 68, 68, 0.1);
-  color: #ef4444;
+  color: var(--admin-danger, #ef4444);
 }
 
 /* Result Section */
@@ -143,7 +143,7 @@
 }
 
 .result-section h4 i {
-  color: #3b82f6;
+  color: var(--admin-accent, #3b82f6);
 }
 
 /* Rubric Results */
@@ -175,7 +175,7 @@
 }
 
 .rubric-result-label i {
-  color: #3b82f6;
+  color: var(--admin-accent, #3b82f6);
 }
 
 .rubric-result-score {
@@ -222,7 +222,7 @@
 
 .rubric-result-average strong {
   font-size: 1.1rem;
-  color: #3b82f6;
+  color: var(--admin-accent, #3b82f6);
 }
 
 /* Timestamp Results */
@@ -248,7 +248,7 @@
   font-family: monospace;
   font-size: 0.85rem;
   font-weight: 600;
-  color: #3b82f6;
+  color: var(--admin-accent, #3b82f6);
   min-width: 50px;
 }
 

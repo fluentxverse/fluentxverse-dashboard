@@ -152,7 +152,7 @@
 
 .mark-read-btn {
   font-size: 12px;
-  color: var(--primary);
+  color: var(--admin-accent, var(--primary));
   background: none;
   border: none;
   cursor: pointer;
@@ -201,27 +201,27 @@
 
 .notification-icon.success {
   background: var(--success-light);
-  color: var(--success);
+  color: var(--admin-success, var(--success));
 }
 
 .notification-icon.warning {
   background: var(--warning-light);
-  color: var(--warning);
+  color: var(--admin-warning, var(--warning));
 }
 
 .notification-icon.info {
   background: var(--info-light);
-  color: var(--info);
+  color: var(--admin-accent, var(--info));
 }
 
 .notification-icon.primary {
   background: rgba(99, 102, 241, 0.15);
-  color: #6366f1;
+  color: var(--admin-accent, #6366f1);
 }
 
 .notification-icon.error {
   background: rgba(239, 68, 68, 0.15);
-  color: #ef4444;
+  color: var(--admin-danger, #ef4444);
 }
 
 .notification-content {
@@ -249,7 +249,7 @@
 .notification-footer a {
   font-size: 13px;
   font-weight: 500;
-  color: var(--primary);
+  color: var(--admin-accent, var(--primary));
   text-decoration: none;
 }
 
@@ -436,11 +436,11 @@
 }
 
 .user-dropdown-item:last-child {
-  color: var(--error);
+  color: var(--admin-danger, var(--error));
 }
 
 .user-dropdown-item:last-child i {
-  color: var(--error);
+  color: var(--admin-danger, var(--error));
 }
 
 /* Responsive */

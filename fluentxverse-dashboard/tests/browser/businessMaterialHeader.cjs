@@ -16,7 +16,7 @@ const kinds = (process.env.BUSINESS_HEADER_KINDS || 'editor,preview,tutor,tutor-
         localStorage.setItem('beve-theme', theme);
         localStorage.setItem('theme-storage', JSON.stringify({ state: { themeMode: theme, isDarkMode: theme === 'dark' }, version: 2 }));
       }, theme);
-      const lesson = { id: 'header-fixture', course: 'business-english', level: 3, chapter: 1, chapterName: 'Work introductions', lessonNumber: 1,
+      const lesson = { id: 'header-fixture', course: 'business-english', level: 3, chapter: 2, chapterName: 'Work introductions', lessonNumber: 1,
         lessonName: width <= 320 ? 'Introducing Your Team and Building Professional Relationships Across International Departments' : 'Introducing Your Team',
         levelBadge: 'BEGINNER', skill: 'listening', status: 'published', goalTextEn: 'Introduce yourself and a coworker.', beData: { lessonType: 'LISTENING' }, sections: [] };
       const writes = [], errors = [];
@@ -59,7 +59,7 @@ const kinds = (process.env.BUSINESS_HEADER_KINDS || 'editor,preview,tutor,tutor-
       await expect(header.locator('.beve-header-brand-sub')).toHaveText('Business English');
       await expect(header.locator('.beve-header-lesson-number')).toHaveText('Lesson 1');
       await expect(header.locator('.beve-header-lesson-title')).toHaveText(lesson.lessonName);
-      await expect(header.locator('.beve-header-chapter')).toHaveText('Chapter 1 / Work introductions');
+      await expect(header.locator('.beve-header-chapter')).toHaveText('Chapter 2 / Work introductions');
       await expect(header.locator('.beve-header-level')).toHaveText('Level 3');
       await expect(header.locator('.beve-header-page')).toHaveText('Page 1');
       assert.equal(await header.locator('.beve-preview-type-pill').count(), 0);

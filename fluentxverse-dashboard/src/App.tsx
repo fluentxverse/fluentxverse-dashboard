@@ -1,6 +1,7 @@
-import { LocationProvider, Router, Route, useLocation } from 'preact-iso';
+import { LocationProvider, Router, Route, useLocation, lazy } from 'preact-iso';
 import { useCallback, useEffect, useState } from 'preact/hooks';
 import { AuthProvider, useAuthContext } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 import { Sidebar } from './components/Sidebar';
 import { SessionExpiredModal } from './Components/Common/SessionExpiredModal';
 import { OfflineBanner } from './Components/Common/OfflineBanner';
@@ -52,6 +53,11 @@ import LessonOperationsPage from './pages/LessonOperationsPage';
 import OperationsLessonPage from './pages/OperationsLessonPage';
 import OperationsAccountPage from './pages/OperationsAccountPage';
 
+const EmailPage = lazy(() => import('./pages/EmailPage'));
+const ServerHealthPage = lazy(() => import('./pages/ServerHealthPage'));
+const ContainerStatsPage = lazy(() => import('./pages/ContainerStatsPage'));
+const OperationalAlertsPage = lazy(() => import('./pages/OperationalAlertsPage'));
+
 // Loading spinner component
 const LoadingScreen = () => (
   <div className="loading-screen">
@@ -98,13 +104,21 @@ const ProtectedLayout = ({ children }: { children: any }) => {
 const AppContent = () => {
   const { isAuthenticated, loading } = useAuthContext();
   const location = useLocation();
+  const path = location.path || location.url || window.location.pathname;
+  const isLoginPage = path === '/login' || path === '/login/';
 
-  if (loading) {
+  // Login is not a workspace route. Replace it after authentication, including restored sessions.
+  useEffect(() => {
+    if (!loading && isAuthenticated && isLoginPage) location.route('/', true);
+  }, [loading, isAuthenticated, isLoginPage, location.route]);
+
+  if (loading || (isAuthenticated && isLoginPage)) {
     return <LoadingScreen />;
   }
 
+  if (isLoginPage) return <LoginPage />;
+
   // Interview room is fullscreen, no sidebar/header
-  const path = location.path || location.url || window.location.pathname;
   const search = (() => {
     try {
       return window.location.search || '';
@@ -255,8 +269,12 @@ const AppContent = () => {
         <Route path="/recordings" component={RecordingsPage} />
         <Route path="/analytics" component={AnalyticsPage} />
         <Route path="/inbox" component={InboxPage} />
+        <Route path="/email" component={EmailPage} />
         <Route path="/tasks" component={AdminTasksPage} />
         <Route path="/testing" component={TestingPage} />
+        <Route path="/server-health" component={ServerHealthPage} />
+        <Route path="/stats" component={ContainerStatsPage} />
+        <Route path="/alerts" component={OperationalAlertsPage} />
         <Route path="/lesson-operations" component={LessonOperationsPage} />
         <Route path="/lesson-operations/:id" component={OperationsLessonPage} />
         <Route path="/operations/people/:role/:id" component={OperationsAccountPage} />
@@ -284,13 +302,15 @@ const AppContent = () => {
 export function App() {
   return (
     <LocationProvider>
-      <AuthProvider>
-        <ToastProvider>
-          <OfflineBanner />
-          <AppContent />
-          <SessionExpiredModal />
-        </ToastProvider>
-      </AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <ToastProvider>
+            <OfflineBanner />
+            <AppContent />
+            <SessionExpiredModal />
+          </ToastProvider>
+        </AuthProvider>
+      </ThemeProvider>
     </LocationProvider>
   );
 }

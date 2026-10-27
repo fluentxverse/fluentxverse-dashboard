@@ -108,12 +108,12 @@
 
 .nav-item.active {
   background: linear-gradient(135deg, rgba(2, 69, 174, 0.1) 0%, rgba(74, 158, 255, 0.1) 100%);
-  color: var(--primary);
+  color: var(--admin-accent, var(--primary));
   font-weight: 600;
 }
 
 .nav-item.active i {
-  color: var(--primary);
+  color: var(--admin-accent, var(--primary));
 }
 
 .nav-badge {
@@ -174,7 +174,7 @@
 
 .change-pw-btn:hover {
   background: rgba(2, 69, 174, 0.1);
-  color: var(--primary);
+  color: var(--admin-accent, var(--primary));
 }
 
 .change-pw-btn i {
@@ -197,7 +197,7 @@
 
 .logout-btn:hover {
   background: var(--error-light);
-  color: var(--error);
+  color: var(--admin-danger, var(--error));
 }
 
 .logout-btn i {

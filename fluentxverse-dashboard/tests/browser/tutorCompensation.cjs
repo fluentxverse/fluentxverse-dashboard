@@ -19,10 +19,12 @@ async function fixture(browser, permissions, viewport) {
     let response = { success: true, data: [] }, status = 200;
     if (path === '/admin/me') response = { success: true, user: { userId: 'finance-ui', username: 'finance', firstName: 'Finance', lastName: 'Operator', role: 'admin' } };
     else if (path === '/admin/operations/access') response.data = { id: 'finance-ui', role: 'admin', permissions };
-    else if (path === '/admin/tutors') response.data = { total: 1, tutors: [{ id: 'compensation-ui', name: 'Tutor Compensation Fixture', email: 'tutor@example.test', languages: ['English'], status: state.tutorStatus, totalSessions: 3, rating: 5, writtenExamPassed: state.tutorStatus === 'certified', speakingExamPassed: state.tutorStatus === 'certified' }] };
+    else if (path === '/admin/tutors') response.data = { total: 1, tutors: [{ id: 'compensation-ui', name: 'Tutor Compensation Fixture', email: 'tutor@example.test', languages: ['English'], status: state.tutorStatus, totalSessions: 3, rating: 5, zkCertificationStatus: 'requirements_incomplete', writtenExamPassed: state.tutorStatus === 'certified', speakingExamPassed: state.tutorStatus === 'certified' }] };
     else if (path === '/admin/operations/people/tutor/compensation-ui') response.data = { person: { name: 'Tutor Compensation Fixture', email: 'tutor@example.test' }, lessons: [], penalties: [], reports: [], transactions: [], performance: null, progress: [], role: 'tutor' };
     else if (path.startsWith('/admin/operations/compensation')) {
-      if (request.method() === 'PUT') {
+      if(path.endsWith('/earnings')||path.endsWith('/payouts')) { state.privateReads++;response.data=[]; }
+      else if(path.endsWith('/payout-authorization/readiness')) response.data={ready:false,transferEnabled:false};
+      else if (request.method() === 'PUT') {
         const input = request.postDataJSON(); state.puts.push(input);
         if (state.failOnce) { state.failOnce = false; status = 503; response = { success: false, error: 'Temporarily unavailable. Please retry.' }; }
         else if (state.conflictOnce) { state.conflictOnce = false; state.version++; state.cents = 2000; status = 409; response = { success: false, error: 'This rate was changed by another administrator. Reload it before saving.' }; }

@@ -99,7 +99,7 @@
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  background: #fff;
+  background: var(--admin-surface, #fff);
   border: 1px solid var(--border-color);
   border-radius: 12px;
 }
@@ -107,7 +107,7 @@
 .cse-stat-value {
   font-size: 32px;
   font-weight: 700;
-  color: var(--primary);
+  color: var(--admin-accent, var(--primary));
 }
 
 .cse-stat-label {
@@ -151,7 +151,7 @@
   justify-content: center;
   padding: 60px 24px;
   text-align: center;
-  background: #fff;
+  background: var(--admin-surface, #fff);
   border: 1px solid var(--border-color);
   border-radius: 14px;
 }
@@ -196,7 +196,7 @@
    ======================================== */
 
 .cse-lesson-card {
-  background: #fff;
+  background: var(--admin-surface, #fff);
   border: 1px solid var(--border-color);
   border-radius: 14px;
   overflow: hidden;
@@ -310,9 +310,9 @@
 }
 
 .cse-delete-btn:hover {
-  background: #fee2e2;
-  border-color: #ef4444;
-  color: #ef4444;
+  background: var(--admin-bg-danger, #fee2e2);
+  border-color: var(--admin-border-danger, #ef4444);
+  color: var(--admin-danger, #ef4444);
 }
 
 /* ========================================
@@ -331,7 +331,7 @@
 }
 
 .cse-modal {
-  background: #fff;
+  background: var(--admin-surface, #fff);
   border-radius: 16px;
   width: 100%;
   max-width: 720px;
@@ -425,7 +425,7 @@
 
 .cse-locked-label {
   font-size: 11px;
-  color: var(--primary);
+  color: var(--admin-accent, var(--primary));
   margin-left: 8px;
   font-weight: 400;
 }
@@ -434,7 +434,7 @@
 .cse-form-field select,
 .cse-form-field textarea {
   padding: 10px 14px;
-  background: #fff;
+  background: var(--admin-surface, #fff);
   border: 1px solid var(--border-color);
   border-radius: 8px;
   font-size: 14px;
@@ -460,10 +460,10 @@
   align-items: center;
   gap: 8px;
   padding: 12px 16px;
-  background: #fef3c7;
-  border: 1px solid #fbbf24;
+  background: var(--admin-bg-warning, #fef3c7);
+  border: 1px solid var(--admin-border-warning, #fbbf24);
   border-radius: 10px;
-  color: #92400e;
+  color: var(--admin-warning, #92400e);
   font-size: 13px;
   margin-bottom: 16px;
 }
@@ -515,7 +515,7 @@
 
 .cse-btn-secondary {
   padding: 10px 20px;
-  background: #fff;
+  background: var(--admin-surface, #fff);
   border: 1px solid var(--border-color);
   border-radius: 8px;
   font-size: 14px;
@@ -570,7 +570,7 @@
   justify-content: space-between;
   gap: 16px;
   padding: 12px 24px;
-  background: #fff;
+  background: var(--admin-surface, #fff);
   border-bottom: 1px solid var(--border-color);
   position: sticky;
   top: 0;
@@ -636,7 +636,7 @@
 
 .cse-editor-controls {
   width: 320px;
-  background: #fff;
+  background: var(--admin-surface, #fff);
   border-right: 1px solid var(--border-color);
   padding: 24px;
   overflow-y: auto;
@@ -720,7 +720,7 @@
 
 .cse-upload-btn:hover {
   border-color: var(--primary);
-  background: #e0f2fe;
+  background: var(--admin-bg-accent, #e0f2fe);
 }
 
 .cse-upload-btn i {
@@ -839,7 +839,7 @@
 .cse-btn-secondary:hover {
   background: var(--bg-secondary);
   border-color: var(--primary);
-  color: var(--primary);
+  color: var(--admin-accent, var(--primary));
 }
 
 .cse-btn-secondary i {
@@ -848,7 +848,7 @@
 
 /* Lesson Info Panel */
 .cse-lesson-info-panel {
-  background: #fff;
+  background: var(--admin-surface, #fff);
   border-radius: 12px;
   padding: 24px;
   border: 1px solid var(--border-color);
@@ -901,18 +901,18 @@
 }
 
 .cse-skill-tag[data-skill="speaking"] {
-  background: #dbeafe;
-  color: #1d4ed8;
+  background: var(--admin-bg-accent, #dbeafe);
+  color: var(--admin-accent, #1d4ed8);
 }
 
 .cse-skill-tag[data-skill="listening"] {
-  background: #ede9fe;
-  color: #6d28d9;
+  background: var(--admin-surface-soft, #ede9fe);
+  color: var(--admin-accent, #6d28d9);
 }
 
 .cse-skill-tag[data-skill="reading"] {
-  background: #d1fae5;
-  color: #047857;
+  background: var(--admin-bg-success, #d1fae5);
+  color: var(--admin-success, #047857);
 }
 
 .cse-info-section {
@@ -947,7 +947,7 @@
 
 /* Sections Placeholder */
 .cse-sections-placeholder {
-  background: #fff;
+  background: var(--admin-surface, #fff);
   border-radius: 12px;
   padding: 24px;
   border: 1px solid var(--border-color);
@@ -1137,7 +1137,7 @@
 .cse-level {
   border: 1px solid var(--border-color);
   border-radius: 12px;
-  background: #fff;
+  background: var(--admin-surface, #fff);
   overflow: hidden;
 }
 
@@ -1147,7 +1147,7 @@
   justify-content: space-between;
   width: 100%;
   padding: 16px 24px;
-  background: #fff;
+  background: var(--admin-surface, #fff);
   border: none;
   cursor: pointer;
   transition: all 0.2s;
@@ -1289,7 +1289,7 @@
   border-radius: 6px;
   font-size: 13px;
   outline: none;
-  background: #fff;
+  background: var(--admin-surface, #fff);
   color: var(--text-primary);
 }
 
@@ -1327,12 +1327,12 @@
 }
 
 .cse-meta-cancel:hover {
-  background: #e5e7eb;
+  background: var(--admin-surface-muted, #e5e7eb);
 }
 
 /* Chapter metadata editors container */
 .cse-chapter-meta-editors {
-  background: #fff;
+  background: var(--admin-surface, #fff);
   border: 1px solid var(--border-color);
   border-top: none;
   padding: 4px 0;
@@ -1371,7 +1371,7 @@
   justify-content: space-between;
   width: 100%;
   padding: 10px 12px;
-  background: #fff;
+  background: var(--admin-surface, #fff);
   border: 1px solid var(--border-color);
   border-radius: 6px;
   cursor: pointer;
@@ -1432,7 +1432,7 @@
 
 /* Lessons List */
 .cse-lessons-list {
-  background: #fff;
+  background: var(--admin-surface, #fff);
   border: 1px solid var(--border-color);
   border-top: none;
   border-radius: 0 0 6px 6px;
@@ -1531,25 +1531,25 @@
 .cse-action-btn:hover {
   background: var(--bg-secondary);
   border-color: var(--border-color);
-  color: var(--primary);
+  color: var(--admin-accent, var(--primary));
 }
 
 .cse-action-btn.cse-action-delete:hover {
-  background: #fee2e2;
-  border-color: #ef4444;
-  color: #ef4444;
+  background: var(--admin-bg-danger, #fee2e2);
+  border-color: var(--admin-border-danger, #ef4444);
+  color: var(--admin-danger, #ef4444);
 }
 
 .cse-action-btn.cse-action-publish:hover {
-  background: #dcfce7;
-  border-color: #10b981;
-  color: #10b981;
+  background: var(--admin-bg-success, #dcfce7);
+  border-color: var(--admin-border-success, #10b981);
+  color: var(--admin-success, #10b981);
 }
 
 .cse-action-btn.cse-action-unpublish:hover {
-  background: #fef3c7;
-  border-color: #f59e0b;
-  color: #f59e0b;
+  background: var(--admin-bg-warning, #fef3c7);
+  border-color: var(--admin-border-warning, #f59e0b);
+  color: var(--admin-warning, #f59e0b);
 }
 
 .cse-action-btn i {
@@ -1603,7 +1603,7 @@
 .cse-add-lesson-btn:hover {
   background: var(--bg-tertiary);
   border-color: var(--primary);
-  color: var(--primary);
+  color: var(--admin-accent, var(--primary));
 }
 
 .cse-add-lesson-btn i {
@@ -1675,33 +1675,33 @@
 }
 
 .cse-lesson-row.selected .cse-action-btn {
-  background: rgba(255, 255, 255, 0.9);
+  background: var(--admin-surface, rgba(255, 255, 255, 0.9));
   border-color: rgba(2, 69, 174, 0.2);
   color: var(--text-secondary);
 }
 
 .cse-lesson-row.selected .cse-action-btn:hover {
-  background: #fff;
+  background: var(--admin-surface, #fff);
   border-color: var(--primary);
-  color: var(--primary);
+  color: var(--admin-accent, var(--primary));
 }
 
 .cse-lesson-row.selected .cse-action-btn.cse-action-delete:hover {
-  background: #fee2e2;
-  border-color: #ef4444;
-  color: #ef4444;
+  background: var(--admin-bg-danger, #fee2e2);
+  border-color: var(--admin-border-danger, #ef4444);
+  color: var(--admin-danger, #ef4444);
 }
 
 .cse-lesson-row.selected .cse-action-btn.cse-action-publish:hover {
-  background: #dcfce7;
-  border-color: #10b981;
-  color: #10b981;
+  background: var(--admin-bg-success, #dcfce7);
+  border-color: var(--admin-border-success, #10b981);
+  color: var(--admin-success, #10b981);
 }
 
 .cse-lesson-row.selected .cse-action-btn.cse-action-unpublish:hover {
-  background: #fef3c7;
-  border-color: #f59e0b;
-  color: #f59e0b;
+  background: var(--admin-bg-warning, #fef3c7);
+  border-color: var(--admin-border-warning, #f59e0b);
+  color: var(--admin-warning, #f59e0b);
 }
 
 .cse-lesson-row {
@@ -1720,7 +1720,7 @@
 }
 
 .cse-analytics {
-  background: #fff;
+  background: var(--admin-surface, #fff);
   border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 20px;
@@ -1742,7 +1742,7 @@
 
 .cse-analytics-header i {
   font-size: 22px;
-  color: var(--primary);
+  color: var(--admin-accent, var(--primary));
 }
 
 .cse-analytics-header h3 {
@@ -1797,7 +1797,7 @@
 
 .cse-progress-fill {
   fill: none;
-  stroke: var(--primary);
+  stroke: var(--admin-accent, var(--primary));
   stroke-width: 8;
   stroke-linecap: round;
   transition: stroke-dasharray 0.5s ease;
@@ -1928,7 +1928,7 @@
 
 .cse-quick-stat i {
   font-size: 20px;
-  color: var(--primary);
+  color: var(--admin-accent, var(--primary));
 }
 
 .cse-quick-stat div {
@@ -1990,7 +1990,7 @@
    ======================================== */
 
 .cse-lesson-info-card {
-  background: linear-gradient(135deg, var(--bg-tertiary) 0%, #fff 100%);
+  background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--admin-surface, #fff) 100%);
   border: 1px solid var(--border-color);
   border-radius: 10px;
   padding: 16px;
@@ -2054,7 +2054,7 @@
   display: block;
   font-size: 18px;
   font-weight: 700;
-  color: var(--primary);
+  color: var(--admin-accent, var(--primary));
 }
 
 .cse-engagement-label {
@@ -2158,11 +2158,11 @@
 }
 
 .cse-status-item.complete {
-  color: #10b981;
+  color: var(--admin-success, #10b981);
 }
 
 .cse-status-item.complete i {
-  color: #10b981;
+  color: var(--admin-success, #10b981);
 }
 
 .cse-status-item.incomplete {
@@ -2254,7 +2254,7 @@
   border-radius: 20px;
   font-size: 11px;
   font-weight: 500;
-  color: #b45309;
+  color: var(--admin-warning, #b45309);
   margin-left: 8px;
   white-space: nowrap;
 }
@@ -2299,7 +2299,7 @@
 .cse-assign-select {
   flex: 1;
   padding: 8px 12px;
-  background: #fff;
+  background: var(--admin-surface, #fff);
   border: 1px solid var(--border-color);
   border-radius: 8px;
   font-size: 13px;
@@ -2425,7 +2425,7 @@
 }
 
 .cse-modal-header-ai h2 {
-  color: #7c3aed;
+  color: var(--admin-accent, #7c3aed);
 }
 
 .cse-modal-header-ai h2 i {
@@ -2459,7 +2459,7 @@
 .cse-ai-chapter-num {
   font-size: 12px;
   font-weight: 700;
-  color: var(--primary);
+  color: var(--admin-accent, var(--primary));
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 10px;
@@ -2489,7 +2489,7 @@
 .cse-ai-lesson-num {
   font-size: 11px;
   font-weight: 700;
-  color: #7c3aed;
+  color: var(--admin-accent, #7c3aed);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 8px;
@@ -2542,7 +2542,7 @@
 
 .cse-saving-overlay i {
   font-size: 36px;
-  color: #8b5cf6;
+  color: var(--admin-accent, #8b5cf6);
 }
 
 /* Spin animation */

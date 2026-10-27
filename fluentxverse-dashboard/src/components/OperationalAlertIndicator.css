@@ -1,0 +1,4 @@
+.ops-alert-indicator { position:relative; }
+.ops-alert-indicator span { position:absolute; top:-5px; right:-5px; min-width:18px; height:18px; display:grid; place-items:center; padding-inline:3px; font-size:10px; font-weight:700; border-radius:4px; background:var(--admin-danger,#bd3545); color:white; }
+.ops-alert-active { color:var(--admin-danger,#bd3545)!important; }
+.ops-alert-stale { color:var(--admin-warning,#a36a11)!important; }

@@ -68,7 +68,7 @@
 }
 
 .stat-icon.total {
-  background: linear-gradient(135deg, #6366f1, #818cf8);
+  background: linear-gradient(135deg, #6366f1, var(--admin-bg-accent, #818cf8));
   color: #fff;
 }
 
@@ -83,7 +83,7 @@
 }
 
 .stat-icon.processing {
-  background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+  background: linear-gradient(135deg, #8b5cf6, var(--admin-bg-accent, #a78bfa));
   color: #fff;
 }
 
@@ -274,13 +274,13 @@
 .exam-step.completed .step-icon {
   background: #22c55e;
   color: white;
-  border-color: #22c55e;
+  border-color: var(--admin-border-success, #22c55e);
 }
 
 .exam-step.current .step-icon {
   background: #3b82f6;
   color: white;
-  border-color: #3b82f6;
+  border-color: var(--admin-border-accent, #3b82f6);
   animation: pulse 2s infinite;
 }
 
@@ -329,32 +329,32 @@
 
 .status-badge.pending-written {
   background: rgba(245, 158, 11, 0.1);
-  color: #f59e0b;
+  color: var(--admin-warning, #f59e0b);
 }
 
 .status-badge.pending-speaking {
   background: rgba(59, 130, 246, 0.1);
-  color: #3b82f6;
+  color: var(--admin-accent, #3b82f6);
 }
 
 .status-badge.processing {
   background: rgba(139, 92, 246, 0.1);
-  color: #8b5cf6;
+  color: var(--admin-accent, #8b5cf6);
 }
 
 .status-badge.interview-pass {
   background: rgba(16, 185, 129, 0.1);
-  color: #10b981;
+  color: var(--admin-success, #10b981);
 }
 
 .status-badge.interview-fail {
   background: rgba(239, 68, 68, 0.1);
-  color: #ef4444;
+  color: var(--admin-danger, #ef4444);
 }
 
 .status-badge.review {
   background: rgba(107, 114, 128, 0.1);
-  color: #6b7280;
+  color: var(--admin-muted, #6b7280);
 }
 
 .card-actions {
@@ -436,7 +436,7 @@
 
 .alert-error {
   background: rgba(239, 68, 68, 0.1);
-  color: #ef4444;
+  color: var(--admin-danger, #ef4444);
   border: 1px solid rgba(239, 68, 68, 0.2);
 }
 
@@ -615,7 +615,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--primary-color) 0%, #818cf8 100%);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--admin-bg-accent, #818cf8) 100%);
   color: white;
   font-size: 20px;
   font-weight: 600;
@@ -651,7 +651,7 @@
   border-radius: 20px;
   font-size: 12px;
   font-weight: 500;
-  color: #10b981;
+  color: var(--admin-success, #10b981);
   flex-shrink: 0;
 }
 
@@ -712,7 +712,7 @@
 
 .preview-badge.has {
   background: rgba(16, 185, 129, 0.1);
-  color: #10b981;
+  color: var(--admin-success, #10b981);
 }
 
 .preview-badge i {
@@ -859,10 +859,10 @@
   align-items: center;
   gap: 8px;
   padding: 12px 16px;
-  background: #fee2e2;
-  border: 1px solid #fca5a5;
+  background: var(--admin-bg-danger, #fee2e2);
+  border: 1px solid var(--admin-border-danger, #fca5a5);
   border-radius: 8px;
-  color: #dc2626;
+  color: var(--admin-danger, #dc2626);
   font-size: 14px;
   margin-bottom: 1rem;
 }
@@ -911,7 +911,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--primary-color) 0%, #818cf8 100%);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--admin-bg-accent, #818cf8) 100%);
   color: white;
   font-size: 28px;
   font-weight: 600;
@@ -1027,10 +1027,10 @@
   justify-content: center;
   gap: 8px;
   padding: 12px 20px;
-  background: #fee2e2;
-  border: 1px solid #fca5a5;
+  background: var(--admin-bg-danger, #fee2e2);
+  border: 1px solid var(--admin-border-danger, #fca5a5);
   border-radius: 8px;
-  color: #dc2626;
+  color: var(--admin-danger, #dc2626);
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
@@ -1038,7 +1038,7 @@
 }
 
 .btn-reject:hover {
-  background: #fecaca;
+  background: var(--admin-bg-danger, #fecaca);
 }
 
 .btn-approve {
@@ -1134,12 +1134,12 @@
 }
 
 .review-item-card.approved {
-  border-color: #10b981;
+  border-color: var(--admin-border-success, #10b981);
   background: rgba(16, 185, 129, 0.03);
 }
 
 .review-item-card.rejected {
-  border-color: #ef4444;
+  border-color: var(--admin-border-danger, #ef4444);
   background: rgba(239, 68, 68, 0.03);
 }
 
@@ -1186,17 +1186,17 @@
 
 .item-status.approved {
   background: rgba(16, 185, 129, 0.1);
-  color: #10b981;
+  color: var(--admin-success, #10b981);
 }
 
 .item-status.rejected {
   background: rgba(239, 68, 68, 0.1);
-  color: #ef4444;
+  color: var(--admin-danger, #ef4444);
 }
 
 .item-status.pending {
   background: rgba(245, 158, 11, 0.1);
-  color: #f59e0b;
+  color: var(--admin-warning, #f59e0b);
 }
 
 .item-content {
@@ -1271,23 +1271,23 @@
 }
 
 .btn-item-reject {
-  background: #fee2e2;
-  border: 1px solid #fca5a5;
-  color: #dc2626;
+  background: var(--admin-bg-danger, #fee2e2);
+  border: 1px solid var(--admin-border-danger, #fca5a5);
+  color: var(--admin-danger, #dc2626);
 }
 
 .btn-item-reject:hover:not(:disabled) {
-  background: #fecaca;
+  background: var(--admin-bg-danger, #fecaca);
 }
 
 .btn-item-approve {
-  background: #d1fae5;
-  border: 1px solid #6ee7b7;
-  color: #059669;
+  background: var(--admin-bg-success, #d1fae5);
+  border: 1px solid var(--admin-border-success, #6ee7b7);
+  color: var(--admin-success, #059669);
 }
 
 .btn-item-approve:hover:not(:disabled) {
-  background: #a7f3d0;
+  background: var(--admin-bg-success, #a7f3d0);
 }
 
 .btn-item-reject:disabled,
@@ -1304,7 +1304,7 @@
   background: rgba(239, 68, 68, 0.05);
   border-top: 1px solid rgba(239, 68, 68, 0.1);
   font-size: 13px;
-  color: #dc2626;
+  color: var(--admin-danger, #dc2626);
 }
 
 .rejection-reason i {
@@ -1362,7 +1362,7 @@
   position: absolute;
   bottom: -2px;
   right: -2px;
-  background: white;
+  background: var(--admin-surface, white);
   border-radius: 50%;
   width: 20px;
   height: 20px;

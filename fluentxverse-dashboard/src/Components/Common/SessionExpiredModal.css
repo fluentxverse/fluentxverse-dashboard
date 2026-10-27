@@ -23,7 +23,7 @@
 }
 
 .session-expired-modal {
-  background: white;
+  background: var(--admin-surface, white);
   border-radius: 16px;
   padding: 32px;
   max-width: 420px;
@@ -64,19 +64,19 @@
   margin: 0 0 12px;
   font-size: 24px;
   font-weight: 600;
-  color: #1f2937;
+  color: var(--admin-text, #1f2937);
 }
 
 .session-expired-modal p {
   margin: 0 0 20px;
-  color: #6b7280;
+  color: var(--admin-muted, #6b7280);
   font-size: 15px;
   line-height: 1.5;
 }
 
 .session-expired-note {
-  background: #f0fdf4;
-  border: 1px solid #bbf7d0;
+  background: var(--admin-surface-soft, #f0fdf4);
+  border: 1px solid var(--admin-border-success, #bbf7d0);
   border-radius: 10px;
   padding: 12px 16px;
   margin-bottom: 24px;
@@ -87,7 +87,7 @@
 }
 
 .session-expired-note i {
-  color: #16a34a;
+  color: var(--admin-success, #16a34a);
   font-size: 18px;
   flex-shrink: 0;
   margin-top: 1px;
@@ -95,7 +95,7 @@
 
 .session-expired-note span {
   font-size: 13px;
-  color: #15803d;
+  color: var(--admin-success, #15803d);
   line-height: 1.4;
 }
 
@@ -124,32 +124,4 @@
 
 .session-expired-btn i {
   font-size: 20px;
-}
-
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-  .session-expired-modal {
-    background: #1f2937;
-  }
-
-  .session-expired-modal h2 {
-    color: #f9fafb;
-  }
-
-  .session-expired-modal p {
-    color: #9ca3af;
-  }
-
-  .session-expired-note {
-    background: #064e3b;
-    border-color: #065f46;
-  }
-
-  .session-expired-note span {
-    color: #6ee7b7;
-  }
-
-  .session-expired-note i {
-    color: #6ee7b7;
-  }
 }

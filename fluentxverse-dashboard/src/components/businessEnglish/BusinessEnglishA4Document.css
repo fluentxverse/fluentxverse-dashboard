@@ -1,0 +1,91 @@
+.beve-a4-document { display: flex; flex: 1; min-width: 0; min-height: 0; }
+.beve-a4-sidebar { display: flex; flex-direction: column; width: 186px; flex-shrink: 0; }
+.beve-a4-sidebar .beve-sidebar-pages { flex: 1; min-height: 0; overflow-y: auto; }
+.beve.beve--a4 .beve-a4-sidebar .beve-page-label { white-space: normal; text-overflow: clip; overflow: visible; }
+.beve-a4-view-controls { padding: 16px 12px; display: grid; gap: 12px; border-top: 1px solid #393444; }
+.beve-a4-view-controls label { display: flex; align-items: center; gap: 8px; }
+.beve-a4-view-controls select { width: 100%; padding: 6px; background: #211d2b; color: #e4e4e7; border: 1px solid #51465f; border-radius: 4px; font: inherit; font-size: 12px; }
+.beve-a4-canvas { align-items: stretch; gap: 32px; padding: 24px; }
+.beve-a4-row { display: grid; grid-template-columns: var(--a4-paper-width); gap: 24px; width: max-content; margin: 0 auto; scroll-margin-top: 24px; }
+.beve-a4-row--side { grid-template-columns: var(--a4-paper-width) 282px; align-items: start; }
+.beve-a4-paper.beve-page { width: 794px; min-width: 794px; max-width: none; height: calc(794px * 297 / 210); box-sizing: border-box; flex: none; display: flex; flex-direction: column; border: 0; border-radius: 0; overflow: visible; zoom: var(--a4-scale); background: #141420; }
+.beve-a4-paper > .beve-page-header { flex-shrink: 0; }
+.beve-a4-paper > .beve-page-footer { flex-shrink: 0; margin-top: auto; }
+.beve-a4-paper .beve-page-header { padding: 20px 32px; }
+.beve-a4-paper .beve-header-lesson { font-size: 23px; }
+.beve-a4-paper-body { padding: 32px 40px; flex: 1; min-height: 0; display: flex; flex-direction: column; box-sizing: border-box; }
+.beve-a4-block.beve-col-student { padding: 0; overflow: visible; min-width: 0; display: flow-root; background: transparent; flex: 0 0 auto; }
+.beve-a4-paper[data-overflow="true"] .beve-a4-paper-body { overflow: auto; }
+.beve-a4-block .beve-section-banner { margin-bottom: 20px; }
+.beve-a4-block .beve-activity-blocks-area:empty { display: none; }
+.beve-a4-continuation { height: 28px; box-sizing: border-box; line-height: 19px; font-size: 12px; font-weight: 700; color: #c4b5fd; margin: 0 0 12px; padding-bottom: 8px; border-bottom: 1px solid #493860; }
+.beve-a4-guide { width: 100%; min-width: 0; display: flex; flex-direction: column; gap: 24px; padding: 12px 0; }
+.beve-a4-note-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 30px; margin-bottom: 8px; font-size: 12px; font-weight: 700; color: #c4b5fd; }
+.beve-a4-guide .beve-col-tutor { position: static; top: auto; max-height: none !important; overflow: visible; padding: 0; background: transparent; }
+.beve-a4-guide .beve-col-tutor-title { margin-bottom: 12px; padding: 12px; font-size: 12px; }
+.beve-a4-guide .beve-tutor-note { margin-bottom: 8px; }
+.beve-a4-guide .beve-note-text { overflow-wrap: anywhere; }
+.beve-a4-layout-controls { display: flex; gap: 4px; }
+.beve-a4-layout-controls button { display: grid; place-items: center; width: 30px; height: 30px; border: 1px solid #51465f; border-radius: 4px; color: #b7adc7; background: #211d2b; cursor: pointer; font-size: 15px; }
+.beve-a4-layout-controls button[aria-pressed="true"] { color: #dec9ff; border-color: #9b70e2; background: #372250; }
+.beve-a4-layout-controls button:disabled { cursor: default; opacity: .45; }
+.beve-a4-overflow-warning { padding: 12px; margin-bottom: 12px; background: #452612; color: #ffcc91; border-left: 3px solid #f5a32f; font-size: 13px; line-height: 1.5; }
+.beve-a4-measure { width: 794px; position: fixed; left: -20000px; top: 0; visibility: hidden; pointer-events: none; zoom: 1; }
+.beve-a4-measure > div:not(.beve-page-header):not(.beve-page-footer) { width: 714px; margin: 0 40px; }
+.beve-a4-measure > .beve-page-header { padding: 20px 32px; }
+.beve-a4-measure .beve-header-lesson { font-size: 23px; }
+.beve-a4-measure .beve-col-student { width: 714px; }
+.beve.light .beve-a4-paper { background: #fff; }
+.beve.light .beve-a4-block { background: transparent; }
+.beve.light .beve-a4-note-heading, .beve.light .beve-a4-continuation { color: #60379a; }
+.beve.light .beve-a4-view-controls { border-color: #e0dce6; }
+.beve.light .beve-a4-view-controls select, .beve.light .beve-a4-layout-controls button { background: #fff; color: #544768; border-color: #dbd3e4; }
+.beve.light .beve-a4-layout-controls button[aria-pressed="true"] { background: #eee5fa; border-color: #8b5acf; color: #60309e; }
+.beve.light .beve-a4-overflow-warning { background: #fff4df; color: #79460c; }
+.beve-a4-document .beve-rich-hint { display: none; }
+.beve--a4 .beve-a4-block .beve-rich-input { padding: 0; margin: 0; border: 0; min-height: 0; line-height: inherit; }
+.beve--a4 .beve-a4-block .beve-block-wrapper { margin: 0; }
+.beve--a4 .beve-a4-block td:last-child:has(> .beve-icon-btn) { width: 0 !important; padding: 0 !important; position: relative; }
+.beve--a4 .beve-a4-block td > .beve-icon-btn { position: absolute; right: -16px; top: 0; opacity: 0; }
+.beve--a4 .beve-a4-block tr:hover td > .beve-icon-btn { opacity: 1; }
+.beve--a4 .beve-a4-block th:last-child:empty { width: 0 !important; padding: 0 !important; }
+.beve-a4-editing-tools { padding-top: 12px; margin-top: 12px; border-top: 1px solid #6b568b; font-size: 12px; }
+.beve-a4-editing-tools summary { cursor: pointer; margin-bottom: 10px; }
+.beve-a4-editing-tools .beve-add-btn { width: 100%; margin: 8px 0 !important; }
+.beve--a4 [data-a4-stage="6"] .beve-feedback-template { padding: 12px; line-height: 1.4; }
+.beve--a4 [data-a4-stage="6"] .beve-feedback-template .beve-preview-static-rich { line-height: inherit; }
+.beve--a4 [data-a4-stage="6"] .beve-readonly-ref { padding: 12px 16px; margin-bottom: 10px; }
+.beve.beve--a4 .beve-a4-sidebar { display: flex; }
+.beve-preview .beve-a4-canvas { height: 100%; }
+.beve.beve--a4 .beve-body { display: flex; min-height: 0; overflow: hidden; }
+.beve.beve--a4 .beve-a4-document { height: 100%; overflow: hidden; }
+/* The paper keeps its desktop typesetting when the viewer scales it down. */
+.beve--a4 .beve-page-header { grid-template-columns: minmax(0, 1fr) auto; gap: 8px 24px; padding: 20px 32px; }
+.beve--a4 .beve-page-header .beve-header-brand { flex-direction: row; align-items: center; gap: 8px 16px; }
+.beve--a4 .beve-page-header .beve-header-meta { margin-left: auto; }
+.beve--a4 .beve-page-header .beve-header-row2-right { grid-column: 2; grid-row: 2 / 4; justify-self: stretch; }
+.beve--a4 .beve-page-header .beve-header-lesson { flex-direction: row; align-items: center; gap: 10px 14px; font-size: 23px; }
+.beve--a4 .beve-page-header .beve-header-lesson-title { flex: 1 1 180px; width: auto; }
+.beve--a4 .beve-page-header .beve-lesson-type-select { min-height: 34px; }
+.beve--a4 .beve-page-header::before { width: 44%; opacity: 1; }
+.beve--a4 .beve-page-header::after { width: min(660px, 72%); opacity: .8; background-size: 660px 220px; background-position: right center; }
+.beve--a4 .beve-preview-roleplay-grid { grid-template-columns: 1fr 1fr; }
+@media (max-width: 700px) {
+  .beve-a4-sidebar { display: none !important; }
+  .beve-a4-canvas { padding: 24px; }
+  .beve-a4-guide { width: var(--a4-paper-width); }
+}
+@media print {
+  @page { size: A4 portrait; margin: 0; }
+  html:has(.beve--a4), body:has(.beve--a4) { margin: 0; padding: 0; background: white; }
+  .beve.beve--a4 { display: block; height: auto; overflow: visible; background: white; color: #1f2533; }
+  .beve--a4 .beve-toolbar, .beve--a4 .beve-a4-sidebar, .beve--a4 .beve-a4-guide, .beve--a4 .beve-a4-measure, .beve--a4 .beai-fab { display: none !important; }
+  html:has(.beve--a4), body:has(.beve--a4), #app:has(.beve--a4) { height: auto !important; max-height: none !important; overflow: visible !important; }
+  .beve.beve--a4 .beve-body, .beve.beve--a4 .beve-a4-document, .beve.beve--a4 .beve-a4-canvas { display: block !important; height: auto !important; padding: 0 !important; overflow: visible !important; }
+  .beve--a4 .beve-a4-row { display: block; margin: 0; width: 210mm; break-after: page; }
+  .beve--a4 .beve-a4-row:last-child { break-after: auto; }
+  .beve--a4 .beve-a4-paper { width: 210mm; min-width: 210mm; height: 297mm; zoom: 1; box-shadow: none; background: white; print-color-adjust: exact; }
+  .beve--a4 .beve-add-btn, .beve--a4 .beve-icon-btn, .beve--a4 .beve-block-remove-btn, .beve--a4 .beve-block-add-btn, .beve--a4 .beve-add-activity-wrap, .beve--a4 .beve-pattern-actions { display: none !important; }
+  .beve--a4 .beve-col-student { background: transparent; }
+  .beve--a4 .beve-a4-paper-body, .beve--a4 .beve-a4-paper-body * { color: #26202e !important; background-color: transparent !important; background-image: none !important; box-shadow: none !important; text-shadow: none !important; border-color: #ddd7e4 !important; }
+}

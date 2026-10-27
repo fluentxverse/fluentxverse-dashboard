@@ -61,10 +61,10 @@ const AnalyticsPage = () => {
 
   const getActionColor = (action: string) => {
     switch (action) {
-      case 'suspended': return '#ef4444';
-      case 'unsuspended': return '#22c55e';
-      case 'auto-unsuspended': return '#3b82f6';
-      default: return '#6b7280';
+      case 'suspended': return 'var(--admin-danger, #ef4444)';
+      case 'unsuspended': return 'var(--admin-success, #22c55e)';
+      case 'auto-unsuspended': return 'var(--admin-accent, #3b82f6)';
+      default: return 'var(--text-secondary)';
     }
   };
 

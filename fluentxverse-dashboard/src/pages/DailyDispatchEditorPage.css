@@ -44,7 +44,7 @@
 
 .dd-header-icon i {
   font-size: 1.5rem;
-  color: #ffcb05;
+  color: var(--admin-warning, #ffcb05);
 }
 
 .dd-page-header h1 {
@@ -122,7 +122,7 @@
 
 .dd-search input:focus {
   outline: none;
-  border-color: #121212;
+  border-color: var(--admin-border, #121212);
 }
 
 .dd-filter-select {
@@ -162,7 +162,7 @@
 
 .dd-btn-secondary {
   background: #ffcb05;
-  color: #121212;
+  color: var(--admin-text, #121212);
 }
 
 .dd-btn-secondary:hover {
@@ -171,8 +171,8 @@
 
 .dd-btn-outline {
   background: transparent;
-  color: #121212;
-  border: 1px solid #121212;
+  color: var(--admin-text, #121212);
+  border: 1px solid var(--admin-border, #121212);
 }
 
 .dd-btn-outline:hover {
@@ -232,7 +232,7 @@
   width: 40px;
   height: 40px;
   border: 3px solid var(--border-color, #e5e7eb);
-  border-top-color: #121212;
+  border-top-color: var(--admin-border, #121212);
   border-radius: 50%;
   animation: dd-spin 0.7s linear infinite;
   margin-bottom: 1rem;
@@ -284,7 +284,7 @@
 }
 
 .dd-article-card:hover {
-  border-color: #121212;
+  border-color: var(--admin-border, #121212);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
@@ -396,7 +396,7 @@
 
 .dd-section-header i {
   font-size: 1.25rem;
-  color: #ffcb05;
+  color: var(--admin-warning, #ffcb05);
   background: #121212;
   width: 36px;
   height: 36px;
@@ -463,7 +463,7 @@
 .dd-metadata-value.dd-badge {
   display: inline-block;
   background: #ffcb05;
-  color: #121212;
+  color: var(--admin-text, #121212);
   padding: 0.25rem 0.75rem;
   font-weight: 600;
   font-size: 0.75rem;
@@ -503,7 +503,7 @@
   width: 1.75rem;
   height: 1.75rem;
   background: #121212;
-  color: #ffcb05;
+  color: var(--admin-warning, #ffcb05);
   font-size: 0.75rem;
   font-weight: 700;
   display: flex;
@@ -525,7 +525,7 @@
   padding: 0.75rem 1rem;
   background: var(--bg-secondary, #f9fafb);
   border-radius: 6px;
-  border-left: 3px solid #ffcb05;
+  border-left: 3px solid var(--admin-border-warning, #ffcb05);
 }
 
 .dd-vocab-top {
@@ -629,8 +629,8 @@
 .dd-inline-qa {
   margin-top: 1rem;
   padding: 1rem;
-  background: linear-gradient(135deg, #fef3c7, #fffbeb);
-  border-left: 3px solid #ffcb05;
+  background: linear-gradient(135deg, var(--admin-bg-warning, #fef3c7), var(--admin-surface-soft, #fffbeb));
+  border-left: 3px solid var(--admin-border-warning, #ffcb05);
   border-radius: 0 8px 8px 0;
 }
 
@@ -641,13 +641,13 @@
 }
 
 .dd-qa-question {
-  color: #92400e;
+  color: var(--admin-warning, #92400e);
   font-weight: 500;
   margin-bottom: 0.5rem;
 }
 
 .dd-qa-answer {
-  color: #065f46;
+  color: var(--admin-success, #065f46);
 }
 
 .dd-qa-label {
@@ -707,7 +707,7 @@
   width: 2rem;
   height: 2rem;
   background: #ffcb05;
-  color: #121212;
+  color: var(--admin-text, #121212);
   font-weight: 700;
   display: flex;
   align-items: center;

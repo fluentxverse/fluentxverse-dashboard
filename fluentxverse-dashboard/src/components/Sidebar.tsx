@@ -23,12 +23,16 @@ const navItems: NavItem[] = [
   { path: '/inbox', icon: 'ri-mail-send-line', label: 'Inbox Messages' },
   { path: '/tasks', icon: 'ri-list-check-3', label: 'Tasks & Suggestions' },
   { path: '/testing', icon: 'ri-checkbox-circle-line', label: 'Testing' },
+  { path: '/email', icon: 'ri-mail-line', label: 'Email' },
   ...(import.meta.env.VITE_ENABLE_TICKETING === 'true' ? [{ path: '/tickets', icon: 'ri-ticket-2-line', label: 'Ticket NFTs' }] : []),
   { path: '/lesson-material-maker', icon: 'ri-draft-line', label: 'Lesson Maker' },
   { path: '/sessions', icon: 'ri-video-chat-line', label: 'Sessions' },
   { path: '/recordings', icon: 'ri-record-circle-line', label: 'QA Recordings' },
   { path: '/lesson-operations', icon: 'ri-history-line', label: 'Lesson Operations' },
   { path: '/analytics', icon: 'ri-bar-chart-box-line', label: 'Analytics' },
+  { path: '/server-health', icon: 'ri-server-line', label: 'Server Health' },
+  { path: '/stats', icon: 'ri-bar-chart-horizontal-line', label: 'Stats' },
+  { path: '/alerts', icon: 'ri-alarm-warning-line', label: 'Alerts' },
   { path: '/ceo-orientation', icon: 'ri-user-voice-line', label: 'CEO Orientation' },
   { path: '/platform-overview', icon: 'ri-book-open-line', label: 'Platform Guide' },
   { path: '/payments', icon: 'ri-money-dollar-circle-line', label: 'Payments' },
@@ -101,7 +105,8 @@ export function Sidebar({ open = false, onClose }: { open?: boolean; onClose?: (
   const managementNavItems = navItems.slice(8).filter(
     (item) => (!item.superadminOnly || isSuperAdmin) &&
       (!['/payments', '/tickets'].includes(item.path) || permissions.includes('finance')) &&
-      (item.path !== '/recordings' || permissions.includes('qa'))
+      (item.path !== '/recordings' || permissions.includes('qa')) &&
+      (!['/server-health', '/stats', '/alerts'].includes(item.path) || permissions.includes('operations'))
   );
 
   const getInitials = () => {

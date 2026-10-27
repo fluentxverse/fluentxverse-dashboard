@@ -1,10 +1,13 @@
 import { useState } from 'preact/hooks';
 import { useAuthContext } from '../context/AuthContext';
+import { useAdminTheme } from '../context/ThemeContext';
+import type { ThemePreference } from '../theme/adminTheme';
 import { authApi } from '../api/auth.api';
 import './SettingsPage.css';
 
 export function SettingsPage() {
   const { user } = useAuthContext();
+  const { preference, setPreference } = useAdminTheme();
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -49,6 +52,24 @@ export function SettingsPage() {
       </div>
 
       <div class="settings-grid">
+        <section class="settings-card appearance-settings" aria-labelledby="appearance-title">
+          <div class="card-header">
+            <i class="ri-palette-line" aria-hidden="true" />
+            <h2 id="appearance-title">Appearance</h2>
+          </div>
+          <div class="card-content">
+            <fieldset class="admin-theme-options">
+              <legend>Theme</legend>
+              {(['light', 'dark', 'system'] as ThemePreference[]).map(value => (
+                <label key={value}>
+                  <input type="radio" name="admin-theme" value={value} checked={preference === value} onChange={() => setPreference(value)} />
+                  <i class={value === 'light' ? 'ri-sun-line' : value === 'dark' ? 'ri-moon-line' : 'ri-computer-line'} aria-hidden="true" />
+                  <span>{value.charAt(0).toUpperCase() + value.slice(1)}</span>
+                </label>
+              ))}
+            </fieldset>
+          </div>
+        </section>
         {/* Profile Section */}
         <div class="settings-card">
           <div class="card-header">

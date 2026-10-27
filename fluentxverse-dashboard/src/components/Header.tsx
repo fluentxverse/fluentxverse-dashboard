@@ -1,11 +1,13 @@
 import { useState, useEffect, useRef, useCallback } from 'preact/hooks';
 import { useAuthContext } from '../context/AuthContext';
+import { useAdminTheme } from '../context/ThemeContext';
 import { adminApi, RecentActivity } from '../api/admin.api';
 import { createRealtimeSocket, type RealtimeSocket } from '../client/realtimeSocket';
 import './Header.css';
 import { useLocation } from 'preact-iso';
 import { ActivityTimestamp } from './ActivityTimestamp';
 import { useActivityClock } from '../hooks/useActivityClock';
+import { OperationalAlertIndicator } from './OperationalAlertIndicator';
 
 const pageNames: Record<string, string> = {
   '/':'Overview', '/tutors':'Tutors', '/students':'Students', '/applications':'Applications',
@@ -13,6 +15,10 @@ const pageNames: Record<string, string> = {
   '/lesson-operations':'Lesson Operations', '/tickets':'Tickets', '/payments':'Payments',
   '/analytics':'Analytics', '/tasks':'Tasks & Suggestions', '/inbox':'Inbox',
   '/testing':'Testing',
+  '/server-health':'Server Health',
+  '/stats':'Stats',
+  '/alerts':'Alerts',
+  '/email':'Email',
   '/admins':'Administrators', '/settings':'Settings', '/lesson-material-maker':'Lesson Maker',
   '/ceo-orientation':'CEO Orientation', '/platform-overview':'Platform Guide',
 };
@@ -24,6 +30,7 @@ export function Header({ navigationOpen = false, onToggleNavigation }: { navigat
   const [notifications, setNotifications] = useState<RecentActivity[]>([]);
   const [loading, setLoading] = useState(false);
   const { user, logout } = useAuthContext();
+  const { theme, toggle: toggleTheme } = useAdminTheme();
   const socketRef = useRef<RealtimeSocket | null>(null);
   
   const notificationRef = useRef<HTMLDivElement>(null);
@@ -156,6 +163,12 @@ export function Header({ navigationOpen = false, onToggleNavigation }: { navigat
       </div>
 
       <div className="header-right">
+        <OperationalAlertIndicator />
+        <button type="button" className="header-btn admin-theme-toggle" onClick={toggleTheme}
+          aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+          title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`} aria-pressed={theme === 'dark'}>
+          <i className={theme === 'dark' ? 'ri-sun-line' : 'ri-moon-line'} aria-hidden="true" />
+        </button>
         <a href="/platform-overview" className="header-btn" title="Platform overview" aria-label="Platform overview">
           <i className="ri-question-line"></i>
         </a>

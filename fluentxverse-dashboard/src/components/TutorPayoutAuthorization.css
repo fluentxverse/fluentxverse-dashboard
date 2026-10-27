@@ -1,0 +1,127 @@
+.payout-authorization {
+  margin-top: 28px;
+  border-top: 1px solid var(--border-color, #dce3ec);
+  padding-top: 20px;
+  min-width: 0;
+}
+.payout-authorization header,
+.payout-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.payout-authorization h3 {
+  font-size: 16px;
+  margin: 0 0 12px;
+}
+.payout-status,
+.payout-muted {
+  font-size: 13px;
+}
+.payout-status strong,
+.payout-muted {
+  color: var(--text-secondary, #657083);
+  font-weight: 500;
+}
+.payout-authorization fieldset {
+  border: 0;
+  padding: 0;
+  margin: 18px 0;
+  min-width: 0;
+}
+.payout-authorization legend {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+.payout-inputs {
+  display: flex;
+  align-items: end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.payout-authorization label {
+  display: grid;
+  gap: 6px;
+  font-size: 13px;
+  flex: 1 1 180px;
+}
+.payout-authorization input:not([type="checkbox"]) {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  font: inherit;
+  padding: 9px 10px;
+  border: 1px solid var(--border-color, #dce3ec);
+  border-radius: 4px;
+  background: var(--input-bg, #fff);
+  color: inherit;
+}
+.payout-authorization input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+}
+.payout-authorization button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 10px;
+  min-height: 36px;
+  font: inherit;
+  font-size: 13px;
+  border: 1px solid var(--border-color, #dce3ec);
+  border-radius: 4px;
+  background: var(--input-bg, #fff);
+  color: inherit;
+  cursor: pointer;
+}
+.payout-authorization button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.payout-authorization td {
+  overflow-wrap: anywhere;
+  font-size: 13px;
+}
+.payout-authorization small {
+  display: block;
+  color: var(--text-secondary, #657083);
+  margin-top: 4px;
+}
+.payout-authorization .operations-table-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+}
+.payout-authorization table {
+  width: 100%;
+  min-width: 720px;
+  table-layout: auto;
+}
+.payout-authorization td {
+  min-width: 100px;
+}
+.payout-authorization td:first-child:has(input[type="checkbox"]) {
+  min-width: 32px;
+}
+.payout-authorization button {
+  white-space: nowrap;
+}
+.payout-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+@media (max-width: 600px) {
+  .payout-inputs {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .payout-status {
+    align-items: start;
+    flex-direction: column;
+  }
+}

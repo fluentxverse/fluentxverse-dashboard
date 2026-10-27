@@ -8,10 +8,10 @@
 .lesson-operations button:disabled { opacity:.5; }
 .operations-report-list article { display:flex; flex-wrap:wrap; gap:12px; align-items:center; padding:16px 0; border-bottom:1px solid var(--border-color,#ddd); }
 .operations-report-list article > div { flex:1; min-width:220px; display:grid; gap:4px; overflow-wrap:anywhere; }
-.operations-report-list span { font-size:13px; }.operations-status { color:#226ac6; text-transform:capitalize; }.operations-status.resolved { color:#148454; }
+.operations-report-list span { font-size:13px; }.operations-status { color:var(--admin-accent, #226ac6); text-transform:capitalize; }.operations-status.resolved { color:var(--admin-success, #148454); }
 .operations-lookup,.operations-attendance-actions { display:flex; align-items:end; flex-wrap:wrap; gap:12px; }.operations-lookup label { flex:1; }
 .operations-audit { padding:16px 0; border-bottom:1px solid var(--border-color,#ddd); overflow-wrap:anywhere; }.operations-audit p { font-size:13px; }
-.operations-error { color:#c43d52; }
+.operations-error { color:var(--admin-danger, #c43d52); }
 .operations-dialog { position:fixed; inset:0; margin:auto; width:min(520px,calc(100vw - 32px)); max-height:calc(100dvh - 32px); overflow:auto; padding:20px; border:1px solid var(--border-color,#ccc); border-radius:8px; background:var(--bg-primary,#fff); color:var(--text-primary,#222); }
 .operations-dialog::backdrop { background:rgba(0,0,0,.55); }.operations-dialog form { display:grid; gap:16px; }.operations-dialog footer { display:flex; justify-content:flex-end; gap:10px; }.operations-dialog textarea { min-height:100px; }
 .lesson-operations { --ops-panel:var(--bg-secondary,#fff); --ops-border:var(--border-color,#ddd); }

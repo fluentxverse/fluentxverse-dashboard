@@ -12,6 +12,7 @@ const tutors = [
 ];
 async function fixture(browser, width, finance, accessDelay=0) {
   const context = await browser.newContext({viewport:{width,height:1000}});
+  if (process.env.ADMIN_DESIGN_THEME) await context.addInitScript(theme => { try { localStorage.setItem('fxv_admin_theme', theme); } catch {} }, process.env.ADMIN_DESIGN_THEME);
   const requests = [];
   await context.route(/\/(admin|interview)\//,async route => {
     const request = route.request(), url = new URL(request.url()), path = url.pathname;

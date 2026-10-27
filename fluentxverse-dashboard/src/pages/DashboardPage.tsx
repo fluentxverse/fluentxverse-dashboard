@@ -468,7 +468,7 @@ const DashboardPage = () => {
               <div className="interview-stats-summary">
                 <div className="donut-chart-container">
                   <svg viewBox="0 0 100 100" className="donut-chart">
-                    <circle cx="50" cy="50" r="40" fill="none" stroke="#e2e8f0" strokeWidth="12" />
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="var(--border-color)" strokeWidth="12" />
                     <circle 
                       cx="50" cy="50" r="40" fill="none" 
                       stroke="#10b981" strokeWidth="12"

@@ -1,0 +1,97 @@
+/* Workspace colors do not leak into independently themed lesson documents. */
+html[data-admin-theme='light'] { color-scheme: light; }
+html[data-admin-theme='dark'] { color-scheme: dark; }
+html[data-admin-theme] .settings-page {
+  --background: var(--bg-primary);
+  --background-secondary: var(--bg-tertiary);
+  --card-background: var(--bg-secondary);
+  --primary-color: var(--primary);
+  --primary-color-dark: var(--primary-dark);
+  --input-bg: var(--bg-secondary);
+  --hover-bg: var(--bg-tertiary);
+}
+
+@media screen {
+  html[data-admin-theme='dark'] {
+    --admin-surface: #1d1f23;
+    --admin-surface-soft: #22252a;
+    --admin-surface-muted: #2b2f36;
+    --admin-text: #e6e8ec;
+    --admin-muted: #a6adb8;
+    --admin-border: #3e444e;
+    --admin-accent: #82b7ff;
+    --admin-success: #66d7a4;
+    --admin-warning: #efc167;
+    --admin-danger: #ff919d;
+    --admin-cyan: #72d3de;
+    --admin-purple: #c3a6ff;
+    --admin-bg-accent: #21324b;
+    --admin-bg-success: #18372c;
+    --admin-bg-warning: #3c311f;
+    --admin-bg-danger: #40252c;
+    --admin-bg-cyan: #1d363b;
+    --admin-bg-purple: #322940;
+    --admin-border-accent: #3d5b7e;
+    --admin-border-success: #37634f;
+    --admin-border-warning: #76603a;
+    --admin-border-danger: #79434d;
+    --admin-border-cyan: #3b646b;
+    --admin-border-purple: #62507d;
+    --primary: #2460c2;
+    --primary-dark: #1c4e9e;
+    --primary-light: #377de3;
+    --bg-primary: #141619;
+    --bg-secondary: var(--admin-surface);
+    --bg-tertiary: var(--admin-surface-muted);
+    --card-bg: var(--admin-surface);
+    --text-primary: var(--admin-text);
+    --text-secondary: var(--admin-muted);
+    --text-muted: var(--admin-muted);
+    --text-tertiary: var(--admin-muted);
+    --border-color: var(--admin-border);
+    --border-light: #30353d;
+    --success-light: var(--admin-bg-success);
+    --warning-light: var(--admin-bg-warning);
+    --error-light: var(--admin-bg-danger);
+    --info-light: var(--admin-bg-accent);
+    --shadow-sm: 0 1px 3px #0004;
+    --shadow-md: 0 4px 12px #0005;
+    --shadow-lg: 0 10px 24px #0006;
+    --shadow-xl: 0 20px 40px #0007;
+  }
+
+  html[data-admin-theme='dark'] .dashboard-layout .dashboard-header { background: #1d1f23f7; }
+  html[data-admin-theme='dark'] :is(input, textarea)::placeholder { color: #a6adb8; opacity: 1; }
+  html[data-admin-theme='dark'] .dashboard-layout :is(input, select, textarea) { color-scheme: dark; }
+  html[data-admin-theme='dark'] .dashboard-layout a:focus-visible { outline-color: var(--admin-accent); }
+  html[data-admin-theme='dark'] .toast-item { box-shadow: 0 4px 20px #0006, 0 0 0 1px var(--border-color); }
+
+  /* Theme the editing surface without injecting theme colors into the outgoing message. */
+  html[data-admin-theme='dark'] .mail-editor .ql-editor { background: var(--bg-secondary); color: var(--text-primary); color-scheme: dark; padding: 12px; border-radius: 4px; }
+  html[data-admin-theme='dark'] .mail-editor .ql-editor.ql-blank::before { left: 12px; color: var(--text-muted); }
+  html[data-admin-theme='dark'] .mail-editor .ql-editor a { color: var(--admin-accent); }
+  html[data-admin-theme='dark'] .mail-editor .ql-toolbar .ql-stroke { stroke: var(--text-secondary); }
+  html[data-admin-theme='dark'] .mail-editor .ql-toolbar .ql-fill { fill: var(--text-secondary); }
+  html[data-admin-theme='dark'] .mail-editor .ql-picker { color: var(--text-secondary); }
+  html[data-admin-theme='dark'] .mail-editor :is(.ql-picker-options, .ql-tooltip) { background: var(--bg-secondary); color: var(--text-primary); border-color: var(--border-color); }
+  html[data-admin-theme='dark'] .mail-editor .ql-tooltip input { background: var(--bg-primary); color: var(--text-primary); }
+}
+
+.admin-theme-toggle[aria-pressed='true'] { color: var(--admin-warning, var(--primary)); }
+.appearance-settings { grid-column: 1 / -1; }
+.settings-page .settings-card > .card-header { justify-content: flex-start; }
+.settings-page .card-header i { color: var(--admin-accent, var(--primary)); }
+.admin-theme-options { display: flex; flex-wrap: wrap; gap: 8px; border: 0; min-width: 0; }
+.admin-theme-options legend { font-size: 13px; font-weight: 600; margin-bottom: 12px; color: var(--text-secondary); }
+.admin-theme-options label { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 16px; min-height: 44px; border: 1px solid var(--border-color); border-radius: 6px; cursor: pointer; font-size: 13px; color: var(--text-secondary); background: var(--bg-secondary); }
+.admin-theme-options input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.admin-theme-options label:has(input:checked) { border-color: var(--admin-accent, var(--primary)); color: var(--admin-accent, var(--primary)); background: var(--admin-bg-accent, #eaf1fc); }
+.admin-theme-options label:has(input:focus-visible) { outline: 2px solid var(--admin-accent, var(--primary)); outline-offset: 3px; }
+.admin-theme-options i { font-size: 18px; }
+
+@media (max-width: 480px) {
+  .admin-theme-options { flex-wrap: nowrap; }
+  .admin-theme-options label { flex: 1; min-width: 0; padding: 10px 8px; flex-direction: column; gap: 4px; font-size: 12px; }
+}
+
+@media print { html[data-admin-theme] { color-scheme: light !important; } }

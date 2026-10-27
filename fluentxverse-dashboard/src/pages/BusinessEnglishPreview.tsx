@@ -3,6 +3,8 @@ import { useRoute } from 'preact-iso';
 import { getLessonById, getPublicLessonById, type LessonMaterial } from '../api/lessonMaterial.api';
 import { API_BASE_URL } from '../config/api';
 import { normalizeLessonMedia } from '../../../shared/lessonMedia';
+import BusinessEnglishA4Document, { businessA4Sections } from '../components/businessEnglish/BusinessEnglishA4Document';
+import { isBusinessA4Pilot, type BusinessA4Layout } from '../components/businessEnglish/a4Pagination';
 import './BusinessEnglishVisualEditor.css';
 import './BusinessEnglishPreview.css';
 
@@ -262,6 +264,7 @@ type ActivityBlock =
 
 interface BELessonData {
   lessonType: LessonType;
+  a4Layout?: BusinessA4Layout;
   hiddenBlocks: string[];
   introduce: {
     goalEn: string;
@@ -1686,7 +1689,7 @@ export default function BusinessEnglishPreview() {
   );
 
   return (
-    <div className={`beve ${theme} beve-preview`}>
+    <div className={`beve ${theme} beve-preview${isBusinessA4Pilot(lesson) ? ' beve--a4' : ''}`}>
       <div className="beve-toolbar">
         <div className="beve-toolbar-left">
           <button className="beve-back-btn" onClick={handleBack}>
@@ -1719,6 +1722,12 @@ export default function BusinessEnglishPreview() {
       </div>
 
       <div className="beve-body">
+        {isBusinessA4Pilot(lesson) ? <BusinessEnglishA4Document
+          sections={businessA4Sections([renderPage1(), renderPage2(), renderPage3(), renderPage4(), renderPage5(), renderPage6(), renderPage7()])}
+          renderHeader={renderPageHeader}
+          renderFooter={renderPageFooter}
+          layout={beData.a4Layout}
+        /> : <>
         <div className="beve-sidebar">
           <div className="beve-sidebar-header">Pages</div>
           <div className="beve-sidebar-pages">
@@ -1744,6 +1753,7 @@ export default function BusinessEnglishPreview() {
           {renderPage6()}
           {renderPage7()}
         </div>
+        </>}
       </div>
     </div>
   );
