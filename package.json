@@ -1,6 +1,7 @@
 {
   "name": "fluentxverse-dashboard-source",
   "private": true,
+  "license": "MIT",
   "description": "Administration dashboard for tutor screening, interviews, lesson operations, compensation, and release acceptance.",
   "scripts": {
     "setup": "cd fluentxverse-dashboard && bun install",

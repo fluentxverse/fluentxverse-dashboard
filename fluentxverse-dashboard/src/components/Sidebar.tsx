@@ -18,6 +18,7 @@ const navItems: NavItem[] = [
   { path: '/', icon: 'ri-dashboard-3-line', label: 'Dashboard' },
   { path: '/interviews', icon: 'ri-calendar-schedule-line', label: 'Interviews' },
   { path: '/applications', icon: 'ri-file-user-line', label: 'Applications', badgeKey: 'pendingApplications' },
+  { path: '/identity-reviews', icon: 'ri-shield-user-line', label: 'Identity Reviews' },
   { path: '/tutors', icon: 'ri-user-star-line', label: 'Tutors' },
   { path: '/students', icon: 'ri-graduation-cap-line', label: 'Students' },
   { path: '/inbox', icon: 'ri-mail-send-line', label: 'Inbox Messages' },

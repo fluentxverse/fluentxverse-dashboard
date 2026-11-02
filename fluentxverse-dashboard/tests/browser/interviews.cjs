@@ -93,6 +93,16 @@ async function main() {
     await admin.page.waitForFunction(() => document.querySelector('.btn-join') && !document.querySelector('.btn-join').disabled);
     await admin.page.locator('.btn-join').click();
     await live(admin.page); await live(tutor.page);
+    // A decision during the call must not stop either participant's media.
+    await admin.page.locator('.btn-pass').click();
+    await admin.page.locator('.confirm-actions .btn-confirm.success').click();
+    await admin.page.getByText('Fixture lost response after commit',{exact:true}).waitFor();
+    await admin.page.locator('.btn-pass').click();
+    await admin.page.locator('.confirm-actions .btn-confirm.success').click();
+    await admin.page.getByText('Interview result saved.',{exact:true}).waitFor();
+    await live(admin.page); await live(tutor.page);
+    assert(admin.page.url().includes('/interview-room/audit-fixture'));
+    assert.equal(results.length,2); assert.deepEqual(results[0],results[1]);
     if (process.env.INTERVIEW_TEST_RELAY === 'true') {
       for (const page of [admin.page,tutor.page]) {
         const relayed = await page.evaluate(async()=>{
@@ -145,16 +155,21 @@ async function main() {
     await stopped(admin.page); await stopped(tutor.page);
     await admin.page.waitForFunction(() => !document.querySelector('.interview-recording-state')?.textContent.includes('Saving recording'));
     const storage = await(await fetch(`${api}/fixture/storage`)).json(); assert.equal(storage.files,2);
+    await admin.page.locator('.btn-fail').click();
+    await admin.page.locator('.confirm-actions .btn-confirm.danger').click();
+    await admin.page.getByText('Saved result: Failed',{exact:true}).waitFor();
+    await admin.page.reload({waitUntil:'domcontentloaded'});
+    await admin.page.getByText('Saved result: Failed',{exact:true}).waitFor();
+    await stopped(admin.page);
     await admin.page.locator('.btn-pass').click();
     await admin.page.locator('.confirm-actions .btn-confirm.success').click();
-    await admin.page.getByText('Fixture lost response after commit',{exact:true}).waitFor();
-    await admin.page.locator('.btn-pass').click();
-    await admin.page.locator('.confirm-actions .btn-confirm.success').click();
-    await admin.page.getByText('Interview Result Submitted!',{exact:true}).waitFor();
-    assert.equal(results.length,2); assert.deepEqual(results[0],results[1]); assert.equal(results[0].slotId,'audit-fixture'); assert.equal(results[0].tutorId,'interview-tutor');
+    await admin.page.getByText('Saved result: Passed',{exact:true}).waitFor();
+    assert.equal(results.length,4); assert.equal(results[0].slotId,'audit-fixture'); assert.equal(results[0].tutorId,'interview-tutor');
     const deniedRejoin = await fetch(`${api}/interview/room/audit-fixture`,{headers:{Cookie:`tutorAuth=${tokens.tutor}`,Origin:'https://tutor.fluentxverse.com'}});
     const closedRoom = (await deniedRejoin.json()).data;
     assert.equal(closedRoom.mediaClosed,true); assert.equal(closedRoom.result,'pass');
+    assert.equal('notes' in closedRoom,false); assert.equal('rubricScores' in closedRoom,false);
+    assert.equal('timestamps' in closedRoom,false);
     assert.deepEqual(errors,[]);
     console.log('PASS: actual dashboard/tutor WebRTC media, room authorization, refresh/reconnect, controls, private recording upload/retry/playback, end-call track cleanup and result binding. All data and storage isolated.');
   } catch(error) {

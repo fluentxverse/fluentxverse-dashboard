@@ -3,6 +3,7 @@
  * API functions for managing lesson materials (Memgraph-backed)
  */
 import apiClient from './apiClient';
+import type { WorkplaceCommunicationData } from '../../../shared/workplaceCommunication';
 
 // ============================================================================
 // TYPES
@@ -344,6 +345,7 @@ export interface ExerciseSectionData {
 }
 
 export interface CreateLessonInput {
+  workplaceData?: WorkplaceCommunicationData;
   course: string;
   level: number;
   chapter: number;
@@ -356,6 +358,7 @@ export interface CreateLessonInput {
 }
 
 export interface LessonMaterial {
+  workplaceData?: WorkplaceCommunicationData;
   id: string;
   course: string;
   level: number;
@@ -414,6 +417,7 @@ export interface StoryData {
 }
 
 export interface UpdateHeaderInput {
+  workplaceData?: WorkplaceCommunicationData;
   backgroundImage?: string;
   overlayColor?: string;
   chapterName?: string;

@@ -1,0 +1,71 @@
+.identity-reviews-page { color: var(--admin-text,#202636); min-width:0; }
+.identity-page-header { display:flex; align-items:center; justify-content:space-between; gap:16px; padding-bottom:24px; border-bottom:1px solid var(--admin-border,#dfe5ed); margin-bottom:24px; }
+.identity-page-header p { margin:0 0 6px; font-size:12px; color:var(--admin-muted,#647184); }
+.identity-page-header h1 { margin:0; font-size:26px; line-height:1.3; }
+.identity-page-header > span { display:flex; align-items:center; gap:7px; font-size:12px; color:var(--admin-muted,#647184); }
+.identity-reviews-page .identity-section { border:0; padding:0; margin:0; color:inherit; }
+.identity-reviews-page .identity-section > h2 { display:none; }
+.identity-reviews-page .identity-review-layout { grid-template-columns:250px minmax(0,1fr); gap:28px; align-items:start; }
+.identity-reviews-page .identity-review-list { gap:8px; border-right:1px solid var(--admin-border,#dfe5ed); padding-right:20px; max-height:calc(100dvh - 240px); overflow-y:auto; min-height:260px; }
+.identity-reviews-page .identity-queue-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:8px; }
+.identity-reviews-page .identity-queue-heading h3 { margin:0; font-size:14px; gap:8px; }
+.identity-reviews-page .identity-queue-heading h3 span { font-size:12px; color:var(--admin-muted,#647184); }
+.identity-reviews-page .identity-queue-heading button { width:32px; height:32px; min-height:32px; padding:0; }
+.identity-reviews-page .identity-search { display:flex; gap:8px; align-items:center; border:1px solid var(--admin-border,#dfe5ed); border-radius:6px; padding:8px 10px; color:var(--admin-muted,#647184); background:var(--admin-surface,#fff); }
+.identity-reviews-page .identity-search input { width:100%; min-width:0; border:0; outline:0; background:transparent; color:var(--admin-text,#202636); font:inherit; font-size:13px; }
+.identity-reviews-page .identity-search:focus-within { outline:2px solid var(--admin-accent,#0245ae); outline-offset:2px; }
+.identity-reviews-page .identity-queue-filter { width:100%; border:1px solid var(--admin-border,#dfe5ed); border-radius:6px; background:var(--admin-surface,#fff); color:var(--admin-text,#202636); padding:8px 10px; font-size:13px; margin-bottom:10px; }
+.identity-reviews-page .identity-review-list .identity-queue-item { display:grid; grid-template-columns:32px minmax(0,1fr) 14px; align-items:center; gap:10px; padding:12px 10px; text-align:left; border:1px solid transparent; border-radius:6px; background:transparent; color:var(--admin-text,#202636); min-width:0; }
+.identity-reviews-page .identity-review-list .identity-queue-item:hover { background:var(--admin-bg-accent,#f0f5fc); }
+.identity-reviews-page .identity-review-list .identity-queue-item[aria-pressed=true] { border-color:var(--admin-border,#dfe5ed); background:var(--admin-bg-accent,#eaf1fc); box-shadow:inset 3px 0 var(--admin-accent,#0245ae); }
+.identity-queue-avatar { display:grid; place-items:center; width:32px; height:32px; border-radius:6px; background:#1254ba; color:#fff; font-size:13px; }
+.identity-reviews-page .identity-queue-item strong { display:block; font-size:13px; line-height:1.45; overflow-wrap:anywhere; }
+.identity-reviews-page .identity-queue-item small { display:block; font-size:12px; margin-top:4px; color:var(--admin-muted,#647184); text-transform:capitalize; }
+.identity-review-detail { min-width:0; }
+.identity-detail-header { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+.identity-section .identity-detail-header h3 { font-size:15px; margin:0 0 8px; }
+.identity-reviews-page .identity-detail-header { padding-bottom:20px; border-bottom:1px solid var(--admin-border,#dfe5ed); margin-bottom:24px; }
+.identity-reviews-page .identity-detail-header .identity-applicant-name { font-size:20px; }
+.identity-review-badge { display:inline-flex; flex:none; padding:4px 8px; border-radius:4px; background:var(--admin-bg-accent,#f0f5fc); color:var(--admin-muted,#647184); font-size:11px; line-height:1.5; font-weight:600; text-transform:capitalize; }
+.identity-review-badge.status-pending_review { background:#fff1d9; color:#875009; }
+.identity-review-badge:is(.status-accepted,.status-verified) { background:#e5f5ed; color:#08764e; }
+.identity-review-badge.status-fraud { background:#fde9ec; color:#b12734; }
+.identity-reviews-page .identity-review-workspace { display:grid; grid-template-columns:minmax(0,1fr) 320px; gap:28px; }
+.identity-document-area,.identity-decision-area { min-width:0; }
+.identity-reviews-page .identity-decision-area { padding-left:24px; border-left:1px solid var(--admin-border,#dfe5ed); }
+.identity-reviews-page .identity-document-placeholder { min-height:240px; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:14px; border:1px dashed var(--admin-border,#dfe5ed); border-radius:6px; background:var(--admin-surface,#fff); color:var(--admin-muted,#647184); }
+.identity-document-placeholder i { font-size:40px; }
+.identity-document-placeholder strong { font-size:13px; font-weight:500; }
+.identity-reviews-page .identity-document { width:100%; max-height:480px; border:1px solid var(--admin-border,#dfe5ed); border-radius:6px; background:var(--admin-surface,#fff); }
+.identity-reviews-page .identity-document-area p { font-size:12px; margin-top:12px; }
+.identity-reviews-page .identity-document-area a { color:var(--admin-accent,#0245ae); text-decoration:none; }
+.identity-reviews-page .identity-document-area a:hover { text-decoration:underline; }
+.identity-reviews-page .identity-form { max-width:none; gap:16px; }
+.identity-reviews-page .identity-form label { color:var(--admin-text,#202636); font-size:13px; }
+.identity-reviews-page .identity-form textarea { min-height:132px; background:var(--admin-surface,#fff); color:var(--admin-text,#202636); border-color:var(--admin-border,#dfe5ed); line-height:1.6; font-weight:400; }
+.identity-reviews-page .identity-form textarea::placeholder { color:var(--admin-muted,#647184); }
+.identity-reviews-page .identity-check { font-size:12px; line-height:1.7; }
+.identity-reviews-page .identity-section button { font-size:12px; border-color:var(--admin-border,#dfe5ed); background:var(--admin-surface,#fff); color:var(--admin-text,#202636); }
+.identity-reviews-page .identity-actions { margin:8px 0 0; }
+.identity-reviews-page .identity-section .identity-accept-action { background:#1254ba; color:#fff; border-color:#1254ba; }
+.identity-fraud-action { padding-top:16px; border-top:1px solid var(--admin-border,#dfe5ed); }
+.identity-reviews-page .identity-fraud-action button { color:#b42318; background:transparent; border-color:transparent; padding-left:0; justify-content:flex-start; }
+.identity-review-empty { min-height:300px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; color:var(--admin-muted,#647184); }
+.identity-review-empty > i { font-size:36px; }
+.identity-section .identity-review-empty h3 { font-size:15px; font-weight:500; margin:0; }
+:is([data-theme='dark'],[data-admin-theme='dark']) .identity-review-badge.status-pending_review { background:#40351f; color:#f3cf84; }
+:is([data-theme='dark'],[data-admin-theme='dark']) .identity-review-badge:is(.status-accepted,.status-verified) { background:#183b2a; color:#82ddb0; }
+:is([data-theme='dark'],[data-admin-theme='dark']) .identity-reviews-page .identity-fraud-action button { color:#ffaaa2; }
+@media(max-width:1350px) {
+ .identity-reviews-page .identity-review-workspace { grid-template-columns:minmax(0,1fr); gap:24px; }
+ .identity-reviews-page .identity-decision-area { border-left:0; padding:24px 0 0; border-top:1px solid var(--admin-border,#dfe5ed); }
+ .identity-reviews-page .identity-document-placeholder { min-height:180px; }
+}
+@media(max-width:800px) {
+ .identity-reviews-page .identity-review-layout { grid-template-columns:minmax(0,1fr); gap:24px; }
+ .identity-reviews-page .identity-review-list { border-right:0; padding:0 0 20px; border-bottom:1px solid var(--admin-border,#dfe5ed); max-height:320px; min-height:0; }
+ .identity-page-header { align-items:flex-start; }
+ .identity-page-header h1 { font-size:22px; }
+ .identity-page-header > span { display:none; }
+ .identity-reviews-page .identity-detail-header .identity-applicant-name { font-size:18px; }
+}

@@ -1,4 +1,6 @@
 import { apiClient } from './apiClient';
+import type { ApplicationFilter, ApplicationPage } from '../../../shared/tutorApplications';
+export type { TutorApplication, ApplicationCounts, ApplicationFilter } from '../../../shared/tutorApplications';
 
 const api = apiClient;
 
@@ -44,6 +46,7 @@ export interface ProfileItemStatus {
 }
 
 export interface ProfileItemStatuses {
+  nickname?: ProfileItemStatus;
   profilePicture: ProfileItemStatus;
   videoIntro: ProfileItemStatus;
   bio: ProfileItemStatus;
@@ -52,6 +55,7 @@ export interface ProfileItemStatuses {
 }
 
 export interface PendingProfileReview {
+  nickname?: string;
   id: string;
   name: string;
   email: string;
@@ -75,6 +79,7 @@ export interface RecentActivity {
 }
 
 export interface TutorListItem {
+  identityStatus?: string;
   id: string;
   name: string;
   email: string;
@@ -255,6 +260,12 @@ export const adminApi = {
     return asArray(response.data.data);
   },
 
+  async getApplications(filter: ApplicationFilter, page: number, pageSize = 10): Promise<ApplicationPage> {
+    const response = await api.get<ApiResponse<ApplicationPage>>('/admin/applications', { params: { filter, page, pageSize } });
+    if (!response.data.success || !response.data.data) throw new Error(response.data.error || 'Failed to load tutor applications');
+    return response.data.data;
+  },
+
   /**
    * Get pending profile reviews
    */
@@ -286,7 +297,7 @@ export const adminApi = {
    */
   async reviewProfileItem(
     tutorId: string, 
-    itemKey: 'profilePicture' | 'videoIntro' | 'bio' | 'education' | 'interests',
+    itemKey: 'nickname' | 'profilePicture' | 'videoIntro' | 'bio' | 'education' | 'interests',
     action: 'approve' | 'reject', 
     reason?: string
   ): Promise<{ profileItemStatuses: ProfileItemStatuses; allApproved: boolean }> {

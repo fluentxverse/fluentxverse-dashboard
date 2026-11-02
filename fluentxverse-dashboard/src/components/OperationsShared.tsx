@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { createPortal } from 'preact/compat';
 import { operations, attendanceOperation, operationError } from '../api/operations.api';
+import { completionDecisionLabels, lessonOutcomeLabels, type CompletionDecision, type LessonOutcomeCode } from '../../../shared/lessonOutcome';
 export const dateText = (v: any) => v && Number.isFinite(Date.parse(v)) ? new Date(v).toLocaleString('en-US', { timeZone: 'Asia/Manila', month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' }) + ' PHT' : '-';
 export const labelText = (v: any) => String(v ?? '-').replaceAll('_', ' ');
 export const lessonLink = (id: string) => `/lesson-operations/${encodeURIComponent(id)}`;
@@ -28,6 +29,8 @@ export function OperationsAction({ action, onClose, onSaved, permissions = [] }:
   const [reason, setReason] = useState(''), [error, setError] = useState(''), [busy, setBusy] = useState(false);
   const [hours, setHours] = useState(24), [subject, setSubject] = useState('tutor'), [status, setStatus] = useState(action.report?.status || 'under_review');
   const [resolution, setResolution] = useState(action.report?.resolution || ''), [refund, setRefund] = useState('');
+  const [completionDecision, setCompletionDecision] = useState<CompletionDecision>(action.report?.completionDecision || 'not_assessed');
+  const [completionOutcome, setCompletionOutcome] = useState<LessonOutcomeCode | ''>(action.report?.completionOutcome || '');
   const [assignee, setAssignee] = useState(action.report?.assigneeId || ''), [priority, setPriority] = useState(action.report?.priority || 'normal');
   const [caps, setCaps] = useState<string[]>(action.admin?.permissions || []), [admins, setAdmins] = useState<any[]>([]);
   const [slots, setSlots] = useState<any[]>([]), [slot, setSlot] = useState(''), [day, setDay] = useState(new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Manila' }));
@@ -48,7 +51,9 @@ export function OperationsAction({ action, onClose, onSaved, permissions = [] }:
     try {
       if (action.kind === 'attendance') await attendanceOperation(`/${id}`, 'put', { status: action.status, subject, reason });
       else if (action.kind === 'restore') await attendanceOperation(`/${id}/restore/${encodeURIComponent(action.auditId)}`, 'post', { reason });
-      else if (action.kind === 'review') await operations(`/reports/${action.report.source}/${encodeURIComponent(action.report.id)}/review`, 'put', { status, resolution, ticketTransactionId: refund || undefined });
+      else if (action.kind === 'review') await operations(`/reports/${action.report.source}/${encodeURIComponent(action.report.id)}/review`, 'put', {
+        status, resolution, ticketTransactionId: refund || undefined, completionDecision,
+        completionOutcome: ['completion_approved', 'alternative_approved'].includes(completionDecision) ? completionOutcome : null });
       else if (action.kind === 'case') await operations(`/reports/${action.report.source}/${encodeURIComponent(action.report.id)}`, 'patch', { assigneeId: assignee, priority, comment: reason });
       else if (action.kind === 'permissions') await operations(`/admins/${encodeURIComponent(action.admin.id)}/permissions`, 'patch', { permissions: caps, reason });
       else if (action.kind === 'revoke') await operations(`/penalties/${id}/revoke`, 'post', { reason });
@@ -68,7 +73,21 @@ export function OperationsAction({ action, onClose, onSaved, permissions = [] }:
     {action.kind === 'refund' && <p>Returns the lesson ticket through the existing refund process. Uncertain transfers are held for review.</p>}
     {action.kind === 'cancel' && <p>The classroom will close for both participants. Ticket refunds follow the cancellation policy.</p>}
     {action.kind === 'reschedule' && <><label>New date (PHT)<input type="date" required value={day} onInput={e => setDay(e.currentTarget.value)} /></label><label>Available slot<select required value={slot} onChange={e => setSlot(e.currentTarget.value)}><option value="">Select a slot</option>{slots.map(s => <option value={s.slotId}>{dateText(s.startsAt)} · {s.durationMinutes || 25} min</option>)}</select></label>{!slots.length && <p>No bookable slots on this date.</p>}</>}
-    {action.kind === 'review' && <><p>{action.report.tutorIssueLabel || action.report.studentIssueLabel || action.report.reason}</p><p>{action.report.details}</p><label>Status<select value={status} onChange={e => setStatus(e.currentTarget.value)}><option value="submitted">Submitted</option><option value="under_review">Under review</option><option value="resolved">Resolved</option></select></label><label>Resolution visible to reporter<textarea value={resolution} onInput={e => setResolution(e.currentTarget.value)} required={status === 'resolved'} maxLength={2000} /></label>{permissions.includes('finance') && <label>Completed refund<select value={refund} onChange={e => setRefund(e.currentTarget.value)}><option value="">No refund linked</option>{transactions.map(t => <option value={t.id}>{dateText(t.completedAt || t.createdAt)} · {t.id}</option>)}</select></label>}</>}
+    {action.kind === 'review' && <><p>{action.report.tutorIssueLabel || action.report.studentIssueLabel || action.report.reason}</p><p>{action.report.details}</p><label>Status<select aria-label="Status" value={status} onChange={e => {
+      setStatus(e.currentTarget.value);
+      if (e.currentTarget.value !== 'resolved') { setCompletionDecision('not_assessed'); setCompletionOutcome(''); }
+    }}><option value="submitted">Submitted</option><option value="under_review">Under review</option><option value="resolved">Resolved</option></select></label><label>Resolution visible to reporter<textarea value={resolution} onInput={e => setResolution(e.currentTarget.value)} required={status === 'resolved'} maxLength={2000} /></label>{permissions.includes('finance') && <label>Completed refund<select value={refund} onChange={e => setRefund(e.currentTarget.value)}><option value="">No refund linked</option>{transactions.map(t => <option value={t.id}>{dateText(t.completedAt || t.createdAt)} · {t.id}</option>)}</select></label>}</>}
+    {action.kind === 'review' && <>
+      <label>Completion decision<select aria-label="Completion decision" value={completionDecision} onChange={e => {
+        const next = e.currentTarget.value as CompletionDecision;
+        setCompletionDecision(next); setCompletionOutcome(next === 'completion_approved' ? 'both_attended' : '');
+      }}>{Object.entries(completionDecisionLabels).map(([value, label]) => <option value={value}
+        disabled={status !== 'resolved' && ['completion_approved', 'alternative_approved', 'completion_rejected'].includes(value)}>{label}</option>)}</select></label>
+      {completionDecision === 'alternative_approved' && <label>Approved outcome<select aria-label="Approved outcome" required value={completionOutcome}
+        onChange={e => setCompletionOutcome(e.currentTarget.value as LessonOutcomeCode | '')}>
+        <option value="">Select outcome</option>{Object.entries(lessonOutcomeLabels).filter(([value]) => value !== 'both_attended').map(([value, label]) => <option value={value}>{label}</option>)}
+      </select></label>}
+    </>}
     {action.kind === 'case' && <><label>Assigned admin<select value={assignee} onChange={e => setAssignee(e.currentTarget.value)}><option value="">Unassigned</option>{admins.map(a => <option value={a.id}>{a.name || a.username}</option>)}</select></label><label>Priority<select value={priority} onChange={e => setPriority(e.currentTarget.value)}><option value="normal">Normal</option><option value="high">High</option><option value="urgent">Urgent</option></select></label><History rows={action.report.internalHistory || []} /></>}
     {action.kind === 'permissions' && <fieldset><legend>{action.admin.name}</legend>{['support', 'qa', 'operations', 'finance'].map(cap => <label className="operations-check"><input type="checkbox" checked={caps.includes(cap)} onChange={e => setCaps(e.currentTarget.checked ? [...caps, cap] : caps.filter(c => c !== cap))} />{labelText(cap)}</label>)}</fieldset>}
     {action.kind !== 'review' && <label>{action.kind === 'case' ? 'Internal update' : 'Reason'}<textarea required maxLength={action.kind === 'case' ? 2000 : 1000} value={reason} onInput={e => setReason(e.currentTarget.value)} /></label>}

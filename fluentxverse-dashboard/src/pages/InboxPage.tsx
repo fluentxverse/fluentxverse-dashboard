@@ -5,6 +5,8 @@ import { adminApi, type SystemMessage, type MessageCategory, type TargetAudience
 import { useAuthContext } from '../context/AuthContext';
 import { AdminArt } from '../components/AdminArt';
 import './InboxPage.css';
+import LessonIssueThreads from '../components/LessonIssueThreads';
+import StudentDisputes from '../components/StudentDisputes';
 
 const categories: { value: MessageCategory; label: string; icon: string }[] = [
   { value: 'announcement', label: 'Announcement', icon: 'megaphone-line' },
@@ -113,6 +115,8 @@ export default function InboxPage() {
 
   return <div className="inbox-page sysmsg-page">
     <header className="sysmsg-heading"><div className="sysmsg-heading-copy"><AdminArt name="community"/><div><h1>System Messages</h1><p>Announcements & platform updates</p></div></div><button type="button" className="sysmsg-btn sysmsg-btn-primary" onClick={() => openComposer()}><Icon name="add-line"/>New message</button></header>
+    <LessonIssueThreads/>
+    <StudentDisputes/>
     {notice && <div className="sysmsg-banner sysmsg-success" role="status"><Icon name="checkbox-circle-line"/><span>{notice}</span><button type="button" className="sysmsg-icon-btn" aria-label="Dismiss confirmation" title="Dismiss confirmation" onClick={() => setNotice('')}><Icon name="close-line"/></button></div>}
     <section className="sysmsg-workspace" aria-label="System messages">
       <div className="sysmsg-toolbar">

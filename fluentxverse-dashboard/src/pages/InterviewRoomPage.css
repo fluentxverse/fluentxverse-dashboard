@@ -447,9 +447,11 @@
   color: #94a3b8;
 }
 
-.avatar-placeholder {
+.interview-room .interview-candidate-avatar {
   width: 80px;
   height: 80px;
+  flex: 0 0 80px;
+  aspect-ratio: 1;
   border-radius: 50%;
   background: #475569;
   display: flex;
@@ -458,9 +460,10 @@
   margin-bottom: 1rem;
 }
 
-.avatar-placeholder i {
+.interview-room .interview-candidate-avatar i {
   font-size: 2.5rem;
   color: #94a3b8;
+  margin: 0;
 }
 
 .video-label {
@@ -1080,4 +1083,115 @@
   .video-container.local {
     width: 120px;
   }
+}
+
+@media (max-width: 480px) {
+  .interview-room .video-container.remote .video-placeholder {
+    padding: 12px;
+    gap: 8px;
+  }
+
+  .interview-room .interview-candidate-avatar {
+    width: 48px;
+    height: 48px;
+    flex-basis: 48px;
+    margin: 0;
+  }
+
+  .interview-room .interview-candidate-avatar i {
+    font-size: 28px;
+  }
+
+  .interview-room .video-container.remote .video-placeholder p {
+    margin: 0;
+    max-width: 100%;
+    font-size: 12px;
+    line-height: 1.4;
+    text-align: center;
+    white-space: normal;
+  }
+
+  .interview-room .video-container.remote:has(.interview-candidate-avatar) .video-label {
+    top: 8px;
+    bottom: auto;
+    left: 8px;
+  }
+}
+.interview-review-navigation { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 13px; }
+.interview-room .notes-section > .interview-chat { height: 360px; flex: none; margin-bottom: 16px; }
+.interview-room .notes-section { overflow-y: auto; min-height: 0; }
+.interview-room .call-header { flex-wrap: wrap; gap: 12px; }
+.interview-room .call-header > * { min-width: 0; }
+.interview-room .call-info, .interview-room .call-title { flex-wrap: wrap; gap: 8px; }
+/* Keep call tools independently scrollable without shrinking the video stage. */
+.interview-room { --ir-surface: #fff; --ir-text: #202636; --ir-muted: #58677a; --ir-border: #d9e1ec; --ir-soft: #f5f7fa; --ir-accent: #1254ba; }
+[data-theme='dark'] .interview-room { --ir-surface: #242424; --ir-text: #f5f5f5; --ir-muted: #b8c2cf; --ir-border: #454545; --ir-soft: #303030; --ir-accent: #8abaff; }
+.interview-room .interview-call { height: 100dvh; min-height: 0; background: var(--ir-soft); }
+.interview-room .call-header { flex: none; padding: 12px 18px; background: var(--ir-surface); border-color: var(--ir-border); }
+.interview-room :is(.call-title,.call-duration) { color: var(--ir-text); }
+.interview-room .call-duration { background: var(--ir-soft); border-color: var(--ir-border); }
+.interview-room .btn-back-header { background: var(--ir-soft); color: var(--ir-muted); }
+.interview-room .call-status { color: var(--ir-muted); }
+.interview-room .call-body { grid-template-columns: minmax(0, 1fr) 400px; min-height: 0; }
+.interview-room .video-section { margin: 0; border: 0; border-radius: 0; min-width: 0; min-height: 0; background: #151719; }
+.interview-room .video-grid { padding: 0; min-height: 0; overflow: hidden; }
+.interview-room .video-container.remote { position: absolute; inset: 0; max-width: none; width: 100%; height: 100%; aspect-ratio: auto; border-radius: 0; background: #151719; }
+.interview-room .video-container.remote video { object-fit: contain; display: block; }
+.interview-room .video-container.remote .video-placeholder { background: #151719; }
+.interview-room .video-container.local { width: 156px; bottom: 16px; right: 16px; border-radius: 8px; border-width: 2px; }
+.interview-room .video-label { font-size: 12px; padding: 5px 8px; }
+.interview-room .call-controls { flex: none; padding: 12px; gap: 12px; background: var(--ir-surface); border-color: var(--ir-border); }
+.interview-room .control-btn { width: 44px; height: 44px; font-size: 19px; }
+.interview-room .control-btn.end-call { width: 48px; height: 48px; }
+.interview-room .interview-recording-state { flex: none; padding: 8px 16px; background: var(--ir-surface); color: var(--ir-muted); }
+.interview-room .interview-recording-state:empty { display: none; }
+.interview-room .notes-section { min-width: 0; min-height: 0; overflow: hidden; background: var(--ir-surface); border-color: var(--ir-border); }
+.interview-sidebar-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); flex: none; padding: 0 8px; border-bottom: 1px solid var(--ir-border); }
+.interview-sidebar-tabs button { display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 52px; padding: 8px 4px; border: 0; border-bottom: 2px solid transparent; background: transparent; color: var(--ir-muted); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
+.interview-sidebar-tabs button[aria-selected=true] { border-bottom-color: var(--ir-accent); color: var(--ir-accent); }
+.interview-sidebar-tabs button span { font-size: 11px; padding: 1px 5px; border-radius: 4px; background: var(--ir-soft); }
+.interview-sidebar-tabs button:focus-visible { outline: 2px solid var(--ir-accent); outline-offset: -4px; }
+.interview-tool-panel { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+.interview-tool-panel[hidden] { display: none !important; }
+.interview-room .chat-tool-panel { padding: 0; overflow: hidden; }
+.interview-room .chat-tool-panel .interview-chat { height: 100%; border: 0; border-radius: 0; margin: 0; }
+.interview-room .identity-section { padding: 20px; margin: 0; border: 0; color: var(--ir-text); }
+.interview-room .identity-section h2 { font-size: 17px; color: var(--ir-text); margin-bottom: 20px; }
+.interview-room .identity-section h3 { font-size: 15px; color: var(--ir-text); margin-bottom: 8px; }
+.interview-room .identity-section p { font-size: 13px; color: var(--ir-muted); line-height: 1.65; }
+.interview-room .identity-section a { color: var(--ir-accent); }
+.interview-room .identity-form { margin-top: 18px; }
+.interview-room .identity-form label { color: var(--ir-text); font-size: 13px; }
+.interview-room .identity-section :is(button,textarea) { background: var(--ir-surface); color: var(--ir-text); border-color: var(--ir-border); }
+.interview-room :is(.identity-section textarea,.note-input-area textarea)::placeholder { color: var(--ir-muted); opacity: 1; }
+.interview-room .identity-actions { gap: 8px; }
+.interview-room .identity-actions button { font-size: 12px; padding: 8px 10px; white-space: normal; }
+.interview-room :is(.rubric-section,.timestamp-section,.result-section) { padding: 18px 20px; flex: none; overflow: visible; background: var(--ir-surface); border-color: var(--ir-border); }
+.interview-room :is(.rubric-section,.timestamp-section,.result-section) h4 { color: var(--ir-text); }
+.interview-room :is(.rubric-label,.rubric-average span,.result-hint) { color: var(--ir-muted); }
+.interview-room .interview-review-navigation a { color: var(--ir-accent); }
+.interview-room :is(.score-btn,.note-input-area textarea,.timestamp-note) { background: var(--ir-soft); color: var(--ir-text); border-color: var(--ir-border); }
+.interview-room .score-btn.active { background: #1254ba; color: #fff; }
+.interview-room .rubric-label { min-width: 100px; }
+@media (max-width: 1024px) {
+  .interview-room .interview-call { height: auto; min-height: 100dvh; }
+  .interview-room .call-body { display: flex; flex-direction: column; overflow: visible; }
+  .interview-room .video-section { min-height: 400px; flex: none; }
+  .interview-room .notes-section { max-height: none; overflow: visible; }
+}
+@media (min-width: 801px) and (max-width: 1024px) {
+  .interview-room .interview-call { height: 100dvh; min-height: 0; }
+  .interview-room .call-body { display: grid; grid-template-columns: minmax(0, 1fr) 360px; grid-template-rows: minmax(0, 1fr); overflow: hidden; }
+  .interview-room .video-section { min-height: 0; }
+  .interview-room .notes-section { overflow: hidden; }
+}
+@media (max-width: 800px) {
+  .interview-room .interview-call { height: auto; min-height: 100dvh; }
+  .interview-room .call-body { display: flex; overflow: visible; }
+  .interview-room .video-section { margin: 0; min-height: 0; }
+  .interview-room .video-grid { flex: none; height: 42dvh; min-height: 220px; }
+  .interview-room .video-container.local { width: 100px; right: 12px; bottom: 12px; }
+  .interview-room .notes-section { height: 580px; max-height: 75dvh; min-height: 360px; overflow: hidden; border-left: 0; border-top: 1px solid var(--ir-border); }
+  .interview-room .call-title { font-size: 13px; }
+  .interview-room .auto-save-indicator { display: none; }
 }

@@ -6,18 +6,18 @@
   min-width: 0;
 }
 
-.chart-title {
+.simple-chart-title {
   font-size: 14px;
   font-weight: 600;
   color: var(--text-primary);
   margin: 0 0 16px 0;
 }
 
-.chart-container {
+.simple-chart-container {
   position: relative;
 }
 
-.chart-empty {
+.simple-chart-empty {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -30,7 +30,7 @@
 }
 
 /* Bar Chart */
-.bar-container {
+.simple-chart-bars {
   display: flex;
   align-items: flex-end;
   justify-content: space-around;
@@ -39,7 +39,7 @@
   padding-bottom: 24px;
 }
 
-.bar-wrapper {
+.simple-chart-bar-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -48,7 +48,7 @@
   height: 100%;
 }
 
-.bar-fill-container {
+.simple-chart-bar-track {
   flex: 1;
   width: 100%;
   display: flex;
@@ -56,7 +56,7 @@
   justify-content: center;
 }
 
-.bar-fill {
+.simple-chart-bar-fill {
   width: 80%;
   max-width: 40px;
   border-radius: 6px 6px 0 0;
@@ -68,7 +68,7 @@
   position: relative;
 }
 
-.bar-value {
+.simple-chart-bar-value {
   position: absolute;
   top: -22px;
   font-size: 11px;
@@ -76,7 +76,7 @@
   color: var(--text-primary);
 }
 
-.bar-label {
+.simple-chart-bar-label {
   font-size: 11px;
   color: var(--text-muted);
   margin-top: 8px;
@@ -88,115 +88,116 @@
 }
 
 /* Line Chart */
-.line-chart .chart-container {
+.simple-chart-line .simple-chart-container {
   height: 200px;
 }
 
-.line-chart svg {
+.simple-chart-line svg {
   width: 100%;
   height: calc(100% - 30px);
 }
 
-.line-labels {
+.simple-chart-line-labels {
   display: flex;
   justify-content: space-between;
   padding: 8px 0 0;
 }
 
-.line-label {
+.simple-chart-line-label {
   font-size: 10px;
   color: var(--text-muted);
 }
 
-.data-point {
+.simple-chart-point {
   opacity: 0;
   transition: opacity 0.2s;
 }
 
-.line-chart:hover .data-point {
+.simple-chart-line:hover .simple-chart-point {
   opacity: 1;
 }
 
 /* Donut Chart */
-.donut-container {
+.simple-chart-donut-container {
   display: flex;
   align-items: center;
   gap: 24px;
 }
 
-.donut-chart svg {
+.simple-chart-donut svg {
   flex-shrink: 0;
 }
 
-.donut-total {
+.simple-chart-total {
   fill: var(--text-primary);
 }
 
-.donut-legend {
+.simple-chart-legend {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.legend-item {
+.simple-chart-legend-item {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.legend-dot {
+.simple-chart-legend-dot {
   width: 10px;
   height: 10px;
   border-radius: 3px;
   flex-shrink: 0;
 }
 
-.legend-label {
+.simple-chart-legend-label {
   font-size: 13px;
   color: var(--text-secondary);
   flex: 1;
 }
 
-.legend-value {
+.simple-chart-legend-value {
   font-size: 13px;
   font-weight: 600;
   color: var(--text-primary);
 }
 
 /* Progress Bar */
-.progress-stat {
+.simple-chart-progress {
   margin-bottom: 16px;
 }
 
-.progress-stat:last-child {
+.simple-chart-progress:last-child {
   margin-bottom: 0;
 }
 
-.progress-header {
+.simple-chart-progress-header {
   display: flex;
   justify-content: space-between;
   margin-bottom: 6px;
 }
 
-.progress-label {
+.simple-chart-progress-label {
   font-size: 13px;
   color: var(--text-secondary);
 }
 
-.progress-value {
+.simple-chart-progress-value {
   font-size: 13px;
   font-weight: 600;
   color: var(--text-primary);
 }
 
-.progress-track {
+.simple-chart-progress-track {
+  position: relative;
   height: 8px;
-  background: var(--bg-secondary);
+  background: var(--admin-surface-muted, var(--bg-tertiary));
   border-radius: 4px;
   overflow: hidden;
 }
 
-.progress-fill {
+.simple-chart-progress-fill {
   height: 100%;
   border-radius: 4px;
   transition: width 0.3s ease;
@@ -212,12 +213,12 @@
 
 /* Responsive */
 @media (max-width: 768px) {
-  .donut-container {
+  .simple-chart-donut-container {
     flex-direction: column;
     text-align: center;
   }
 
-  .donut-legend {
+  .simple-chart-legend {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;

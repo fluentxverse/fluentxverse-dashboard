@@ -1,8 +1,37 @@
-import { useState, useEffect } from 'preact/hooks';
-import { adminApi, PendingTutor, PendingProfileReview, ProfileItemStatuses } from '../api/admin.api';
+import { useState, useEffect, useRef } from 'preact/hooks';
+import { adminApi, type TutorApplication, type ApplicationCounts, type ApplicationFilter, PendingProfileReview, ProfileItemStatuses } from '../api/admin.api';
 import './ApplicationsPage.css';
+import ProfileAvatar from '../components/ProfileAvatar';
+import { mediaUrl } from '../utils/mediaUrl';
+import { API_BASE_URL } from '../config/api';
+import { profileApplicationStatus } from '../../../shared/profileApplicationStatus';
 
-type ProfileItemKey = 'profilePicture' | 'videoIntro' | 'bio' | 'education' | 'interests';
+const reviewMedia = (src?: string) => mediaUrl(src, API_BASE_URL);
+const reviewVideoUrl = (src: string) => {
+  const source = reviewMedia(src);
+  if (!source) return source;
+  try {
+    const url = new URL(source);
+    if (url.origin === new URL(API_BASE_URL).origin && /^\/lesson\/files\/user\/[^/]+\/video\/[^/]+$/.test(url.pathname)) url.pathname += '/stream';
+    return url.toString();
+  } catch { return source; }
+};
+function ReviewVideo({ src }: { src: string }) {
+  const [failed, setFailed] = useState(false);
+  return <div className="review-video-preview">
+    <video key={src} src={reviewVideoUrl(src)} controls preload="metadata" aria-label="Submitted introduction video" onLoadedMetadata={() => setFailed(false)} onError={() => setFailed(true)}/>
+    {failed && <p className="missing" role="alert">The submitted video could not be loaded.</p>}
+  </div>;
+}
+function ReviewPhoto({ src }: { src: string }) {
+  const source = reviewMedia(src);
+  const [failed, setFailed] = useState<string>();
+  return source && failed !== source ? <a className="profile-review-photo" href={source} target="_blank" rel="noopener noreferrer" aria-label="Open profile photo">
+    <img src={source} alt="Profile photo" className="review-image" onError={() => setFailed(source)}/>
+  </a> : <p className="missing" role="status">Profile photo could not be loaded.</p>;
+}
+
+type ProfileItemKey = 'nickname' | 'profilePicture' | 'videoIntro' | 'bio' | 'education' | 'interests';
 type TabType = 'applications' | 'profiles' | 'changes';
 
 interface PendingChange {
@@ -13,6 +42,11 @@ interface PendingChange {
   rejectionReason?: string;
   submittedAt: string;
 }
+
+const changeField = (change: PendingChange) => {
+  const field = change.fieldKey || change.itemKey;
+  return field === 'videoIntro' ? 'videoIntroUrl' : field;
+};
 
 interface TutorWithPendingChanges {
   id: string;
@@ -25,21 +59,34 @@ interface TutorWithPendingChanges {
 
 const ApplicationsPage = () => {
   const [activeTab, setActiveTab] = useState<TabType>('applications');
-  const [applications, setApplications] = useState<PendingTutor[]>([]);
+  const [applications, setApplications] = useState<TutorApplication[]>([]);
   const [pendingProfiles, setPendingProfiles] = useState<PendingProfileReview[]>([]);
   const [tutorsWithChanges, setTutorsWithChanges] = useState<TutorWithPendingChanges[]>([]);
-  const [certifiedCount, setCertifiedCount] = useState(0);
-  const [pendingProfileCount, setPendingProfileCount] = useState(0);
+  const [stats, setStats] = useState<ApplicationCounts | null>(null);
+  const [page, setPage] = useState(1);
+  const [pageCount, setPageCount] = useState(1);
+  const [totalApplications, setTotalApplications] = useState(0);
+  const applicationRequest = useRef(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [filter, setFilter] = useState<string>('all');
+  const [filter, setFilter] = useState<ApplicationFilter>('all');
   const [reviewingId, setReviewingId] = useState<string | null>(null);
   const [reviewingItem, setReviewingItem] = useState<ProfileItemKey | null>(null);
   const [reviewingChange, setReviewingChange] = useState<{ tutorId: string; index: number } | null>(null);
   const [showProfileModal, setShowProfileModal] = useState<PendingProfileReview | null>(null);
+  const profileDialog = useRef<HTMLDialogElement>(null);
+  useEffect(() => {
+    const dialog = profileDialog.current;
+    if (!showProfileModal || !dialog) return;
+    if (!dialog.open) dialog.showModal();
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = previousOverflow; };
+  }, [showProfileModal?.id]);
   const [showChangesModal, setShowChangesModal] = useState<TutorWithPendingChanges | null>(null);
   const [changeRejectReason, setChangeRejectReason] = useState('');
   const [itemRejectReasons, setItemRejectReasons] = useState<Record<ProfileItemKey, string>>({
+    nickname: '',
     profilePicture: '',
     videoIntro: '',
     bio: '',
@@ -48,32 +95,35 @@ const ApplicationsPage = () => {
   });
 
   useEffect(() => {
-    loadApplications();
     loadPendingProfiles();
     loadTutorsWithChanges();
-    loadStats();
   }, []);
 
-  const loadApplications = async () => {
-    try {
-      setLoading(true);
-      setError('');
-      const data = await adminApi.getPendingTutors(50);
-      setApplications(data);
-    } catch (err: any) {
-      setError(err.message || 'Failed to load applications');
-    } finally {
-      setLoading(false);
-    }
-  };
+  useEffect(() => {
+    void loadApplications();
+    const refresh = () => { if (!document.hidden) void loadApplications(true); };
+    window.addEventListener('focus', refresh);
+    document.addEventListener('visibilitychange', refresh);
+    const timer = window.setInterval(refresh, 30000);
+    return () => { applicationRequest.current++; window.clearInterval(timer); window.removeEventListener('focus', refresh); document.removeEventListener('visibilitychange', refresh); };
+  }, [page, filter]);
 
-  const loadStats = async () => {
+  const loadApplications = async (background = false) => {
+    const request = ++applicationRequest.current;
     try {
-      const stats = await adminApi.getStats();
-      setCertifiedCount(stats.certifiedTutors);
-      setPendingProfileCount(stats.pendingTutors);
-    } catch (err) {
-      console.error('Failed to load stats:', err);
+      if (!background) setLoading(true);
+      setError('');
+      const data = await adminApi.getApplications(filter, page);
+      if (request !== applicationRequest.current) return;
+      setApplications(data.items);
+      setStats(data.counts);
+      setPageCount(data.pageCount);
+      setTotalApplications(data.total);
+      if (data.page !== page) setPage(data.page);
+    } catch (err: any) {
+      if (request === applicationRequest.current) setError(err.response?.data?.error || err.message || 'Failed to load applications');
+    } finally {
+      if (request === applicationRequest.current) setLoading(false);
     }
   };
 
@@ -169,6 +219,7 @@ const ApplicationsPage = () => {
       
       // Clear the reject reason for this item
       setItemRejectReasons(prev => ({ ...prev, [itemKey]: '' }));
+      void loadApplications(true);
     } catch (err: any) {
       setError(err.message || 'Failed to review item');
     } finally {
@@ -178,6 +229,7 @@ const ApplicationsPage = () => {
 
   const getItemLabel = (key: ProfileItemKey): string => {
     const labels: Record<ProfileItemKey, string> = {
+      nickname: 'Preferred nickname',
       profilePicture: 'Profile Photo',
       videoIntro: 'Introduction Video',
       bio: 'Bio',
@@ -189,6 +241,7 @@ const ApplicationsPage = () => {
 
   const getItemIcon = (key: ProfileItemKey): string => {
     const icons: Record<ProfileItemKey, string> = {
+      nickname: 'ri-user-line',
       profilePicture: 'ri-image-line',
       videoIntro: 'ri-video-line',
       bio: 'ri-file-text-line',
@@ -200,6 +253,7 @@ const ApplicationsPage = () => {
 
   const getChangeIcon = (itemKey: string): string => {
     const icons: Record<string, string> = {
+      nickname: 'ri-user-line',
       bio: 'ri-file-text-line',
       profilePicture: 'ri-image-line',
       videoIntroUrl: 'ri-video-line',
@@ -212,6 +266,7 @@ const ApplicationsPage = () => {
 
   const getChangeLabel = (itemKey: string): string => {
     const labels: Record<string, string> = {
+      nickname: 'Preferred nickname',
       bio: 'Bio',
       profilePicture: 'Profile Photo',
       videoIntroUrl: 'Introduction Video',
@@ -223,19 +278,18 @@ const ApplicationsPage = () => {
   };
 
   const renderChangeValue = (change: PendingChange) => {
-    if (change.itemKey === 'profilePicture' && change.newValue) {
+    const field = changeField(change);
+    if (field === 'profilePicture' && change.newValue) {
       return (
-        <a href={change.newValue} target="_blank" rel="noopener noreferrer">
-          <img src={change.newValue} alt="New profile photo" className="change-image-preview" />
-        </a>
+        <ReviewPhoto src={change.newValue}/>
       );
     }
-    if (change.itemKey === 'videoIntroUrl' && change.newValue) {
+    if (field === 'videoIntroUrl' && typeof change.newValue === 'string' && change.newValue) {
       return (
-        <video src={change.newValue} controls className="change-video-preview" />
+        <ReviewVideo src={change.newValue}/>
       );
     }
-    if (change.itemKey === 'interests') {
+    if (field === 'interests') {
       // Handle both array and JSON string formats
       let interests: string[] = [];
       if (Array.isArray(change.newValue)) {
@@ -266,13 +320,16 @@ const ApplicationsPage = () => {
   };
 
   const getApprovalProgress = (statuses?: ProfileItemStatuses): { approved: number; total: number; percent: number } => {
-    if (!statuses) return { approved: 0, total: 5, percent: 0 };
-    const items = Object.values(statuses);
+    if (!statuses) return { approved: 0, total: 6, percent: 0 };
+    const items = Object.values(statuses).filter(Boolean);
     const approved = items.filter(s => s.status === 'approved').length;
-    return { approved, total: 5, percent: Math.round((approved / 5) * 100) };
+    return { approved, total: 6, percent: Math.round((approved / 6) * 100) };
   };
 
-  const getStatusInfo = (app: PendingTutor) => {
+  const getStatusInfo = (app: TutorApplication) => {
+    if (app.writtenExamPassed && app.speakingExamPassed && !['verified', 'booked'].includes(app.identityStatus || '')) return { label: app.identityStatus === 'pending_review' ? 'ID Review Pending' : app.identityStatus === 'accepted' ? 'ID Accepted: Book Interview' : app.identityStatus === 'fraud' ? 'Identity Fraud: Banned' : 'ID Submission Required', class: 'review', icon: 'ri-shield-user-line' };
+    if (app.status === 'certified') return { label: 'Application Approved', class: 'interview-pass', icon: 'ri-verified-badge-line' };
+    if (app.status === 'pending_profile') return { label: 'Profile Review Pending', class: 'review', icon: 'ri-user-settings-line' };
     // Check interview result first
     if (app.interviewResult === 'pass') {
       return { label: 'Interview Passed', class: 'interview-pass', icon: 'ri-check-double-line' };
@@ -281,7 +338,7 @@ const ApplicationsPage = () => {
       return { label: 'Interview Failed', class: 'interview-fail', icon: 'ri-close-circle-line' };
     }
     if (app.status === 'processing') {
-      return { label: 'Interview Processing', class: 'processing', icon: 'ri-loader-4-line' };
+      return { label: 'Speaking Assessment Processing', class: 'processing', icon: 'ri-loader-4-line' };
     }
     if (!app.writtenExamPassed) {
       return { label: 'Pending Written Exam', class: 'pending-written', icon: 'ri-file-text-line' };
@@ -289,20 +346,13 @@ const ApplicationsPage = () => {
     if (!app.speakingExamPassed) {
       return { label: 'Pending Speaking Exam', class: 'pending-speaking', icon: 'ri-mic-line' };
     }
-    return { label: 'Under Review', class: 'review', icon: 'ri-search-line' };
+    if (app.status === 'interview_scheduled') return { label: 'Interview Scheduled', class: 'review', icon: 'ri-calendar-check-line' };
+    if (app.status === 'interview_review') return { label: 'Interview Decision Pending', class: 'review', icon: 'ri-search-line' };
+    return { label: 'Ready for Interview', class: 'review', icon: 'ri-calendar-schedule-line' };
   };
 
-  const filteredApplications = applications.filter(app => {
-    if (filter === 'all') return true;
-    if (filter === 'pending_written') return !app.writtenExamPassed;
-    if (filter === 'pending_speaking') return app.writtenExamPassed && !app.speakingExamPassed;
-    if (filter === 'processing') return app.status === 'processing';
-    if (filter === 'interview_passed') return app.interviewResult === 'pass';
-    if (filter === 'interview_failed') return app.interviewResult === 'fail';
-    return true;
-  });
-
-  const formatDate = (dateString: string) => {
+  const formatDate = (dateString: string | null) => {
+    if (!dateString) return 'Date unavailable';
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'short',
@@ -310,14 +360,17 @@ const ApplicationsPage = () => {
     });
   };
 
-  const stats = {
-    total: applications.length,
-    pendingWritten: applications.filter(a => !a.writtenExamPassed).length,
-    pendingSpeaking: applications.filter(a => a.writtenExamPassed && !a.speakingExamPassed).length,
-    processing: applications.filter(a => a.status === 'processing').length,
-    interviewPassed: applications.filter(a => a.interviewResult === 'pass').length,
-    interviewFailed: applications.filter(a => a.interviewResult === 'fail').length,
-  };
+  const selectFilter = (value: ApplicationFilter) => { setFilter(value); setPage(1); };
+  const metrics = [
+    { filter: 'all', count: stats?.total, label: 'Total Applications', icon: 'ri-file-user-line', tone: 'total' },
+    { filter: 'pending_written', count: stats?.pendingWritten, label: 'Pending Written', icon: 'ri-file-text-line', tone: 'pending-written' },
+    { filter: 'pending_speaking', count: stats?.pendingSpeaking, label: 'Pending Speaking', icon: 'ri-mic-line', tone: 'pending-speaking' },
+    { filter: 'processing', count: stats?.processing, label: 'Processing', icon: 'ri-loader-4-line', tone: 'processing' },
+    { filter: 'interview_passed', count: stats?.interviewPassed, label: 'Interview Passed', icon: 'ri-check-double-line', tone: 'interview-pass' },
+    { filter: 'interview_failed', count: stats?.interviewFailed, label: 'Interview Failed', icon: 'ri-close-circle-line', tone: 'interview-fail' },
+    { filter: 'pending_profile', count: stats?.pendingProfile, label: 'Profile Review', icon: 'ri-user-settings-line', tone: 'pending-profile' },
+    { filter: 'certified', count: stats?.certified, label: 'Approved', icon: 'ri-verified-badge-line', tone: 'certified' },
+  ] as const;
 
   return (
     <div className="applications-page">
@@ -332,8 +385,8 @@ const ApplicationsPage = () => {
             onClick={() => setActiveTab('applications')}
           >
             <i className="ri-file-user-line"></i>
-            Exam Applications
-            <span className="tab-badge">{applications.length}</span>
+            Applications
+            <span className="tab-badge">{stats?.total ?? '--'}</span>
           </button>
           <button 
             className={`tab-btn ${activeTab === 'profiles' ? 'active' : ''}`}
@@ -341,7 +394,7 @@ const ApplicationsPage = () => {
           >
             <i className="ri-user-settings-line"></i>
             Profile Reviews
-            <span className="tab-badge">{pendingProfiles.length}</span>
+            <span className="tab-badge">{stats?.pendingProfile ?? pendingProfiles.length}</span>
           </button>
           <button 
             className={`tab-btn ${activeTab === 'changes' ? 'active' : ''}`}
@@ -360,78 +413,11 @@ const ApplicationsPage = () => {
         <>
           {/* Stats Cards */}
           <div className="stats-grid">
-        <div className={`stat-card ${filter === 'all' ? 'active' : ''}`} onClick={() => setFilter('all')}>
-          <div className="stat-icon total">
-            <i className="ri-file-user-line"></i>
-          </div>
-          <div className="stat-content">
-            <span className="stat-number">{stats.total}</span>
-            <span className="stat-label">Total Applications</span>
-          </div>
-        </div>
-        <div className={`stat-card ${filter === 'pending_written' ? 'active' : ''}`} onClick={() => setFilter('pending_written')}>
-          <div className="stat-icon pending-written">
-            <i className="ri-file-text-line"></i>
-          </div>
-          <div className="stat-content">
-            <span className="stat-number">{stats.pendingWritten}</span>
-            <span className="stat-label">Pending Written</span>
-          </div>
-        </div>
-        <div className={`stat-card ${filter === 'pending_speaking' ? 'active' : ''}`} onClick={() => setFilter('pending_speaking')}>
-          <div className="stat-icon pending-speaking">
-            <i className="ri-mic-line"></i>
-          </div>
-          <div className="stat-content">
-            <span className="stat-number">{stats.pendingSpeaking}</span>
-            <span className="stat-label">Pending Speaking</span>
-          </div>
-        </div>
-        <div className={`stat-card ${filter === 'processing' ? 'active' : ''}`} onClick={() => setFilter('processing')}>
-          <div className="stat-icon processing">
-            <i className="ri-loader-4-line"></i>
-          </div>
-          <div className="stat-content">
-            <span className="stat-number">{stats.processing}</span>
-            <span className="stat-label">Processing</span>
-          </div>
-        </div>
-        <div className={`stat-card ${filter === 'interview_passed' ? 'active' : ''}`} onClick={() => setFilter('interview_passed')}>
-          <div className="stat-icon interview-pass">
-            <i className="ri-check-double-line"></i>
-          </div>
-          <div className="stat-content">
-            <span className="stat-number">{stats.interviewPassed}</span>
-            <span className="stat-label">Interview Passed</span>
-          </div>
-        </div>
-        <div className={`stat-card ${filter === 'interview_failed' ? 'active' : ''}`} onClick={() => setFilter('interview_failed')}>
-          <div className="stat-icon interview-fail">
-            <i className="ri-close-circle-line"></i>
-          </div>
-          <div className="stat-content">
-            <span className="stat-number">{stats.interviewFailed}</span>
-            <span className="stat-label">Interview Failed</span>
-          </div>
-        </div>
-        <div className="stat-card info-card">
-          <div className="stat-icon pending-profile">
-            <i className="ri-user-settings-line"></i>
-          </div>
-          <div className="stat-content">
-            <span className="stat-number">{pendingProfileCount}</span>
-            <span className="stat-label">Pending Profile</span>
-          </div>
-        </div>
-        <div className="stat-card info-card">
-          <div className="stat-icon certified">
-            <i className="ri-verified-badge-line"></i>
-          </div>
-          <div className="stat-content">
-            <span className="stat-number">{certifiedCount}</span>
-            <span className="stat-label">Certified</span>
-          </div>
-        </div>
+        {metrics.map(metric => <button type="button" key={metric.filter} className={`stat-card ${filter === metric.filter ? 'active' : ''}`}
+          aria-label={metric.label} aria-pressed={filter === metric.filter} onClick={() => selectFilter(metric.filter)}>
+          <span className={`stat-icon ${metric.tone}`}><i className={metric.icon} aria-hidden="true"/></span>
+          <span className="stat-content"><span className="stat-number">{metric.count ?? '--'}</span><span className="stat-label">{metric.label}</span></span>
+        </button>)}
       </div>
 
       {error && (
@@ -444,8 +430,15 @@ const ApplicationsPage = () => {
       {/* Applications List */}
       <div className="applications-container">
         <div className="container-header">
-          <h2>Applications ({filteredApplications.length})</h2>
-          <button className="btn-refresh" onClick={loadApplications}>
+          <h2>Applications ({stats ? totalApplications : '--'})</h2>
+          <select className="application-stage-filter" aria-label="Application stage" value={filter} onChange={event => selectFilter(event.currentTarget.value as ApplicationFilter)}>
+            <option value="all">All applications</option><option value="pending_written">Pending written</option>
+            <option value="pending_speaking">Pending speaking</option><option value="processing">Speaking processing</option>
+            <option value="pending_interview">Ready for interview</option><option value="interview_scheduled">Interview scheduled</option>
+            <option value="interview_review">Interview decision pending</option><option value="interview_passed">Interview passed</option>
+            <option value="interview_failed">Interview failed</option><option value="pending_profile">Profile review</option><option value="certified">Approved</option>
+          </select>
+          <button className="btn-refresh" onClick={() => void loadApplications()}>
             <i className="ri-refresh-line"></i>
             Refresh
           </button>
@@ -458,11 +451,16 @@ const ApplicationsPage = () => {
           </div>
         ) : (
           <div className="applications-list">
-            {filteredApplications.map(app => {
+            <div className="application-column-headings" aria-hidden="true">
+              <span>Applicant</span><span>Application steps</span><span>Profile Submission</span><span>Profile Review</span><span>Status</span><span>Actions</span>
+            </div>
+            {applications.map(app => {
               const statusInfo = getStatusInfo(app);
+              const profile = profileApplicationStatus(app.profileStatus);
+              const idAccepted = ['accepted', 'booked', 'verified'].includes(app.identityStatus || '');
+              const idStep = idAccepted ? 'Accepted' : app.identityStatus === 'pending_review' ? 'Awaiting review' : 'Required';
               return (
                 <div className="application-card" key={app.id}>
-                  <div className="card-main">
                     <div className="applicant-info">
                       <div className="applicant-avatar">
                         {app.name?.charAt(0) || 'T'}
@@ -470,10 +468,10 @@ const ApplicationsPage = () => {
                       <div className="applicant-details">
                         <h3 className="applicant-name">{app.name}</h3>
                         <p className="applicant-email">{app.email}</p>
-                        <span className="applied-date">
+                        {app.registeredAt && <span className="applied-date">
                           <i className="ri-calendar-line"></i>
                           Applied {formatDate(app.registeredAt)}
-                        </span>
+                        </span>}
                       </div>
                     </div>
 
@@ -492,45 +490,60 @@ const ApplicationsPage = () => {
                         <span className="step-label">Speaking</span>
                       </div>
                       <div className="step-connector"></div>
-                      <div className={`exam-step ${app.writtenExamPassed && app.speakingExamPassed ? 'completed' : 'pending'}`}>
+                      <div className={`exam-step identity-step ${idAccepted ? 'completed' : app.speakingExamPassed ? 'current' : 'pending'}`} title={`ID Submission: ${idStep}`} aria-label={`ID Submission: ${idStep}`}>
+                        <div className="step-icon"><i className={idAccepted ? 'ri-check-line' : app.identityStatus === 'pending_review' ? 'ri-time-line' : 'ri-id-card-line'} aria-hidden="true"/></div>
+                        <span className="step-label">ID Submission</span>
+                      </div>
+                      <div className="step-connector"></div>
+                      <div className={`exam-step ${app.interviewResult === 'pass' ? 'completed' : 'pending'}`}>
                         <div className="step-icon">
-                          <i className="ri-shield-check-line"></i>
+                          <i className={app.interviewResult === 'fail' ? 'ri-close-circle-line' : 'ri-video-chat-line'} aria-hidden="true"/>
                         </div>
-                        <span className="step-label">Certified</span>
+                        <span className="step-label">Interview</span>
                       </div>
                     </div>
-                  </div>
-
-                  <div className="card-footer">
+                    <dl className="application-profile-column" data-profile-column="submission">
+                      <dt>Profile Submission</dt>
+                      <dd><span className={`profile-stage-badge ${profile.submission === 'Submitted' ? 'submitted' : 'neutral'}`}>{profile.submission}</span></dd>
+                    </dl>
+                    <dl className="application-profile-column" data-profile-column="review">
+                      <dt>Profile Review</dt>
+                      <dd><span className={`profile-stage-badge ${profile.tone}`}>{profile.review}</span></dd>
+                    </dl>
                     <span className={`status-badge ${statusInfo.class}`}>
                       <i className={statusInfo.icon}></i>
                       {statusInfo.label}
                     </span>
                     <div className="card-actions">
-                      <button className="btn-action view">
-                        <i className="ri-eye-line"></i>
-                        View
-                      </button>
-                      {app.writtenExamPassed && !app.speakingExamPassed && app.status !== 'processing' && (
+                      {app.interviewSlotId && <a className="btn-action view" href={`/interview-room/${encodeURIComponent(app.interviewSlotId)}`}>
+                        <i className="ri-edit-line" aria-hidden="true"/> Review interview
+                      </a>}
+                      {app.writtenExamPassed && app.speakingExamPassed && app.identityStatus === 'accepted' && !app.interviewSlotId && (
                         <a href="/interviews" className="btn-action schedule">
-                          <i className="ri-calendar-schedule-line"></i>
+                          <i className="ri-calendar-schedule-line" aria-hidden="true"></i>
                           Schedule Interview
                         </a>
                       )}
+                      {app.speakingExamPassed && !idAccepted && app.identityStatus === 'pending_review' && <a href="/identity-reviews" className="btn-action view"><i className="ri-shield-user-line" aria-hidden="true"/>Review ID</a>}
                     </div>
-                  </div>
                 </div>
               );
             })}
           </div>
         )}
 
-        {!loading && filteredApplications.length === 0 && (
+        {!loading && applications.length === 0 && !error && (
           <div className="empty-state">
             <i className="ri-file-search-line"></i>
             <p>No applications found</p>
           </div>
         )}
+        {!loading && stats && <nav className="applications-pagination" aria-label="Application pages">
+          <span>{totalApplications === 0 ? '0 applications' : `${(page - 1) * 10 + 1}-${Math.min(page * 10, totalApplications)} of ${totalApplications}`}</span>
+          <div><button type="button" aria-label="Previous application page" title="Previous page" disabled={page <= 1} onClick={() => setPage(current => current - 1)}><i className="ri-arrow-left-s-line" aria-hidden="true"/></button>
+          <span>Page {page} of {pageCount}</span>
+          <button type="button" aria-label="Next application page" title="Next page" disabled={page >= pageCount} onClick={() => setPage(current => current + 1)}><i className="ri-arrow-right-s-line" aria-hidden="true"/></button></div>
+        </nav>}
       </div>
         </>
       )}
@@ -557,6 +570,8 @@ const ApplicationsPage = () => {
                 <div 
                   key={profile.id} 
                   className="profile-review-card clickable"
+                  role="button" tabIndex={0} aria-label={`Review ${profile.name}`}
+                  onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); setShowProfileModal(profile); setError(''); } }}
                   onClick={() => {
                     setShowProfileModal(profile);
                   }}
@@ -564,13 +579,7 @@ const ApplicationsPage = () => {
                 >
                   <div className="profile-card-header">
                     <div className="profile-avatar-wrapper">
-                      {profile.profilePicture ? (
-                        <img src={profile.profilePicture} alt={profile.name} className="profile-avatar" />
-                      ) : (
-                        <div className="profile-avatar placeholder">
-                          {profile.name.charAt(0)}
-                        </div>
-                      )}
+<ProfileAvatar src={profile.profilePicture} name={profile.name} className="profile-avatar review-avatar" fallback={profile.name.charAt(0)}/>
                     </div>
                     <div className="profile-info">
                       <h3 className="profile-name">{profile.name}</h3>
@@ -641,13 +650,7 @@ const ApplicationsPage = () => {
                 >
                   <div className="profile-card-header">
                     <div className="profile-avatar-wrapper">
-                      {tutor.profilePicture ? (
-                        <img src={tutor.profilePicture} alt={tutor.name} className="profile-avatar" />
-                      ) : (
-                        <div className="profile-avatar placeholder">
-                          {tutor.name.charAt(0)}
-                        </div>
-                      )}
+<ProfileAvatar src={tutor.profilePicture} name={tutor.name} className="profile-avatar review-avatar" fallback={tutor.name.charAt(0)}/>
                       <span className="verified-badge" title="Approved Tutor">
                         <i className="ri-verified-badge-fill"></i>
                       </span>
@@ -667,8 +670,8 @@ const ApplicationsPage = () => {
                     <ul className="changes-list">
                       {tutor.pendingChanges.slice(0, 3).map((change, idx) => (
                         <li key={idx} className="change-item-preview">
-                          <i className={getChangeIcon(change.itemKey)}></i>
-                          <span>{getChangeLabel(change.itemKey)}</span>
+                          <i className={getChangeIcon(changeField(change))}></i>
+                          <span>{getChangeLabel(changeField(change))}</span>
                         </li>
                       ))}
                       {tutor.pendingChanges.length > 3 && (
@@ -710,7 +713,7 @@ const ApplicationsPage = () => {
               
               <div className="modal-profile-header">
                 {showChangesModal.profilePicture ? (
-                  <img src={showChangesModal.profilePicture} alt={showChangesModal.name} className="modal-avatar" />
+                  <ProfileAvatar src={showChangesModal.profilePicture} name={showChangesModal.name} className="modal-avatar review-avatar" fallback={showChangesModal.name.charAt(0)}/>
                 ) : (
                   <div className="modal-avatar placeholder">{showChangesModal.name.charAt(0)}</div>
                 )}
@@ -733,8 +736,8 @@ const ApplicationsPage = () => {
                 <div key={idx} className={`review-item-card pending`}>
                   <div className="item-header">
                     <div className="item-title">
-                      <i className={getChangeIcon(change.itemKey)}></i>
-                      <h4>{getChangeLabel(change.itemKey)}</h4>
+                      <i className={getChangeIcon(changeField(change))}></i>
+                      <h4>{getChangeLabel(changeField(change))}</h4>
                     </div>
                     <div className="item-status pending">
                       <i className="ri-time-line"></i> Pending Review
@@ -785,22 +788,22 @@ const ApplicationsPage = () => {
 
       {/* Profile Review Modal */}
       {showProfileModal && (
-        <div className="modal-overlay" onClick={() => { setShowProfileModal(null); setItemRejectReasons({ profilePicture: '', videoIntro: '', bio: '', education: '', interests: '' }); setError(''); }}>
+        <dialog ref={profileDialog} className="application-profile-dialog" aria-labelledby="profile-review-title" onCancel={event => { if (reviewingItem) event.preventDefault(); else { setShowProfileModal(null); setError(''); } }} onClick={event => { if (event.target === event.currentTarget && !reviewingItem) { setShowProfileModal(null); setError(''); } }}>
           <div className="profile-modal granular-review" onClick={e => e.stopPropagation()}>
             <div className="modal-header">
-              <h2>Review Profile</h2>
+              <h2 id="profile-review-title">Review Profile</h2>
               <div className="approval-progress">
                 <span className="progress-text">
-                  {getApprovalProgress(showProfileModal.profileItemStatuses).approved}/5 approved
+                  {getApprovalProgress(showProfileModal.profileItemStatuses).approved}/{getApprovalProgress(showProfileModal.profileItemStatuses).total} approved
                 </span>
-                <div className="progress-bar">
+                <div className="progress-bar" role="progressbar" aria-label="Profile approval" aria-valuemin={0} aria-valuemax={getApprovalProgress(showProfileModal.profileItemStatuses).total} aria-valuenow={getApprovalProgress(showProfileModal.profileItemStatuses).approved}>
                   <div 
                     className="progress-fill" 
                     style={{ width: `${getApprovalProgress(showProfileModal.profileItemStatuses).percent}%` }}
                   />
                 </div>
               </div>
-              <button className="modal-close" onClick={() => { setShowProfileModal(null); setItemRejectReasons({ profilePicture: '', videoIntro: '', bio: '', education: '', interests: '' }); setError(''); }}>
+              <button className="modal-close" aria-label="Close profile review" title="Close profile review" disabled={!!reviewingItem} onClick={() => { setShowProfileModal(null); setItemRejectReasons({ nickname: '', profilePicture: '', videoIntro: '', bio: '', education: '', interests: '' }); setError(''); }}>
                 <i className="ri-close-line"></i>
               </button>
             </div>
@@ -813,14 +816,7 @@ const ApplicationsPage = () => {
               )}
               
               <div className="modal-profile-header">
-                {showProfileModal.profilePicture ? (
-                  <a href={showProfileModal.profilePicture} target="_blank" rel="noopener noreferrer" className="avatar-link">
-                    <img src={showProfileModal.profilePicture} alt={showProfileModal.name} className="modal-avatar" />
-                    <span className="avatar-zoom"><i className="ri-zoom-in-line"></i></span>
-                  </a>
-                ) : (
-                  <div className="modal-avatar placeholder">{showProfileModal.name.charAt(0)}</div>
-                )}
+                <ProfileAvatar src={showProfileModal.profilePicture} name={showProfileModal.name} className="modal-avatar review-avatar" fallback={showProfileModal.name.charAt(0)}/>
                 <div className="modal-profile-info">
                   <h3>{showProfileModal.name}</h3>
                   <p>{showProfileModal.email}</p>
@@ -831,6 +827,21 @@ const ApplicationsPage = () => {
                 </div>
               </div>
 
+              <section className={`review-item-card ${showProfileModal.profileItemStatuses?.nickname?.status || 'pending'}`} aria-label="Preferred nickname review">
+                <div className="item-header">
+                  <div className="item-title"><i className="ri-user-line"/><h4>Preferred nickname</h4></div>
+                  <span className={`item-status ${showProfileModal.profileItemStatuses?.nickname?.status || 'pending'}`}>{showProfileModal.profileItemStatuses?.nickname?.status || 'pending'}</span>
+                </div>
+                <div className="item-content"><p>{showProfileModal.nickname || 'Not provided'}</p><p className="missing">Check readability, professional wording, no surname or contact details, and consistency with the introduction video.</p></div>
+                {showProfileModal.profileItemStatuses?.nickname?.status !== 'approved' && <div className="item-actions">
+                  <input className="reject-input" aria-label="Nickname rejection reason" value={itemRejectReasons.nickname} onChange={e => setItemRejectReasons(prev => ({ ...prev, nickname: (e.target as HTMLInputElement).value }))} placeholder="Rejection reason (required if rejecting)"/>
+                  <div className="action-buttons">
+                    <button className="btn-item-reject" disabled={reviewingItem === 'nickname'} onClick={() => handleReviewItem(showProfileModal.id, 'nickname', 'reject')}><i className="ri-close-line" aria-hidden="true"/> Reject</button>
+                    <button className="btn-item-approve" disabled={reviewingItem === 'nickname' || !showProfileModal.nickname} onClick={() => handleReviewItem(showProfileModal.id, 'nickname', 'approve')}><i className="ri-check-line" aria-hidden="true"/> Approve</button>
+                  </div>
+                </div>}
+                {showProfileModal.profileItemStatuses?.nickname?.rejectionReason && <p className="rejection-reason">{showProfileModal.profileItemStatuses.nickname.rejectionReason}</p>}
+              </section>
               {/* Profile Picture Review */}
               <div className={`review-item-card ${showProfileModal.profileItemStatuses?.profilePicture?.status || 'pending'}`}>
                 <div className="item-header">
@@ -846,9 +857,7 @@ const ApplicationsPage = () => {
                 </div>
                 <div className="item-content">
                   {showProfileModal.profilePicture ? (
-                    <a href={showProfileModal.profilePicture} target="_blank" rel="noopener noreferrer">
-                      <img src={showProfileModal.profilePicture} alt="Profile" className="review-image" />
-                    </a>
+                    <ReviewPhoto src={showProfileModal.profilePicture}/>
                   ) : (
                     <p className="missing">No profile photo uploaded</p>
                   )}
@@ -1068,7 +1077,7 @@ const ApplicationsPage = () => {
                 </div>
                 <div className="item-content">
                   {showProfileModal.videoIntroUrl ? (
-                    <video src={showProfileModal.videoIntroUrl} controls className="modal-video" />
+                    <ReviewVideo src={showProfileModal.videoIntroUrl}/>
                   ) : (
                     <p className="missing">Not uploaded</p>
                   )}
@@ -1109,7 +1118,7 @@ const ApplicationsPage = () => {
               </div>
             </div>
           </div>
-        </div>
+        </dialog>
       )}
     </div>
   );

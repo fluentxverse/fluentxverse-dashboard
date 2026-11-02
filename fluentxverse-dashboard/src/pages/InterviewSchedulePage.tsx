@@ -3,11 +3,33 @@ import { interviewApi, type InterviewSlot, type PendingInterview } from '@api/in
 import InterviewFeedback from '../Components/InterviewFeedback';
 import InterviewResultModal from '../Components/InterviewResultModal';
 import { toastConfirm } from '../Components/Toast/Toast';
+import { currentInterviewPeriod, type InterviewPeriod } from '../utils/interviewPeriod';
+import { INTERVIEW_HORIZON_MS } from '../../../shared/tutorIdentity';
 import './InterviewSchedulePage.css';
 
 const InterviewSchedulePage = () => {
   const [currentWeekOffset, setCurrentWeekOffset] = useState(0);
-  const [selectedPeriod, setSelectedPeriod] = useState<'morning' | 'afternoon' | 'evening'>('afternoon');
+  const [selectedPeriod, setSelectedPeriod] = useState<InterviewPeriod>(() => currentInterviewPeriod());
+  useEffect(() => {
+    let previousPeriod = currentInterviewPeriod();
+    setSelectedPeriod(previousPeriod);
+    const refreshPeriod = () => {
+      const period = currentInterviewPeriod();
+      // Preserve manual browsing until the actual time period changes.
+      if (period !== previousPeriod) {
+        previousPeriod = period;
+        setSelectedPeriod(period);
+      }
+    };
+    const timer = window.setInterval(refreshPeriod, 1000);
+    window.addEventListener('focus', refreshPeriod);
+    document.addEventListener('visibilitychange', refreshPeriod);
+    return () => {
+      window.clearInterval(timer);
+      window.removeEventListener('focus', refreshPeriod);
+      document.removeEventListener('visibilitychange', refreshPeriod);
+    };
+  }, []);
   const [slots, setSlots] = useState<Map<string, InterviewSlot>>(new Map());
   const [pendingInterviews, setPendingInterviews] = useState<PendingInterview[]>([]);
   const [selectedSlots, setSelectedSlots] = useState<Set<string>>(new Set());
@@ -20,6 +42,7 @@ const InterviewSchedulePage = () => {
   const [showResultModal, setShowResultModal] = useState(false);
   const [resultTutorId, setResultTutorId] = useState<string | null>(null);
   const [resultTutorName, setResultTutorName] = useState<string | null>(null);
+  const [resultInterviewId, setResultInterviewId] = useState<string | null>(null);
 
   const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
@@ -90,18 +113,17 @@ const InterviewSchedulePage = () => {
     })
   };
 
-  // Check if slot is in the past
-  const isPastSlot = (date: Date, timeStr: string): boolean => {
-    const now = new Date();
+  const slotStart = (date: Date, timeStr: string): number => {
     const [time, period] = timeStr.split(' ');
     let [hour, minute] = time.split(':').map(Number);
     if (period === 'PM' && hour !== 12) hour += 12;
     if (period === 'AM' && hour === 12) hour = 0;
     
-    const slotDateTime = new Date(date);
-    slotDateTime.setHours(hour, minute, 0, 0);
-    return slotDateTime < now;
+    const day = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+    return Date.parse(`${day}T${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}:00+08:00`);
   };
+  const isPastSlot = (date: Date, time: string) => slotStart(date, time) <= Date.now();
+  const beyondBookingHorizon = (date: Date, time: string) => slotStart(date, time) > Date.now() + INTERVIEW_HORIZON_MS;
 
   // Load schedule data
   useEffect(() => {
@@ -151,6 +173,7 @@ const InterviewSchedulePage = () => {
     const existingSlot = slots.get(key);
     if (existingSlot && existingSlot.status === 'completed' && existingSlot.tutorId) {
       setResultTutorId(existingSlot.tutorId);
+      setResultInterviewId(existingSlot.id);
       setResultTutorName(existingSlot.tutorName || null);
       setShowResultModal(true);
       return;
@@ -158,6 +181,7 @@ const InterviewSchedulePage = () => {
     
     // Don't allow selecting past slots
     if (isPastSlot(date, time)) return;
+    if (beyondBookingHorizon(date, time)) return;
     
     // Check if slot is already booked
     if (existingSlot && existingSlot.status === 'booked') return;
@@ -325,7 +349,7 @@ const InterviewSchedulePage = () => {
           <h1>Interview Scheduling</h1>
         </div>
         <div className="interview-actions">
-          <button className="btn btn-secondary" onClick={() => setCurrentWeekOffset(0)}>
+          <button className="btn btn-secondary" onClick={() => { setCurrentWeekOffset(0); setSelectedPeriod(currentInterviewPeriod()); }}>
             <i className="ri-calendar-check-line" aria-hidden="true"></i> Today
           </button>
         </div>
@@ -420,7 +444,7 @@ const InterviewSchedulePage = () => {
                       key={key}
                       type="button"
                       className={`slot-cell ${isPast ? 'past' : ''} ${isSelected ? 'selected' : ''}`}
-                      disabled={slot?.status === 'booked' || (isPast && !(slot?.status === 'completed' && slot.tutorId))}
+                      disabled={slot?.status === 'booked' || ((isPast || beyondBookingHorizon(date, time)) && !(slot?.status === 'completed' && slot.tutorId))}
                       aria-pressed={isSelected}
                       aria-label={`${days[dayIdx]}, ${formatDate(date)}, ${time}${slot ? `, ${slot.status}${slot.tutorName ? `, ${slot.tutorName}` : ''}` : ', available'}`}
                       onClick={() => handleSlotClick(dayIdx, time)}
@@ -431,7 +455,7 @@ const InterviewSchedulePage = () => {
                           {slot.status === 'booked' && (
                             <><i className="ri-user-line"></i><span className="slot-name">{slot.tutorName?.split(' ')[0] || 'Booked'}</span></>
                           )}
-                          {slot.status === 'completed' && <><i className="ri-check-line"></i> Done</>}
+                          {slot.status === 'completed' && <><i className="ri-check-line"></i> {slot.result === 'pass' ? 'Passed' : slot.result === 'fail' ? 'Failed' : 'Review'}</>}
                         </span>
                       )}
                     </button>
@@ -484,7 +508,7 @@ const InterviewSchedulePage = () => {
       {/* Pending Interviews */}
       {pendingInterviews.length > 0 && (
         <div className="pending-interviews">
-          <h2>Upcoming Interviews ({pendingInterviews.length})</h2>
+          <h2>Interviews to review ({pendingInterviews.length})</h2>
           <div className="interview-list">
             {pendingInterviews.map(interview => (
               <div key={interview.id} className="interview-item">
@@ -501,10 +525,11 @@ const InterviewSchedulePage = () => {
                     className="btn btn-primary btn-sm"
                     onClick={() => window.location.href = `/interview-room/${interview.id}`}
                   >
-                    <i className="ri-video-chat-line"></i> Join
+                    <i className="ri-video-chat-line"></i> {interview.mediaClosed || interview.status === 'completed' ? 'Review' : 'Join'}
                   </button>
                   <button 
                     className="btn btn-success btn-sm"
+                    aria-label="Feedback"
                     onClick={() => {
                       setFeedbackInterviewId(interview.id);
                       setShowFeedbackModal(true);
@@ -514,6 +539,7 @@ const InterviewSchedulePage = () => {
                   </button>
                   <button 
                     className="btn btn-danger btn-sm"
+                    disabled={interview.status === 'completed' || Boolean(interview.result) || interview.mediaClosed}
                     onClick={() => handleCancelInterview(interview.id)}
                   >
                     <i className="ri-close-line"></i> Cancel
@@ -571,6 +597,7 @@ const InterviewSchedulePage = () => {
       {/* Interview Result Modal */}
       {showResultModal && resultTutorId && (
         <InterviewResultModal
+          interviewId={resultInterviewId || undefined}
           tutorId={resultTutorId}
           tutorName={resultTutorName || undefined}
           onClose={() => {

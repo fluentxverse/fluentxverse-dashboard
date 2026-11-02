@@ -11,26 +11,26 @@ export const BarChart = ({ data, title, height = 200, showValues = true }: BarCh
   const maxValue = Math.max(...data.map(d => d.value), 1);
   
   return (
-    <div className="simple-chart bar-chart">
-      {title && <h4 className="chart-title">{title}</h4>}
-      <div className="chart-container" style={{ height: `${height}px` }}>
-        <div className="bar-container">
+    <div className="simple-chart simple-chart-bar">
+      {title && <h4 className="simple-chart-title">{title}</h4>}
+      <div className="simple-chart-container" style={{ height: `${height}px` }}>
+        <div className="simple-chart-bars">
           {data.map((item, index) => (
-            <div className="bar-wrapper" key={index}>
-              <div className="bar-fill-container">
+            <div className="simple-chart-bar-wrapper" key={index}>
+              <div className="simple-chart-bar-track">
                 <div 
-                  className="bar-fill"
+                  className="simple-chart-bar-fill"
                   style={{ 
                     height: `${(item.value / maxValue) * 100}%`,
                     background: item.color || 'var(--primary)'
                   }}
                 >
                   {showValues && item.value > 0 && (
-                    <span className="bar-value">{item.value}</span>
+                    <span className="simple-chart-bar-value">{item.value}</span>
                   )}
                 </div>
               </div>
-              <span className="bar-label">{item.label}</span>
+              <span className="simple-chart-bar-label">{item.label}</span>
             </div>
           ))}
         </div>
@@ -49,9 +49,9 @@ interface LineChartProps {
 export const LineChart = ({ data, title, height = 200, color = '#0245ae' }: LineChartProps) => {
   if (data.length === 0) {
     return (
-      <div className="simple-chart line-chart">
-        {title && <h4 className="chart-title">{title}</h4>}
-        <div className="chart-empty">No data available</div>
+      <div className="simple-chart simple-chart-line">
+        {title && <h4 className="simple-chart-title">{title}</h4>}
+        <div className="simple-chart-empty">No data available</div>
       </div>
     );
   }
@@ -73,9 +73,9 @@ export const LineChart = ({ data, title, height = 200, color = '#0245ae' }: Line
   const areaD = `${pathD} L ${points[points.length - 1]?.x || 0} ${chartHeight} L 0 ${chartHeight} Z`;
 
   return (
-    <div className="simple-chart line-chart">
-      {title && <h4 className="chart-title">{title}</h4>}
-      <div className="chart-container">
+    <div className="simple-chart simple-chart-line">
+      {title && <h4 className="simple-chart-title">{title}</h4>}
+      <div className="simple-chart-container">
         <svg viewBox={`0 0 ${width} ${chartHeight}`} preserveAspectRatio="none">
           <defs>
             <linearGradient id={`gradient-${title}`} x1="0" y1="0" x2="0" y2="1">
@@ -86,12 +86,12 @@ export const LineChart = ({ data, title, height = 200, color = '#0245ae' }: Line
           <path d={areaD} fill={`url(#gradient-${title})`} />
           <path d={pathD} fill="none" stroke={color} strokeWidth="2" vectorEffect="non-scaling-stroke" />
           {points.map((p, i) => (
-            <circle key={i} cx={p.x} cy={p.y} r="3" fill={color} className="data-point" />
+            <circle key={i} cx={p.x} cy={p.y} r="3" fill={color} className="simple-chart-point" />
           ))}
         </svg>
-        <div className="line-labels">
+        <div className="simple-chart-line-labels">
           {data.map((item, i) => (
-            <span key={i} className="line-label">{item.label}</span>
+            <span key={i} className="simple-chart-line-label">{item.label}</span>
           ))}
         </div>
       </div>
@@ -109,9 +109,9 @@ export const DonutChart = ({ data, title, size = 180 }: DonutChartProps) => {
   const total = data.reduce((sum, d) => sum + d.value, 0);
   if (total === 0) {
     return (
-      <div className="simple-chart donut-chart">
-        {title && <h4 className="chart-title">{title}</h4>}
-        <div className="chart-empty">No data available</div>
+      <div className="simple-chart simple-chart-donut">
+        {title && <h4 className="simple-chart-title">{title}</h4>}
+        <div className="simple-chart-empty">No data available</div>
       </div>
     );
   }
@@ -133,9 +133,9 @@ export const DonutChart = ({ data, title, size = 180 }: DonutChartProps) => {
   });
 
   return (
-    <div className="simple-chart donut-chart">
-      {title && <h4 className="chart-title">{title}</h4>}
-      <div className="donut-container">
+    <div className="simple-chart simple-chart-donut">
+      {title && <h4 className="simple-chart-title">{title}</h4>}
+      <div className="simple-chart-donut-container">
         <svg width={size} height={size} viewBox="0 0 100 100">
           {segments.map((segment, i) => (
             <circle
@@ -151,17 +151,17 @@ export const DonutChart = ({ data, title, size = 180 }: DonutChartProps) => {
               transform="rotate(-90 50 50)"
             />
           ))}
-          <text x="50" y="50" textAnchor="middle" dominantBaseline="middle" className="donut-total">
+          <text x="50" y="50" textAnchor="middle" dominantBaseline="middle" className="simple-chart-total">
             <tspan fontSize="16" fontWeight="700">{total}</tspan>
             <tspan x="50" dy="14" fontSize="8" fill="var(--text-muted)">Total</tspan>
           </text>
         </svg>
-        <div className="donut-legend">
+        <div className="simple-chart-legend">
           {data.map((item, i) => (
-            <div className="legend-item" key={i}>
-              <span className="legend-dot" style={{ background: item.color }}></span>
-              <span className="legend-label">{item.label}</span>
-              <span className="legend-value">{item.value}</span>
+            <div className="simple-chart-legend-item" key={i}>
+              <span className="simple-chart-legend-dot" style={{ background: item.color }}></span>
+              <span className="simple-chart-legend-label">{item.label}</span>
+              <span className="simple-chart-legend-value">{item.value}</span>
             </div>
           ))}
         </div>
@@ -181,14 +181,14 @@ export const ProgressBar = ({ label, value, max, color = 'var(--primary)' }: Pro
   const percentage = max > 0 ? (value / max) * 100 : 0;
   
   return (
-    <div className="progress-stat">
-      <div className="progress-header">
-        <span className="progress-label">{label}</span>
-        <span className="progress-value">{value} / {max}</span>
+    <div className="simple-chart-progress">
+      <div className="simple-chart-progress-header">
+        <span className="simple-chart-progress-label">{label}</span>
+        <span className="simple-chart-progress-value">{value} / {max}</span>
       </div>
-      <div className="progress-track">
+      <div className="simple-chart-progress-track">
         <div 
-          className="progress-fill" 
+          className="simple-chart-progress-fill"
           style={{ width: `${percentage}%`, background: color }}
         ></div>
       </div>

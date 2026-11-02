@@ -1544,3 +1544,120 @@
   font-size: 14px;
 }
 
+.applications-page button.stat-card { width: 100%; text-align: left; color: var(--admin-text, #202636); font: inherit; }
+.applications-page .profile-card-header { display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 12px; align-items: center; }
+.applications-page .profile-card-header .profile-info { min-width: 0; display: block; }
+.applications-page .profile-card-header .profile-name { margin: 0 0 4px; font-size: 14px; line-height: 1.5; overflow-wrap: anywhere; }
+.applications-page .profile-card-header .profile-email { margin: 0; font-size: 12px; overflow-wrap: anywhere; }
+.applications-page .profile-submitted-badge { grid-column: 2; justify-self: start; }
+.applications-page .review-avatar,.application-profile-dialog .review-avatar { flex: 0 0 auto; display: grid; place-items: center; overflow: hidden; background: var(--admin-bg-accent, #eaf1fc); color: var(--admin-accent, #0245ae); font-weight: 600; }
+.applications-page .profile-card-header .review-avatar { width: 48px; height: 48px; font-size: 18px; }
+.review-avatar > img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.application-profile-dialog { position: fixed; inset: 0; margin: auto !important; width: min(760px, calc(100% - 32px)); max-width: none; max-height: 92dvh; padding: 0; border: 1px solid var(--admin-border, #dfe5ed); border-radius: 8px; background: var(--admin-surface, #fff); color: var(--admin-text, #202636); overflow: hidden; }
+.application-profile-dialog::backdrop { background: rgba(15, 20, 28, .55); }
+.application-profile-dialog .profile-modal.granular-review { max-width: none; max-height: 90dvh; border-radius: 0; background: var(--admin-surface, #fff); }
+.application-profile-dialog .profile-modal.granular-review .modal-header { flex: 0 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) 36px; gap: 12px 16px; padding: 18px 24px; background: var(--admin-surface, #fff) !important; border-bottom: 1px solid var(--admin-border, #dfe5ed); }
+.application-profile-dialog .modal-header h2 { color: var(--admin-text, #202636) !important; font-size: 18px; line-height: 1.4; margin: 0; }
+.application-profile-dialog .approval-progress { grid-column: 1; grid-row: 2; display: grid; grid-template-columns: auto minmax(80px, 180px); align-items: center; gap: 12px; }
+.application-profile-dialog .progress-text { color: var(--admin-muted, #647184) !important; font-size: 12px; }
+.application-profile-dialog .progress-bar { display: block; width: 100%; max-width: none; height: 6px; background: var(--admin-border, #dfe5ed); border-radius: 3px; }
+.application-profile-dialog .progress-fill { background: var(--admin-accent, #0245ae); }
+.application-profile-dialog .modal-close { position: static; grid-column: 2; grid-row: 1 / 3; align-self: start; display: grid; place-items: center; width: 36px; height: 36px; padding: 0; border: 1px solid var(--admin-border, #dfe5ed); border-radius: 6px; color: var(--admin-text, #202636); background: transparent; font-size: 20px; }
+.application-profile-dialog .modal-body { min-height: 0; padding: 20px 24px; overflow-y: auto; overscroll-behavior: contain; }
+.application-profile-dialog .modal-profile-header { align-items: center; gap: 14px; padding-bottom: 20px; margin-bottom: 20px; }
+.application-profile-dialog .modal-avatar { width: 56px; height: 56px; font-size: 20px; }
+.application-profile-dialog .modal-profile-info { min-width: 0; }
+.application-profile-dialog .modal-profile-info :is(h3,p) { overflow-wrap: anywhere; }
+.application-profile-dialog .modal-profile-info h3 { font-size: 15px; margin: 0 0 4px; }
+.application-profile-dialog .modal-profile-info p { font-size: 13px; margin: 0 0 6px; }
+.application-profile-dialog .review-item-card { border-radius: 6px; }
+.application-profile-dialog .review-image { display: block; max-width: 100%; width: auto; height: auto; max-height: 260px; object-fit: contain; border-radius: 6px; }
+.profile-review-photo { display: grid; place-items: center; width: min(100%, 320px); aspect-ratio: 1; padding: 8px; box-sizing: border-box; border: 1px solid var(--admin-border, #dfe5ed); border-radius: 6px; background: var(--admin-surface, #fff); }
+.review-video-preview { width: 100%; max-width: 560px; }
+.review-video-preview video { display: block; width: 100%; aspect-ratio: 16 / 9; max-height: 315px; object-fit: contain; background: #000; border-radius: 6px; }
+.changes-review-modal .item-content.change-preview { padding: 16px; }
+.profile-review-photo .review-image,.application-profile-dialog .profile-review-photo .review-image { display: block; width: 100%; height: 100%; min-height: 0; max-width: 100%; max-height: 100%; object-fit: contain; border: 0; border-radius: 0; transform: none; transition: none; }
+.application-profile-dialog .modal-close:focus-visible { outline: 2px solid var(--admin-accent, #0245ae); outline-offset: 2px; }
+@media(max-width:600px) {
+  .application-profile-dialog { width: calc(100% - 20px); }
+  .application-profile-dialog .profile-modal.granular-review .modal-header { padding: 16px; }
+  .application-profile-dialog .modal-body { padding: 16px; }
+  .application-profile-dialog .approval-progress { grid-template-columns: auto minmax(40px, 1fr); }
+}
+.applications-page .page-tabs .tab-btn.active { background: var(--admin-bg-accent, #eaf1fc) !important; color: var(--admin-accent, #0245ae) !important; border-color: var(--admin-border, #dfe5ed); }
+.applications-page .stat-content { min-width: 0; }
+.applications-page .header-content { min-width: 0; max-width: 100%; }
+.applications-page .header-content p { white-space: normal; overflow-wrap: anywhere; }
+.applications-page .application-stage-filter { margin-left: auto; max-width: 100%; padding: 8px 12px; border: 1px solid var(--admin-border, #dfe5ed); border-radius: 6px; background: var(--admin-surface, #fff); color: var(--admin-text, #202636); font-size: 13px; }
+.applications-page .applications-list { --application-columns: minmax(160px, 1fr) 248px 128px 128px 196px 152px; padding: 0; gap: 0; }
+.applications-page .application-card {
+  display: grid;
+  grid-template-columns: var(--application-columns);
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  min-width: 0;
+  border: 0;
+  border-bottom: 1px solid var(--border-color);
+  border-radius: 0;
+  background: var(--admin-surface, #fff);
+  transition: background-color .15s;
+}
+.applications-page .application-card:last-child { border-bottom: 0; }
+.applications-page .application-card:hover { background: var(--admin-bg-accent, #f0f5fc); box-shadow: none; }
+.applications-page .application-card .applicant-info { min-width: 0; gap: 10px; }
+.applications-page .application-card .applicant-avatar { width: 34px; height: 34px; flex: 0 0 34px; border-radius: 6px; font-size: 14px; background: var(--admin-accent, #0245ae); }
+.applications-page .application-card .applicant-details { min-width: 0; gap: 2px; }
+.applications-page .application-card .applicant-name { font-size: 14px; line-height: 1.4; overflow-wrap: anywhere; }
+.applications-page .application-card .applicant-email { font-size: 12px; line-height: 1.4; overflow-wrap: anywhere; }
+.applications-page .application-card .applied-date { font-size: 11px; line-height: 1.4; }
+.applications-page .application-card .exam-progress { display: grid; grid-template-columns: 48px 8px 48px 8px 80px 8px 48px; width: 248px; justify-content: start; gap: 0; align-items: start; }
+.applications-page .application-card .exam-step { gap: 3px; width: 48px; min-width: 0; }
+.applications-page .application-card .step-icon { width: 24px; height: 24px; font-size: 12px; border-width: 1px; }
+.applications-page .application-card .step-label { font-size: 11px; height: 15px; min-height: 15px; line-height: 15px; white-space: nowrap; text-align: center; }
+.applications-page .application-card .identity-step { width: 80px; flex: 0 0 80px; }
+.applications-page .application-card .step-connector { width: 8px; flex: 0 0 8px; height: 1px; margin: 12px 0 0; }
+.applications-page .application-card > .status-badge { justify-self: start; max-width: 100%; padding: 4px 8px; font-size: 11px; line-height: 1.5; border-radius: 4px; }
+.applications-page .application-card .card-actions { width: auto; justify-content: flex-start; min-width: 0; }
+.applications-page .application-card .btn-action { min-height: 34px; padding: 6px 10px; border-radius: 6px; font-size: 12px; text-align: center; justify-content: center; }
+.applications-page .application-card .btn-action.schedule { background: var(--admin-accent, #0245ae); }
+.applications-page .application-column-headings { display: grid; grid-template-columns: var(--application-columns); gap: 12px; padding: 12px 20px; border-bottom: 1px solid var(--admin-border, #dfe5ed); color: var(--admin-muted, #647184); font-size: 12px; font-weight: 600; }
+.applications-page .applications-container { container-type: inline-size; }
+.applications-page .application-column-headings > span:nth-child(2) { text-align: center; }
+.applications-page .application-profile-column { margin: 0; min-width: 0; }
+.applications-page .application-profile-column dt { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.applications-page .application-profile-column dd { margin: 0; }
+.applications-page .profile-stage-badge { display: inline-flex; align-items: center; min-height: 24px; padding: 3px 7px; box-sizing: border-box; border-radius: 4px; font-size: 11px; line-height: 1.5; overflow-wrap: anywhere; color: var(--admin-muted, #647184); background: var(--admin-bg-accent, #f0f5fc); }
+.applications-page .profile-stage-badge.submitted,.applications-page .profile-stage-badge.approved { color: #08764e; background: #e5f5ed; }
+.applications-page .profile-stage-badge.pending { color: #875009; background: #fff1d9; }
+.applications-page .profile-stage-badge.rejected { color: #b12734; background: #fde9ec; }
+@container (max-width: 1130px) {
+  .applications-page .application-column-headings { display: none; }
+  .applications-page .application-card { grid-template-columns: minmax(0, 1fr) 180px; gap: 10px 16px; padding: 12px 16px; }
+  .applications-page .application-card .exam-progress { grid-column: 1 / -1; justify-content: flex-start; }
+  .applications-page .application-profile-column dt { position: static; width: auto; height: auto; overflow: visible; clip-path: none; white-space: normal; color: var(--admin-muted, #647184); font-size: 12px; margin-bottom: 4px; }
+}
+@media (max-width: 1200px) {
+  .applications-page .application-column-headings { display: none; }
+  .applications-page .application-profile-column dt { position: static; width: auto; height: auto; overflow: visible; clip-path: none; white-space: normal; color: var(--admin-muted, #647184); font-size: 12px; margin-bottom: 4px; }
+  .applications-page .application-card { grid-template-columns: minmax(0, 1fr) 180px; gap: 10px 16px; padding: 12px 16px; }
+}
+@media (max-width: 600px) {
+  .applications-page .application-card { grid-template-columns: minmax(0, 1fr); gap: 12px; padding: 14px; }
+  .applications-page .application-card .exam-progress { justify-content: flex-start; }
+  .applications-page .application-card .card-actions { justify-content: flex-start; }
+  .applications-page .application-card .btn-action { flex: 0 1 auto; }
+  .applications-page .application-card .card-actions:empty { display: none; }
+}
+.applications-pagination { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 16px 20px; border-top: 1px solid var(--admin-border, #dfe5ed); color: var(--admin-muted, #647184); font-size: 13px; }
+.applications-pagination > div { display: flex; align-items: center; gap: 12px; }
+.applications-pagination button { width: 36px; height: 36px; display: grid; place-items: center; border: 1px solid var(--admin-border, #dfe5ed); border-radius: 6px; background: var(--admin-surface, #fff); color: var(--admin-text, #202636); cursor: pointer; }
+.applications-pagination button:disabled { opacity: .4; cursor: default; }
+@media (max-width: 600px) {
+  .applications-page .page-tabs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; }
+  .applications-page .page-tabs .tab-btn { min-width: 0; justify-content: center; white-space: normal; }
+  .applications-page .page-tabs .tab-btn:last-child { grid-column: 1 / -1; }
+  .applications-page .container-header { flex-wrap: wrap; gap: 12px; }
+  .applications-page .application-stage-filter { order: 3; width: 100%; margin: 0; }
+  .applications-page .card-actions { flex-wrap: wrap; }
+}

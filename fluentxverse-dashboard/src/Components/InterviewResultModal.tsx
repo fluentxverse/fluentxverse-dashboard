@@ -24,12 +24,13 @@ interface InterviewResult {
 }
 
 interface InterviewResultModalProps {
+  interviewId?: string;
   tutorId: string;
   tutorName?: string;
   onClose: () => void;
 }
 
-const InterviewResultModal = ({ tutorId, tutorName, onClose }: InterviewResultModalProps) => {
+const InterviewResultModal = ({ tutorId, tutorName, interviewId, onClose }: InterviewResultModalProps) => {
   const [result, setResult] = useState<InterviewResult | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -118,9 +119,9 @@ const InterviewResultModal = ({ tutorId, tutorName, onClose }: InterviewResultMo
                 <div className={`result-badge ${result.result}`}>
                   {result.result === 'pass' ? (
                     <><i className="ri-check-double-line"></i> Passed</>
-                  ) : (
+                  ) : result.result === 'fail' ? (
                     <><i className="ri-close-circle-line"></i> Failed</>
-                  )}
+                  ) : 'Pending review'}
                 </div>
               </div>
 
@@ -210,6 +211,7 @@ const InterviewResultModal = ({ tutorId, tutorName, onClose }: InterviewResultMo
         </div>
 
         <div className="modal-footer">
+          {(interviewId || result?.id) && <a className="btn btn-primary" href={`/interview-room/${encodeURIComponent(interviewId || result!.id)}`}>Review interview result</a>}
           <button className="btn btn-secondary" onClick={onClose}>
             Close
           </button>

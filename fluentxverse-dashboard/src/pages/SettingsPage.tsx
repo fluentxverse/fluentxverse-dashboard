@@ -4,6 +4,7 @@ import { useAdminTheme } from '../context/ThemeContext';
 import type { ThemePreference } from '../theme/adminTheme';
 import { authApi } from '../api/auth.api';
 import './SettingsPage.css';
+import { BookingSettings } from '../components/BookingSettings';
 
 export function SettingsPage() {
   const { user } = useAuthContext();
@@ -51,6 +52,7 @@ export function SettingsPage() {
         <p class="page-description">Manage your account settings</p>
       </div>
 
+      {user?.role === 'superadmin' && <BookingSettings/>}
       <div class="settings-grid">
         <section class="settings-card appearance-settings" aria-labelledby="appearance-title">
           <div class="card-header">

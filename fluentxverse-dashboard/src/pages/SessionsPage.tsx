@@ -11,27 +11,58 @@ const SessionsPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+  const [appliedSearch, setAppliedSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<SessionStatus>('all');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
+  const [limit, setLimit] = useState(10);
+  const [reload, setReload] = useState(0);
   
   // Session detail modal
   const [showDetailModal, setShowDetailModal] = useState(false);
   const [selectedSession, setSelectedSession] = useState<SessionDetails | null>(null);
   const [detailLoading, setDetailLoading] = useState(false);
   
-  const limit = 15;
-
   useEffect(() => {
     loadStats();
   }, []);
 
   useEffect(() => {
-    loadSessions();
-  }, [page, statusFilter, startDate, endDate]);
+    let cancelled = false;
+    const load = async () => {
+      let redirected = false;
+      setLoading(true);
+      setError('');
+      try {
+        const result = await adminApi.getSessions({
+          page, limit,
+          status: statusFilter !== 'all' ? statusFilter : undefined,
+          search: appliedSearch || undefined,
+          startDate: startDate || undefined,
+          endDate: endDate || undefined
+        });
+        if (cancelled) return;
+        const lastPage = Math.max(1, result.totalPages);
+        if (page > lastPage) {
+          setPage(lastPage);
+          redirected = true;
+          return;
+        }
+        setSessions(result.sessions);
+        setTotal(result.total);
+        setTotalPages(lastPage);
+      } catch (err: any) {
+        if (!cancelled) setError(err.message || 'Failed to load sessions');
+      } finally {
+        if (!cancelled && !redirected) setLoading(false);
+      }
+    };
+    void load();
+    return () => { cancelled = true; };
+  }, [page, limit, statusFilter, startDate, endDate, appliedSearch, reload]);
 
   const loadStats = async () => {
     try {
@@ -42,42 +73,31 @@ const SessionsPage = () => {
     }
   };
 
-  const loadSessions = async () => {
-    try {
-      setLoading(true);
-      setError('');
-      const result = await adminApi.getSessions({
-        page,
-        limit,
-        status: statusFilter !== 'all' ? statusFilter : undefined,
-        search: searchQuery || undefined,
-        startDate: startDate || undefined,
-        endDate: endDate || undefined
-      });
-      setSessions(result.sessions);
-      setTotal(result.total);
-      setTotalPages(result.totalPages);
-    } catch (err: any) {
-      setError(err.message || 'Failed to load sessions');
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const handleSearch = (e: Event) => {
     e.preventDefault();
+    setLoading(true);
     setPage(1);
-    loadSessions();
+    setAppliedSearch(searchQuery.trim());
+    setReload(value => value + 1);
   };
 
   const handleFilterChange = (newFilter: SessionStatus) => {
+    if (newFilter !== statusFilter || page !== 1) setLoading(true);
     setStatusFilter(newFilter);
     setPage(1);
   };
 
-  const handleDateChange = () => {
+  const changePage = (value: number) => {
+    if (value === page) return;
+    setLoading(true);
+    setPage(value);
+  };
+
+  const changeLimit = (value: number) => {
+    if (value === limit) return;
+    setLoading(true);
+    setLimit(value);
     setPage(1);
-    loadSessions();
   };
 
   const openSessionDetail = async (sessionId: string) => {
@@ -204,7 +224,7 @@ const SessionsPage = () => {
             <p>Track and manage all tutoring sessions</p>
           </div>
         </div>
-        <button className="btn-refresh" onClick={() => { loadStats(); loadSessions(); }}>
+        <button className="btn-refresh" onClick={() => { loadStats(); setLoading(true); setReload(value => value + 1); }}>
           <i className="ri-refresh-line"></i>
           Refresh
         </button>
@@ -337,7 +357,8 @@ const SessionsPage = () => {
               <input 
                 type="date" 
                 value={startDate}
-                onChange={(e) => { setStartDate((e.target as HTMLInputElement).value); handleDateChange(); }}
+                aria-label="From date"
+                onChange={(e) => { setLoading(true); setStartDate((e.target as HTMLInputElement).value); setPage(1); }}
               />
             </div>
             <div className="date-input">
@@ -345,11 +366,12 @@ const SessionsPage = () => {
               <input 
                 type="date" 
                 value={endDate}
-                onChange={(e) => { setEndDate((e.target as HTMLInputElement).value); handleDateChange(); }}
+                aria-label="To date"
+                onChange={(e) => { setLoading(true); setEndDate((e.target as HTMLInputElement).value); setPage(1); }}
               />
             </div>
             {(startDate || endDate) && (
-              <button className="btn-clear-dates" onClick={() => { setStartDate(''); setEndDate(''); handleDateChange(); }}>
+              <button className="btn-clear-dates" title="Clear dates" aria-label="Clear dates" onClick={() => { setLoading(true); setStartDate(''); setEndDate(''); setPage(1); }}>
                 <i className="ri-close-line"></i>
               </button>
             )}
@@ -367,12 +389,16 @@ const SessionsPage = () => {
       )}
 
       {/* Sessions Table */}
-      <div className="sessions-table-container">
+      <div className="sessions-table-container" aria-busy={loading}>
+        <SessionsPagination position="top" page={page} total={total} totalPages={totalPages} limit={limit}
+          disabled={loading || !!error} onPage={changePage} onLimit={changeLimit} />
         {loading ? (
           <div className="loading-state">
             <div className="spinner"></div>
             <p>Loading sessions...</p>
           </div>
+        ) : error ? (
+          <div className="empty-state"><p>Sessions could not be loaded. Refresh to try again.</p></div>
         ) : sessions.length === 0 ? (
           <div className="empty-state">
             <i className="ri-calendar-line"></i>
@@ -449,51 +475,10 @@ const SessionsPage = () => {
               </tbody>
             </table>
 
-            {/* Pagination */}
-            {totalPages > 1 && (
-              <div className="pagination">
-                <span className="pagination-info">
-                  Showing {(page - 1) * limit + 1} - {Math.min(page * limit, total)} of {total}
-                </span>
-                <div className="pagination-buttons">
-                  <button 
-                    disabled={page === 1}
-                    onClick={() => setPage(page - 1)}
-                  >
-                    <i className="ri-arrow-left-s-line"></i>
-                  </button>
-                  {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-                    let pageNum;
-                    if (totalPages <= 5) {
-                      pageNum = i + 1;
-                    } else if (page <= 3) {
-                      pageNum = i + 1;
-                    } else if (page >= totalPages - 2) {
-                      pageNum = totalPages - 4 + i;
-                    } else {
-                      pageNum = page - 2 + i;
-                    }
-                    return (
-                      <button
-                        key={pageNum}
-                        className={page === pageNum ? 'active' : ''}
-                        onClick={() => setPage(pageNum)}
-                      >
-                        {pageNum}
-                      </button>
-                    );
-                  })}
-                  <button 
-                    disabled={page === totalPages}
-                    onClick={() => setPage(page + 1)}
-                  >
-                    <i className="ri-arrow-right-s-line"></i>
-                  </button>
-                </div>
-              </div>
-            )}
           </>
         )}
+        <SessionsPagination position="bottom" page={page} total={total} totalPages={totalPages} limit={limit}
+          disabled={loading || !!error} onPage={changePage} onLimit={changeLimit} />
       </div>
 
       {/* Session Detail Modal */}
@@ -631,5 +616,40 @@ const SessionsPage = () => {
     </div>
   );
 };
+
+function SessionsPagination({ position, page, total, totalPages, limit, disabled, onPage, onLimit }: {
+  position: 'top' | 'bottom'; page: number; total: number; totalPages: number; limit: number;
+  disabled: boolean; onPage: (page: number) => void; onLimit: (limit: number) => void;
+}) {
+  const pages = Math.max(1, totalPages);
+  const first = Math.max(1, Math.min(page - 2, pages - 4));
+  const mobileFirst = Math.max(1, Math.min(page - 1, pages - 2));
+  const arrow = (label: string, icon: string, target: number, boundary: boolean, edge = false) => (
+    <button type="button" className={edge ? 'sessions-page-edge' : ''} title={label} aria-label={label}
+      disabled={disabled || boundary} onClick={() => onPage(target)}><i className={`ri-${icon}-line`} aria-hidden="true" /></button>
+  );
+  return <nav className={`sessions-pagination sessions-pagination-${position}`} aria-label={`Sessions pagination (${position})`}>
+    <div className="sessions-pagination-summary">
+      <span>{total ? `${(page - 1) * limit + 1}-${Math.min(page * limit, total)}` : '0'} of {total} sessions</span>
+      <label>Rows per page<select value={limit} disabled={disabled} onChange={e => onLimit(Number(e.currentTarget.value))}>
+        {[10, 25, 50].map(value => <option key={value} value={value}>{value}</option>)}
+      </select></label>
+    </div>
+    <div className="sessions-pagination-navigation">
+      <span>Page {page} of {pages}</span>
+      <div className="sessions-pagination-buttons">
+        {arrow('First page', 'skip-back', 1, page <= 1, true)}
+        {arrow('Previous page', 'arrow-left-s', page - 1, page <= 1)}
+        {Array.from({ length: Math.min(5, pages) }, (_, index) => first + index).map(value => (
+          <button type="button" key={value} aria-label={`Page ${value}`} aria-current={page === value ? 'page' : undefined}
+            className={value < mobileFirst || value > mobileFirst + 2 ? 'sessions-page-distant' : undefined}
+            disabled={disabled} onClick={() => onPage(value)}>{value}</button>
+        ))}
+        {arrow('Next page', 'arrow-right-s', page + 1, page >= pages)}
+        {arrow('Last page', 'skip-forward', pages, page >= pages, true)}
+      </div>
+    </div>
+  </nav>;
+}
 
 export default SessionsPage;

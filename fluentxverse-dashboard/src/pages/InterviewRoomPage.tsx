@@ -4,7 +4,10 @@ import { apiClient as api } from '../api/apiClient';
 import { API_BASE_URL } from '../config/api';
 import { interviewApi } from '../api/interview.api';
 import { InterviewCall } from '../../../shared/interviewCall';
+import type { InterviewMessage } from '../../../shared/interviewChat';
+import InterviewChat from '../Components/InterviewChat';
 import { InterviewRecording } from '../client/interviewRecording';
+import IdentityReview from '../components/IdentityReview';
 import { createRealtimeSocket, type RealtimeSocket } from '../client/realtimeSocket';
 import './InterviewRoomPage.css';
 
@@ -35,6 +38,10 @@ const InterviewRoomPage = (props: InterviewRoomPageProps) => {
   const tutorId = room?.tutorId;
   const tutorName = room?.tutorName;
   const [ended, setEnded] = useState(false);
+  const [identityCheckActive, setIdentityCheckActive] = useState(false);
+  const [sidebarTab, setSidebarTab] = useState<'identity' | 'evaluation' | 'chat'>('identity');
+  const [messages, setMessages] = useState<InterviewMessage[]>([]);
+  const [chatReady, setChatReady] = useState(false);
   const endedRef = useRef(false);
   const mounted = useRef(true);
   const callRef = useRef<InterviewCall | null>(null);
@@ -50,6 +57,11 @@ const InterviewRoomPage = (props: InterviewRoomPageProps) => {
     interviewApi.getRoom(interviewId).then(data => {
       if (active) {
         setRoom(data);
+        if (data.result) {
+          if (data.rubricScores) setRubricScores(data.rubricScores);
+          setNotes(data.notes || '');
+          setTimestampNotes(data.timestamps || []);
+        }
         if (data.hasRecording) setRecordingUrl(`/interview/recording/${encodeURIComponent(data.id)}`);
         if (data.status !== 'booked' || data.mediaClosed) { setEnded(true); endedRef.current = true; setSetupComplete(true); }
       }
@@ -120,6 +132,7 @@ const InterviewRoomPage = (props: InterviewRoomPageProps) => {
   // Add timestamp note
   const addTimestampNote = () => {
     if (notes.trim()) {
+      setResultSubmitted(false);
       const newNote: TimestampNote = {
         time: formatCurrentTime(),
         note: notes.trim()
@@ -131,6 +144,7 @@ const InterviewRoomPage = (props: InterviewRoomPageProps) => {
 
   // Update rubric score
   const updateRubricScore = (category: keyof RubricScores, score: number) => {
+    setResultSubmitted(false);
     setRubricScores(prev => ({ ...prev, [category]: score }));
   };
 
@@ -180,28 +194,25 @@ const InterviewRoomPage = (props: InterviewRoomPageProps) => {
       return;
     }
 
-    if (isSaving || recordingUploading || room?.result) return;
+    if (isSaving || recordingUploading) return;
     setIsSaving(true);
     try {
-      await handleEndCall();
       if (pendingRecording.current && !await uploadRecording()) throw Error('Upload the recording before submitting the result.');
       const response = await api.post('/interview/result', {
         slotId: interviewId,
         tutorId: tutorId,
         result,
+        expectedReviewedAt: room?.reviewedAt || null,
         rubricScores,
-        notes: timestampNotes.map(t => `[${t.time}] ${t.note}`).join('\n') + (notes ? `\n[Final] ${notes}` : ''),
+        notes,
         timestamps: timestampNotes
       });
       if (!response.data.success) throw Error(response.data.error || 'Failed to submit result');
 
       setResultSubmitted(true);
+      const savedRoom = await interviewApi.getRoom(interviewId);
+      setRoom(savedRoom);
       localStorage.removeItem(`interview-${interviewId}`);
-      
-      // Show success and redirect
-      setTimeout(() => {
-        window.location.href = '/applications';
-      }, 2000);
     } catch (err: any) {
       setError(err.response?.data?.error || err.message || 'Failed to submit result');
     } finally {
@@ -211,6 +222,7 @@ const InterviewRoomPage = (props: InterviewRoomPageProps) => {
 
   // Get available devices and auto-start preview
   useEffect(() => {
+    if (roomLoading || ended) return;
     const getDevices = async () => {
       const version = ++previewVersion.current;
       try {
@@ -237,7 +249,7 @@ const InterviewRoomPage = (props: InterviewRoomPageProps) => {
     
     if (room?.status === 'booked' && !ended) void getDevices();
     return () => { previewVersion.current++; };
-  }, [room?.id, ended]);
+  }, [room?.id, roomLoading, ended]);
 
   // Sync video element with stream
   useEffect(() => {
@@ -333,6 +345,8 @@ const InterviewRoomPage = (props: InterviewRoomPageProps) => {
         },
         onError: message => { if (mounted.current) { setError(message); setIsConnecting(false); } },
         onEnded: () => { void handleEndCall(false); },
+        onChatReady: ready => { if (mounted.current) setChatReady(ready); },
+        onMessage: message => { if (mounted.current) setMessages(previous => [...previous.slice(-199), message]); },
       });
       callRef.current = call;
       const ready = call.start();
@@ -369,6 +383,7 @@ const InterviewRoomPage = (props: InterviewRoomPageProps) => {
 
   // Recording functions
   const startRecording = () => {
+    if (identityCheckActive) { setError('Finish the unrecorded ID check before recording.'); return; }
     if (!localStream || !remoteStream || !isConnected || recordingRef.current || pendingRecording.current) {
       setError('Both participants must be connected before recording. Upload any pending recording first.');
       return;
@@ -507,17 +522,7 @@ const InterviewRoomPage = (props: InterviewRoomPageProps) => {
 
   return (
     <div className="interview-room">
-      {resultSubmitted ? (
-        <div className="result-submitted">
-          <div className="result-card">
-            <div className="result-icon success">
-              <i className="ri-checkbox-circle-fill"></i>
-            </div>
-            <h2>Interview Result Submitted!</h2>
-            <p>Redirecting to applications...</p>
-          </div>
-        </div>
-      ) : !setupComplete ? (
+      {!setupComplete ? (
         <div className="interview-setup">
           <div className="setup-container">
             <div className="setup-header">
@@ -642,10 +647,10 @@ const InterviewRoomPage = (props: InterviewRoomPageProps) => {
                     <video ref={remoteVideoRef} autoPlay playsInline />
                   ) : (
                     <div className="video-placeholder">
-                      <div className="avatar-placeholder">
+                      <div className="interview-candidate-avatar">
                         <i className="ri-user-line"></i>
                       </div>
-                      <p>{tutorConnected ? 'Connecting video...' : 'Waiting for candidate to join...'}</p>
+                      <p>{ended ? 'Interview ended' : tutorConnected ? 'Connecting video...' : 'Waiting for candidate to join...'}</p>
                     </div>
                   )}
                   <div className="video-label">Candidate</div>
@@ -673,7 +678,7 @@ const InterviewRoomPage = (props: InterviewRoomPageProps) => {
                   className={`control-btn ${isRecording ? 'recording' : ''}`} 
                   onClick={isRecording ? stopRecording : startRecording}
                   title={isRecording ? 'Stop recording' : 'Start recording'}
-                  disabled={recordingUploading || hasPendingRecording || (!isRecording && (!isConnected || ended))}
+                  disabled={identityCheckActive || recordingUploading || hasPendingRecording || (!isRecording && (!isConnected || ended))}
                 >
                   <i className={isRecording ? 'ri-stop-circle-line' : 'ri-record-circle-line'}></i>
                 </button>
@@ -691,10 +696,22 @@ const InterviewRoomPage = (props: InterviewRoomPageProps) => {
             </div>
 
             <div className="notes-section">
-              <div className="notes-header">
-                <h3><i className="ri-file-text-line"></i> Interview Notes</h3>
+              <div className="interview-sidebar-tabs" role="tablist" aria-label="Interview tools">
+                {([{id:'identity',label:'Identity',icon:'ri-shield-user-line'},{id:'evaluation',label:'Evaluation',icon:'ri-file-text-line'},{id:'chat',label:'Chat',icon:'ri-chat-3-line'}] as const).map(tab => <button key={tab.id} id={`interview-tab-${tab.id}`} role="tab" aria-selected={sidebarTab === tab.id} aria-controls={`interview-panel-${tab.id}`} tabIndex={sidebarTab === tab.id ? 0 : -1} onClick={() => setSidebarTab(tab.id)} onKeyDown={e => {if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const tabs=['identity','evaluation','chat'] as const;const idx=tabs.indexOf(tab.id);const next=e.key==='Home'?0:e.key==='End'?2:(idx+(e.key==='ArrowRight'?1:2))%3;setSidebarTab(tabs[next]);document.getElementById(`interview-tab-${tabs[next]}`)?.focus();}}><i className={tab.icon} aria-hidden="true"/>{tab.label}{tab.id==='chat' && messages.length>0 && <span>{messages.length}</span>}</button>)}
               </div>
-              {room?.result ? <div className="result-section"><h3>Final result: {room.result === 'pass' ? 'Passed' : 'Failed'}</h3><a href="/interviews">Back to interviews</a></div> : <>
+              <div className="interview-tool-panel chat-tool-panel" id="interview-panel-chat" role="tabpanel" aria-labelledby="interview-tab-chat" hidden={sidebarTab !== 'chat'}>
+                <InterviewChat messages={messages} ready={chatReady} ended={ended} send={text => { if (!callRef.current) throw Error('Chat is not connected.'); callRef.current.sendText(text); }}/>
+              </div>
+              <div className="interview-tool-panel" id="interview-panel-identity" role="tabpanel" aria-labelledby="interview-tab-identity" hidden={sidebarTab !== 'identity'}>
+                {tutorId && <IdentityReview tutorId={tutorId} interviewId={interviewId}
+                  startPresentation={async () => { await stopRecording(); if (pendingRecording.current) throw Error('Save the recording before the ID check.'); setIdentityCheckActive(true); }}
+                  onResolved={mismatch => { setIdentityCheckActive(false); if (mismatch) void handleEndCall(false); }}/>}</div>
+              <div className="interview-tool-panel" id="interview-panel-evaluation" role="tabpanel" aria-labelledby="interview-tab-evaluation" hidden={sidebarTab !== 'evaluation'}>
+              <div className="result-section" role="status">
+                <h4>{room?.result ? `Saved result: ${room.result === 'pass' ? 'Passed' : 'Failed'}` : 'Result pending review'}</h4>
+                {resultSubmitted && <p>Interview result saved.</p>}
+                <nav className="interview-review-navigation" aria-label="Review navigation"><a href="/interviews">Back to interviews</a><a href="/applications">Back to applications</a></nav>
+              </div>
 
               {/* Rubric Scoring */}
               <div className="rubric-section">
@@ -740,7 +757,7 @@ const InterviewRoomPage = (props: InterviewRoomPageProps) => {
                 <div className="note-input-area">
                   <textarea
                     value={notes}
-                    onChange={(e) => setNotes((e.target as HTMLTextAreaElement).value)}
+                    onChange={(e) => { setResultSubmitted(false); setNotes((e.target as HTMLTextAreaElement).value); }}
                     placeholder="Type a note and press Add to timestamp it..."
                     rows={3}
                   />
@@ -757,7 +774,7 @@ const InterviewRoomPage = (props: InterviewRoomPageProps) => {
                   <button 
                     className="btn-result btn-pass"
                     onClick={() => setShowPassConfirm(true)}
-                    disabled={isSaving || recordingUploading || Boolean(room?.result)}
+                    disabled={isSaving || recordingUploading}
                   >
                     <i className="ri-checkbox-circle-fill"></i>
                     {isSaving ? 'Submitting...' : 'Pass'}
@@ -765,7 +782,7 @@ const InterviewRoomPage = (props: InterviewRoomPageProps) => {
                   <button 
                     className="btn-result btn-fail"
                     onClick={() => setShowFailConfirm(true)}
-                    disabled={isSaving || recordingUploading || Boolean(room?.result)}
+                    disabled={isSaving || recordingUploading}
                   >
                     <i className="ri-close-circle-fill"></i>
                     {isSaving ? 'Submitting...' : 'Fail'}
@@ -773,10 +790,10 @@ const InterviewRoomPage = (props: InterviewRoomPageProps) => {
                 </div>
                 <p className="result-hint">
                   <i className="ri-information-line"></i>
-                  Submitting will end the interview and save all notes & scores
+                  Save the result independently of the call. Results can be reviewed and corrected later.
                 </p>
               </div>
-              </>}
+              </div>
             </div>
           </div>
 
@@ -822,7 +839,7 @@ const InterviewRoomPage = (props: InterviewRoomPageProps) => {
               <i className="ri-checkbox-circle-line"></i>
             </div>
             <h3>Pass This Candidate?</h3>
-            <p>This will mark the interview as passed and certify the tutor if they've completed all other requirements. This action cannot be undone.</p>
+            <p>Save a passing result and unlock profile completion. The call will stay open. You can correct this result later.</p>
             <div className="rubric-summary">
               <span>Average Score: <strong>{(Object.values(rubricScores).reduce((a, b) => a + b, 0) / 5).toFixed(1)}/5</strong></span>
             </div>
@@ -849,7 +866,7 @@ const InterviewRoomPage = (props: InterviewRoomPageProps) => {
               <i className="ri-close-circle-line"></i>
             </div>
             <h3>Fail This Candidate?</h3>
-            <p>This will mark the interview as failed. The tutor will not be certified. This action cannot be undone.</p>
+            <p>Save a failing result. Teaching access will remain locked. The call will stay open, and you can correct this result later.</p>
             <div className="rubric-summary">
               <span>Average Score: <strong>{(Object.values(rubricScores).reduce((a, b) => a + b, 0) / 5).toFixed(1)}/5</strong></span>
             </div>

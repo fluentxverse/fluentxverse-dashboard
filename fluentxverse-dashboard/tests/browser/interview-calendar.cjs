@@ -40,6 +40,7 @@ const screenshots = resolve(__dirname, '../../../output/screenshots');
       page.on('pageerror', error => errors.push(error.message));
       await page.goto(`${base}/interviews`, { waitUntil: 'networkidle' });
       await page.getByRole('region', { name: 'Interview calendar', exact: true }).waitFor();
+      await page.getByRole('button', { name: 'Afternoon (12PM-6PM)', exact: true }).click();
       assert.equal(await page.locator('.time-label').count(), 12);
       const geometry = await page.evaluate(() => ({
         rowHeight: document.querySelector('.slot-cell').getBoundingClientRect().height,

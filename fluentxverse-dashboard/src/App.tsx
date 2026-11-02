@@ -16,6 +16,7 @@ import { AdminsPage } from './pages/AdminsPage';
 import TutorsPage from './pages/TutorsPage';
 import StudentsPage from './pages/StudentsPage';
 import ApplicationsPage from './pages/ApplicationsPage';
+import IdentityReviewsPage from './pages/IdentityReviewsPage';
 import AnalyticsPage from './pages/AnalyticsPage';
 import InboxPage from './pages/InboxPage';
 import LoginPage from './pages/LoginPage';
@@ -57,6 +58,7 @@ const EmailPage = lazy(() => import('./pages/EmailPage'));
 const ServerHealthPage = lazy(() => import('./pages/ServerHealthPage'));
 const ContainerStatsPage = lazy(() => import('./pages/ContainerStatsPage'));
 const OperationalAlertsPage = lazy(() => import('./pages/OperationalAlertsPage'));
+const WorkplaceCommunicationPage = lazy(() => import('./pages/WorkplaceCommunicationPage'));
 
 // Loading spinner component
 const LoadingScreen = () => (
@@ -118,6 +120,9 @@ const AppContent = () => {
 
   if (isLoginPage) return <LoginPage />;
 
+  // Every dashboard route, including fullscreen previews, requires an admin session.
+  if (!isAuthenticated) return <LoginPage />;
+
   // Interview room is fullscreen, no sidebar/header
   const search = (() => {
     try {
@@ -134,7 +139,7 @@ const AppContent = () => {
     }
   })();
 
-  // Public lesson material view (used by server-hosted index.html redirect)
+  // Standalone lesson material view (used by server-hosted index.html redirect)
   if (path.startsWith('/lesson-material-maker') && (searchParams.has('previewToken') || searchParams.has('src'))) {
     return (
       <Router>
@@ -263,6 +268,7 @@ const AppContent = () => {
         <Route path="/" component={DashboardPage} />
         <Route path="/interviews" component={InterviewSchedulePage} />
         <Route path="/applications" component={ApplicationsPage} />
+        <Route path="/identity-reviews" component={IdentityReviewsPage} />
         <Route path="/tutors" component={TutorsPage} />
         <Route path="/students" component={StudentsPage} />
         <Route path="/sessions" component={SessionsPage} />
@@ -288,6 +294,7 @@ const AppContent = () => {
         <Route path="/young-learners-editor" component={YoungLearnersEditorPage} />
         <Route path="/discussion-questions-editor" component={DiscussionQuestionsEditorPage} />
         <Route path="/business-english-editor" component={BusinessEnglishEditorPage} />
+        <Route path="/workplace-communication" component={WorkplaceCommunicationPage} />
         <Route path="/business-english-preview/:id" component={BusinessEnglishPreview} />
         <Route path="/lesson-material-view" component={LessonMaterialViewPage} />
         <Route path="/ceo-orientation" component={CeoOrientationPage} />

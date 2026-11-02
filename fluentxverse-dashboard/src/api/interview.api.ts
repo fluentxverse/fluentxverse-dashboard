@@ -23,6 +23,7 @@ const emptyInterviewStats = {
 };
 
 export interface InterviewSlot {
+  result?: 'pass' | 'fail' | null;
   id: string;
   date: string;
   time: string;
@@ -42,6 +43,9 @@ export interface InterviewWeekSchedule {
 }
 
 export interface PendingInterview {
+  result?: 'pass' | 'fail' | null;
+  status?: 'booked' | 'completed';
+  mediaClosed?: boolean;
   id: string;
   date: string;
   time: string;
@@ -52,7 +56,9 @@ export interface PendingInterview {
 }
 
 export const interviewApi = {
-  getRoom: async (id: string): Promise<{ id: string; tutorId: string; tutorName: string; status: string; result: string | null; hasRecording: boolean; mediaClosed: boolean }> => {
+  getRoom: async (id: string): Promise<{ id: string; date: string; time: string; tutorId: string; tutorName: string; status: string; result: string | null; hasRecording: boolean; mediaClosed: boolean;
+    reviewedAt?: string | null; notes?: string; timestamps?: { time: string; note: string }[];
+    rubricScores?: { grammar: number; fluency: number; pronunciation: number; vocabulary: number; professionalism: number } | null }> => {
     const { data } = await api.get(`/interview/room/${encodeURIComponent(id)}`);
     if (!data.success) throw Error(data.error || 'Interview not found');
     return data.data;
@@ -144,6 +150,7 @@ export const interviewApi = {
       timestamps: { time: string; note: string }[];
       result: 'pass' | 'fail';
       notes: string;
+      expectedReviewedAt?: string | null;
     }
   ): Promise<void> => {
     const response = await api.post('/interview/result', {

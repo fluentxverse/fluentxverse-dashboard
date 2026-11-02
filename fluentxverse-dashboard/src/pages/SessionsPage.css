@@ -688,6 +688,99 @@
   cursor: not-allowed;
 }
 
+.sessions-page .sessions-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 16px 20px;
+  border-top: 1px solid var(--admin-border, #e2e8f0);
+  color: var(--admin-muted, #64748b);
+  font-size: 13px;
+}
+
+.sessions-page .sessions-pagination-top {
+  border-top: 0;
+  border-bottom: 1px solid var(--admin-border, #e2e8f0);
+}
+
+.sessions-pagination-summary,
+.sessions-pagination-navigation,
+.sessions-pagination-summary label {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.sessions-pagination-summary label { gap: 8px; }
+
+.sessions-pagination-summary select {
+  min-height: 36px;
+  padding: 4px 8px;
+  border: 1px solid var(--admin-border, #e2e8f0);
+  border-radius: 6px;
+  background: var(--admin-surface, #fff);
+  color: var(--admin-text, #0f172a);
+  font: inherit;
+}
+
+.sessions-pagination-buttons {
+  display: flex;
+  gap: 4px;
+}
+
+.sessions-pagination-buttons button {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--admin-surface, #fff);
+  border: 1px solid var(--admin-border, #e2e8f0);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--admin-muted, #64748b);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sessions-pagination-buttons button:hover:not(:disabled) {
+  border-color: var(--admin-border-accent, #0245ae);
+  color: var(--admin-accent, #0245ae);
+}
+
+.sessions-pagination-buttons button[aria-current="page"] {
+  background: #0245ae;
+  border-color: var(--admin-border-accent, #0245ae);
+  color: #fff;
+}
+
+.sessions-pagination-buttons button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.sessions-pagination button:focus-visible,
+.sessions-pagination select:focus-visible {
+  outline: 2px solid var(--admin-accent, #0245ae);
+  outline-offset: 2px;
+}
+
+@media (max-width: 600px) {
+  .sessions-page .sessions-pagination { padding: 12px; }
+  .sessions-pagination-summary,
+  .sessions-pagination-navigation { width: 100%; justify-content: space-between; }
+  .sessions-pagination-navigation { gap: 8px; }
+  .sessions-pagination-buttons button { width: 32px; height: 36px; }
+  .sessions-pagination-buttons .sessions-page-edge,
+  .sessions-pagination-buttons .sessions-page-distant { display: none; }
+}
+
 /* Modal Styles */
 .modal-overlay {
   position: fixed;

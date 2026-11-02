@@ -69,6 +69,17 @@ const COURSE_TEMPLATES: TemplateInfo[] = [
     status: 'draft',
   },
   {
+    id: 'workplace-communication',
+    name: 'Workplace Communication',
+    course: 'Workplace Communication',
+    category: 'Workplace',
+    icon: 'ri-discuss-line',
+    description: 'Prepare and Perform lessons for everyday workplace communication',
+    sections: 7,
+    lastUpdated: '2026-10-27',
+    status: 'draft',
+  },
+  {
     id: 'discussion-questions',
     name: 'Discussion Questions',
     course: 'Discussion Questions',
@@ -122,6 +133,10 @@ export default function LessonMaterialMakerPage() {
     }
     if (template.id === 'business-english') {
       location.route('/business-english-editor');
+      return;
+    }
+    if (template.id === 'workplace-communication') {
+      location.route('/workplace-communication');
       return;
     }
     
@@ -283,6 +298,8 @@ function TemplateSelector({
                   window.location.href = '/daily-dispatch';
                 } else if (t.id === 'business-english') {
                   window.location.href = '/business-english-editor';
+                } else if (t.id === 'workplace-communication') {
+                  window.location.href = '/workplace-communication';
                 } else if (t.id === 'young-learners') {
                   window.location.href = '/young-learners-editor';
                 } else if (t.id === 'discussion-questions') {
@@ -292,7 +309,7 @@ function TemplateSelector({
                 }
               }}
             >
-              <div className="lmm-template-icon">{t.icon}</div>
+              <div className="lmm-template-icon">{t.icon.startsWith('ri-') ? <i className={t.icon} aria-hidden="true" /> : t.icon}</div>
               <div className="lmm-template-content">
                 <h3 className="lmm-template-name">{t.name}</h3>
                 <p className="lmm-template-desc">{t.description}</p>

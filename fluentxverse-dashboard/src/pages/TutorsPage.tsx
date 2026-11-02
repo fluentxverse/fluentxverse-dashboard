@@ -395,6 +395,8 @@ const TutorsPage = ({ initialAccount, onAccountClose }: { initialAccount?: { id:
               <col key="written" className="exam-column" />
               <col key="speaking" className="exam-column" />
               <col key="status" className="status-column" />
+              <col className="status-column" />
+              <col className="status-column" />
               <col key="bookings" className="bookings-column" />
               <col key="proof" className="proof-column" />
               <col key="sessions" className="sessions-column" />
@@ -409,6 +411,8 @@ const TutorsPage = ({ initialAccount, onAccountClose }: { initialAccount?: { id:
                 <th key="written" scope="col">Written Exam</th>
                 <th key="speaking" scope="col">Speaking Exam</th>
                 <th key="status" scope="col">Status</th>
+                <th scope="col">Profile approval</th>
+                <th scope="col">Identity verification</th>
                 <th key="bookings" scope="col">Bookings</th>
                 <th key="proof" scope="col">ZK Proof</th>
                 <th key="sessions" scope="col">Sessions</th>
@@ -471,6 +475,8 @@ const TutorsPage = ({ initialAccount, onAccountClose }: { initialAccount?: { id:
                     )}
                   </td>
                   <td key="status">{getStatusBadge(tutor)}</td>
+                  <td><span className={`status-badge ${tutor.profileStatus === 'approved' ? 'certified' : 'pending'}`}>{(tutor.profileStatus || 'incomplete').replaceAll('_', ' ')}</span></td>
+                  <td><a href="/identity-reviews">{(tutor.identityStatus || 'not_submitted').replaceAll('_', ' ')}</a></td>
                   <td key="bookings" className="tutor-booking-access">
                     <span className={`booking-access-status ${bookingBlocked(tutor) ? 'blocked' : tutor.isSuspended ? 'suspended' : tutor.isBlocked === undefined ? 'unknown' : 'open'}`}>
                       <i aria-hidden="true" className={bookingBlocked(tutor) ? 'ri-lock-line' : tutor.isSuspended ? 'ri-forbid-line' : tutor.isBlocked === undefined ? 'ri-question-line' : 'ri-checkbox-circle-line'} />

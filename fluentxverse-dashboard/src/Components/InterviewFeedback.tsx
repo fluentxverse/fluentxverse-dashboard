@@ -13,16 +13,19 @@ const InterviewFeedback = ({ interviewId, onClose, onSuccess }: InterviewFeedbac
   const [notes, setNotes] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [interview, setInterview] = useState<PendingInterview | null>(null);
+  const [interview, setInterview] = useState<Awaited<ReturnType<typeof interviewApi.getRoom>> | null>(null);
+  const [scores, setScores] = useState({ grammar: 3, fluency: 3, pronunciation: 3, vocabulary: 3, professionalism: 3 });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadInterview = async () => {
       try {
-        const pending = await interviewApi.getPendingInterviews();
-        const found = pending.find(p => p.id === interviewId);
+        const found = await interviewApi.getRoom(interviewId);
         if (found) {
           setInterview(found);
+          setDecision(found.result === 'pass' || found.result === 'fail' ? found.result : null);
+          setNotes(found.notes || '');
+          if (found.rubricScores) setScores(found.rubricScores);
         } else {
           setError('Interview not found');
         }
@@ -45,20 +48,16 @@ const InterviewFeedback = ({ interviewId, onClose, onSuccess }: InterviewFeedbac
     setError(null);
 
     try {
-      // TODO: Create POST /interview/feedback endpoint
-      // For now, we'll just close the modal
-      const feedback = {
-        interviewId,
-        decision,
-        notes,
-        feedback_submitted_at: new Date().toISOString()
-      };
-      // await interviewApi.submitFeedback(feedback);
+      if (!interview) throw Error('Interview not loaded');
+      await interviewApi.saveResult(interviewId, interview.tutorId, {
+        result: decision, notes, rubricScores: scores,
+        timestamps: interview.timestamps || [], expectedReviewedAt: interview.reviewedAt || null,
+      });
       
       onSuccess?.();
       onClose();
     } catch (err: any) {
-      setError(err.message || 'Failed to submit feedback');
+      setError(err.response?.data?.error || err.message || 'Failed to submit feedback');
     } finally {
       setSubmitting(false);
     }
@@ -101,7 +100,7 @@ const InterviewFeedback = ({ interviewId, onClose, onSuccess }: InterviewFeedbac
           <div className="feedback-info">
             <div className="info-row">
               <label>Candidate:</label>
-              <span>{interview.tutorName} ({interview.tutorEmail})</span>
+              <span>{interview.tutorName}</span>
             </div>
             <div className="info-row">
               <label>Interview Date:</label>
@@ -114,6 +113,7 @@ const InterviewFeedback = ({ interviewId, onClose, onSuccess }: InterviewFeedbac
             <div className="decision-buttons">
               <button
                 className={`decision-btn pass ${decision === 'pass' ? 'selected' : ''}`}
+                aria-label="Pass" aria-pressed={decision === 'pass'}
                 onClick={() => setDecision('pass')}
                 disabled={submitting}
               >
@@ -122,6 +122,7 @@ const InterviewFeedback = ({ interviewId, onClose, onSuccess }: InterviewFeedbac
               </button>
               <button
                 className={`decision-btn fail ${decision === 'fail' ? 'selected' : ''}`}
+                aria-label="Fail" aria-pressed={decision === 'fail'}
                 onClick={() => setDecision('fail')}
                 disabled={submitting}
               >
@@ -129,6 +130,16 @@ const InterviewFeedback = ({ interviewId, onClose, onSuccess }: InterviewFeedbac
                 Fail
               </button>
             </div>
+          </div>
+
+          <div className="feedback-section">
+            <label className="section-label">Evaluation scores</label>
+            {Object.entries(scores).map(([key, score]) => <label className="info-row" key={key}>
+              {key.charAt(0).toUpperCase() + key.slice(1)}
+              <select aria-label={`${key} score`} value={score} disabled={submitting} onChange={event => setScores(current => ({ ...current, [key]: Number(event.currentTarget.value) }))}>
+                {[1, 2, 3, 4, 5].map(value => <option key={value} value={value}>{value} / 5</option>)}
+              </select>
+            </label>)}
           </div>
 
           <div className="feedback-section">
@@ -140,6 +151,7 @@ const InterviewFeedback = ({ interviewId, onClose, onSuccess }: InterviewFeedbac
               onChange={(e) => setNotes((e.target as any).value)}
               disabled={submitting}
               rows={6}
+              maxLength={2000}
             />
             <p className="char-count">{notes.length} / 2000</p>
           </div>
@@ -158,6 +170,7 @@ const InterviewFeedback = ({ interviewId, onClose, onSuccess }: InterviewFeedbac
           </button>
           <button
             className="btn btn-primary"
+            aria-label={submitting ? 'Submitting feedback' : 'Submit Feedback'}
             onClick={handleSubmit}
             disabled={submitting || !decision}
           >
